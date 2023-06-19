@@ -12,7 +12,8 @@
 		"lint:format": "prettier --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
 		"lint": "npm run lint:format && npm run lint:fix ",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
+		"deploy": "gh-pages -d build",
+    "watch:scss": "sass --watch src/main.scss:src/index.css"
 	},
 	"dependencies": {
 		"@mui/material": "^5.11.10",
