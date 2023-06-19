@@ -8,7 +8,7 @@ export function Navigation() {
         <NavLink to="/" className="logo-container">
           <img src="/itstar.svg" className="logo" alt="Vite logo" />
 
-          <h2 className="title">
+          <h2 className="title" style={{ textDecoration: 'none'}}>
             ITSTARBank
           </h2>
         </NavLink>
@@ -19,8 +19,8 @@ export function Navigation() {
               Home
             </NavLink>
 
-            <NavLink to="/about" className="link">
-              About
+            <NavLink to="/history" className="link">
+              History
             </NavLink>
           </div>
         </div>

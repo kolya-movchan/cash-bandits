@@ -1,0 +1,23 @@
+.home {
+  // height: 100vh;
+  display: flex;
+}
+
+.balance {
+  // display: flex;
+  // padding: 50px;
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  // background-color: #fff;
+  color: #000;
+}
+
+.controls {
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

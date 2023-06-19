@@ -1,9 +1,9 @@
 import React from 'react';
 
-export function About() {
+export function History() {
   return (
     <>
-      <h1>About Page</h1>
+      <h1>History Page</h1>
 
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga,
