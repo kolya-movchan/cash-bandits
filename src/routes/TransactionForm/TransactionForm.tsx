@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+// import React, { useRef, useState } from 'react';
 import { Form as BootstrapForm, Container, Button } from 'react-bootstrap';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
@@ -18,14 +18,12 @@ export function TransactionForm() {
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
-    const { amount, type } = data;
-
-    if (type === 'income') {
-      dispatch(increment(+amount));
+    if (data.type === 'income') {
+      dispatch(increment({ ...data, amount: parseFloat(data.amount) }));
     } else {
-      dispatch(decrement(+amount));
+      dispatch(decrement({ ...data, amount: parseFloat(data.amount) }));
     }
-    
+
     reset();
     toast.success('Transaction registered successfully!');
 
@@ -41,7 +39,7 @@ export function TransactionForm() {
             <BootstrapForm.Control
               className={classNames({ 'error-container': errors.name })}
               type="text"
-              placeholder="e.g. Salary or Gift"
+              placeholder="e.g. Salary or Loan"
               {...register('name', { required: 'Transaction Name is required' })}
             />
             <p className='error'>
@@ -65,8 +63,6 @@ export function TransactionForm() {
             <BootstrapForm.Label>Amount</BootstrapForm.Label>
             <BootstrapForm.Control
               type="number"
-              min={0}
-              max={100000000000}
               className={classNames(
                 { 'error-container': errors.amount }
               )}

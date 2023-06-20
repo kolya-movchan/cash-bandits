@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Home, History, NotFound } from '../../routes';
 import { Navigation } from '..';
 import { TransactionForm } from '../../routes/TransactionForm';
-// import styles from './App.module.scss';
 
 export function App() {
   return (
