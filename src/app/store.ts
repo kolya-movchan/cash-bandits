@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-// import authorSlice from '../features/authors/authorSlice';
+import balanceSlice from '../reducers/balanceReducer';
 
 export const store = configureStore({
   reducer: {
+    balance: balanceSlice,
   },
 });
 

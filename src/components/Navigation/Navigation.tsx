@@ -19,6 +19,10 @@ export function Navigation() {
               Home
             </NavLink>
 
+            <NavLink to="/add" className="link">
+              Add Transaction
+            </NavLink>
+
             <NavLink to="/history" className="link">
               History
             </NavLink>

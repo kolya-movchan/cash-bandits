@@ -1,29 +1,27 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { useAppSelector } from '../../app/hooks';
 
 export function Home() {
+  const { balance, income, expenses } = useAppSelector(state => state.balance);
+
   return (
-    <div className="home">
-      <div className="balance">
-        Current Balance: 1000
+    <Container fluid className="balance-container d-flex flex-column">
+      <div className="d-flex flex-column justify-content-center align-items-center h-50 p-3">
+        <h1 className="display-1 text-center">Current Balance</h1>
+        <h2 className="display-4 text-center balance-container__balance balance-container__balance--total">{balance}</h2>
       </div>
 
-      <div className="controls">
-        <Button variant="primary" type="submit">
-          Add Income
-        </Button>
-
-        <Button variant="primary" type="submit">
-          Add Expense
-        </Button>
-
-        {/* <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </Form.Select> */}
-      </div>
-    </div>
+        <div className="d-flex justify-content-around total-container">
+          <div className="d-flex flex-column justify-content-center align-items-center h-50">
+            <h1 className="display-5 text-center">Total Income</h1>
+            <h3 className="display-4 text-center balance-container__balance balance-container__balance--income">{income}</h3>
+          </div>
+          <div className="d-flex flex-column justify-content-center align-items-center h-50">
+            <h1 className="display-5 text-center">Total Expenses</h1>
+            <h3 className="display-4 text-center balance-container__balance balance-container__balance--expenses">{expenses}</h3>
+          </div>
+        </div>
+    </Container>
   );
 }

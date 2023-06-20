@@ -35,6 +35,19 @@ a:hover {
   color: #535bf2;
 }
 
+.error {
+  margin-bottom: 4px;
+  min-height: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+input.error-container,
+select.error-container {
+  border: 2px solid #ff0000;
+}
+
 .header {
   background-color: #444;
   margin-bottom: 50px;
@@ -120,11 +133,39 @@ a:hover {
   color: #000;
 }
 
-.controls {
-  margin-right: 10px;
+.balance-container {
+  padding: 50px;
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+.balance-container h1 {
+  font-weight: bold;
+}
+.balance-container .balance-container__balance {
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+.balance-container .balance-container__balance--total {
+  color: #f8f800;
+}
+.balance-container .balance-container__balance--income {
+  color: #43d843;
+}
+.balance-container .balance-container__balance--expenses {
+  color: #dc4c4c;
+}
+
+.total-container {
+  padding: 40px;
+  width: 100%;
+  border-top: 1px solid #000;
+}
+
+.form-container {
+  width: 400px;
+  height: 200px;
 }
 
 /*# sourceMappingURL=index.css.map */
