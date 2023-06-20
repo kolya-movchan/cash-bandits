@@ -1,12 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import uniqid from 'uniqid';
 
 interface TransactionPayload {
   amount: number;
   name: string;
   type: string;
+  id?: string,
 }
 
-interface History {
+interface DeletePayload {
+  id: string,
+  amount: number,
+}
+
+export interface History {
+  id: string,
   name: string,
   type: string,
   currentBalance: number,
@@ -37,6 +45,7 @@ export const balanceSlice = createSlice({
       state.balance += amount;
       state.income += amount;
       state.history.push({
+        id: uniqid(),
         name,
         type,
         currentBalance: state.balance,
@@ -50,6 +59,7 @@ export const balanceSlice = createSlice({
       state.balance -= amount;
       state.expenses += amount;
       state.history.push({
+        id: uniqid(),
         name,
         type,
         currentBalance: state.balance,
@@ -57,9 +67,80 @@ export const balanceSlice = createSlice({
         time: new Date().toISOString(),
       })
     },
+    updateIncome: (state, action: PayloadAction<TransactionPayload>) => {
+      const { amount, name, type, id } = action.payload;
+
+      const targetTransaction = state.history.find(transaction => transaction.id === id);
+
+      if (targetTransaction) {
+        state.balance -= targetTransaction.amount;
+        state.income -= targetTransaction.amount;
+
+        state.balance += amount;
+        state.income += amount;
+  
+        state.history = state.history.map(transaction => {
+          if (transaction.id === id) {
+            return {
+              ...transaction,
+              name,
+              amount,
+              type,
+              currentBalance: state.balance,
+            };
+          }
+  
+          return transaction;
+        });
+      }
+    },
+    updateExpenses: (state, action: PayloadAction<TransactionPayload>) => {
+      const { amount, name, type, id } = action.payload;
+
+      const targetTransaction = state.history.find(transaction => transaction.id === id);
+
+      if (targetTransaction) {
+        state.balance += targetTransaction.amount;
+        state.expenses -= targetTransaction.amount;
+
+        state.balance -= amount;
+        state.expenses += amount;
+  
+        state.history = state.history.map(transaction => {
+          if (transaction.id === id) {
+            return {
+              ...transaction,
+              name,
+              amount,
+              type,
+              currentBalance: state.balance,
+            };
+          }
+  
+          return transaction;
+        });
+      }
+    },
+    deleteIncome: (state, action: PayloadAction<DeletePayload>) => {
+      const { id, amount } = action.payload;
+
+      state.history = state.history.filter(transaction => transaction.id !== id);
+
+      state.balance -= amount;
+      state.income -= amount;
+    },
+    deleteExpenses: (state, action: PayloadAction<DeletePayload>) => {
+      const { id, amount } = action.payload;
+
+      state.history = state.history.filter(transaction => transaction.id !== id);
+
+      state.balance += amount;
+      state.expenses -= amount;
+    },
   },
 });
 
-export const { increment, decrement } = balanceSlice.actions;
+
+export const { increment, decrement, updateIncome, updateExpenses, deleteIncome, deleteExpenses } = balanceSlice.actions;
 
 export default balanceSlice.reducer;

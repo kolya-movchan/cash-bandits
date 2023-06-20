@@ -4,9 +4,11 @@ import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { decrement, increment } from '../../reducers/balanceReducer';
+import { decrement, increment, updateExpenses, updateIncome } from '../../reducers/balanceReducer';
 import { Transaction } from '../../types/Transaction';
 import classNames from 'classnames';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function TransactionForm() {
     const {
@@ -18,17 +20,34 @@ export function TransactionForm() {
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
+    // console.log(data);
+
+    reset();
+    toast.success('Transaction registered successfully!');
+
+    if (state && data.type === 'income') {
+      dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: state.id }));
+
+      return
+    } else if (state) {
+      dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: state.id }));
+
+      return
+    }
+
     if (data.type === 'income') {
       dispatch(increment({ ...data, amount: parseFloat(data.amount) }));
     } else {
       dispatch(decrement({ ...data, amount: parseFloat(data.amount) }));
     }
-
-    reset();
-    toast.success('Transaction registered successfully!');
-
-    console.log(data);
   };
+
+  const location = useLocation();
+  const { state } = location;
+
+  useEffect(() => {
+    // console.log(state);
+  }, [])
 
   return (
     <>
@@ -41,6 +60,7 @@ export function TransactionForm() {
               type="text"
               placeholder="e.g. Salary or Loan"
               {...register('name', { required: 'Transaction Name is required' })}
+              defaultValue={state && state.name}
             />
             <p className='error'>
               {errors && errors.name?.message}
@@ -52,6 +72,7 @@ export function TransactionForm() {
             <BootstrapForm.Select
               as="select"
               {...register('type', { required: 'Transaction Type is required' })}
+              defaultValue={state && state.type}
             >
               <option disabled>Choose Transaction Type</option>
               <option value="income">Income</option>
@@ -73,10 +94,11 @@ export function TransactionForm() {
                   message: 'Amount must be greater than or equal to 0',
                 },
                 max: {
-                  value: 100000000000,
-                  message: 'Amount must be less than or equal to 100000000000',
+                  value: 10000000000,
+                  message: 'Amount must be less than or equal to 100.000.000.000',
                 },
               })}
+              defaultValue={state && state.amount}
             />
             <p className='error'>
               {errors && errors.amount?.message}
@@ -85,7 +107,7 @@ export function TransactionForm() {
 
           <div className="d-flex justify-content-center">
             <Button variant="primary" type="submit" style={{ width: '150px' }}>
-              Add
+              {state ? 'Update' : 'Add'}
             </Button>
           </div>
         </BootstrapForm>
