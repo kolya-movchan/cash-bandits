@@ -133,7 +133,7 @@ export const balanceSlice = createSlice({
           .minus(amount)
           .toNumber();
         state.expenses = new Decimal(state.expenses)
-          .plus(targetTransaction.amount)
+          .plus(amount)
           .toNumber();
         state.income = new Decimal(state.income)
         .minus(targetTransaction.amount)

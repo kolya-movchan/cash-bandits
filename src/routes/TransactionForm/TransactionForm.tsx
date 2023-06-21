@@ -8,7 +8,7 @@ import { decrement, increment, updateExpenses, updateIncome } from '../../reduce
 import { Transaction } from '../../types/Transaction';
 import classNames from 'classnames';
 import { useEffect } from 'react';
-import { amountValidation, nameValidation } from '../../utils/regex';
+import { nameValidation } from '../../utils/regex';
 
 type Props = {
   updateData?: {
