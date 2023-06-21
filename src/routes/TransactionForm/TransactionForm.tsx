@@ -8,6 +8,7 @@ import { decrement, increment, updateExpenses, updateIncome } from '../../reduce
 import { Transaction } from '../../types/Transaction';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+import { amountValidation, nameValidation } from '../../utils/regex';
 
 type Props = {
   updateData?: {
@@ -26,7 +27,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     formState: { errors },
     reset,
   } = useForm<Transaction>();
-  
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
@@ -98,7 +98,18 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               className={classNames({ 'error-container': errors.name })}
               type="text"
               placeholder="e.g. Salary or Loan"
-              {...register('name', { required: 'Transaction Name is required' })}
+              {...register('name',
+                { required: 'Transaction Name is required',
+                  pattern: {
+                    value: nameValidation,
+                    message: 'Invalid Transaction Name',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: 'Name cannot be longer than 30 characters',
+                  },
+                },
+              )}
               defaultValue={updateData ? updateData.name : ''}
             />
             <p className='error'>
@@ -122,6 +133,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
           <BootstrapForm.Group controlId="exampleBootstrapForm.ControlInput2" className="mb-3">
             <BootstrapForm.Label>Amount</BootstrapForm.Label>
             <BootstrapForm.Control
+              step={0.01}
               type="number"
               className={classNames(
                 { 'error-container': errors.amount }

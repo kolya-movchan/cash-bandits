@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import uniqid from 'uniqid';
+import Decimal from 'decimal.js';
 
 interface TransactionPayload {
   amount: number;
@@ -40,50 +41,65 @@ export const balanceSlice = createSlice({
   initialState,
   reducers: {
     increment: (state, action: PayloadAction<TransactionPayload>) => {
-      const { amount , name, type } = action.payload;
-
-      state.balance += amount;
-      state.income += amount;
+      const { amount, name, type } = action.payload;
+    
+      const decimalAmount = new Decimal(amount);
+      const roundedAmount = decimalAmount.toFixed(2);
+      const roundedBalance = new Decimal(state.balance).plus(roundedAmount).toNumber();
+      const roundedIncome = new Decimal(state.income).plus(roundedAmount).toNumber();
+    
+      state.balance = roundedBalance;
+      state.income = roundedIncome;
+    
       state.history.push({
         id: uniqid(),
         name,
         type,
-        currentBalance: state.balance,
-        amount,
+        currentBalance: roundedBalance,
+        amount: +roundedAmount,
         time: new Date().toISOString(),
-      })
+      });
     },
     decrement: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount , name, type } = action.payload;
 
-      state.balance -= amount;
-      state.expenses += amount;
+      state.balance -= parseFloat(amount.toFixed(2));
+      state.expenses += parseFloat(amount.toFixed(2));
       state.history.push({
         id: uniqid(),
         name,
         type,
-        currentBalance: state.balance,
+        currentBalance: parseFloat(state.balance.toFixed(2)),
         amount,
         time: new Date().toISOString(),
       })
     },
     updateIncome: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type, id } = action.payload;
-
+    
       const targetTransaction = state.history.find(transaction => transaction.id === id);
-
+    
       if (targetTransaction && targetTransaction?.type === type) {
-        state.balance -= targetTransaction.amount;
-        state.income -= targetTransaction.amount;
-        state.balance += amount;
-        state.income += amount;
+        state.balance = new Decimal(state.balance)
+          .minus(targetTransaction.amount)
+          .plus(amount)
+          .toNumber();
+        state.income = new Decimal(state.income)
+          .minus(targetTransaction.amount)
+          .plus(amount)
+          .toNumber();
       } else if (targetTransaction) {
-        state.balance += targetTransaction.amount;
-        state.expenses -= targetTransaction.amount;
-        state.income += amount;
-        state.balance += amount;
+        state.balance = new Decimal(state.balance)
+          .plus(targetTransaction.amount)
+          .plus(amount)
+          .toNumber();
+        state.expenses = new Decimal(state.expenses)
+          .minus(targetTransaction.amount)
+          .toNumber();
+        state.income = new Decimal(state.income)
+        .plus(amount)
+        .toNumber();
       }
-
       state.history = state.history.map(transaction => {
         if (transaction.id === id) {
           return {
@@ -94,27 +110,35 @@ export const balanceSlice = createSlice({
             currentBalance: state.balance,
           };
         }
-
         return transaction;
       });
     },
     updateExpenses: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type, id } = action.payload;
-
+    
       const targetTransaction = state.history.find(transaction => transaction.id === id);
-
+    
       if (targetTransaction && targetTransaction?.type === type) {
-        state.balance += targetTransaction.amount;
-        state.expenses -= targetTransaction.amount;
-        state.balance -= amount;
-        state.expenses += amount;
+        state.balance = new Decimal(state.balance)
+          .plus(targetTransaction.amount)
+          .minus(amount)
+          .toNumber();
+        state.expenses = new Decimal(state.expenses)
+          .minus(targetTransaction.amount)
+          .plus(amount)
+          .toNumber();
       } else if (targetTransaction) {
-        state.balance -= targetTransaction.amount;
-        state.expenses += targetTransaction.amount;
-        state.income -= amount;
-        state.balance -= amount;
+        state.balance = new Decimal(state.balance)
+          .minus(targetTransaction.amount)
+          .minus(amount)
+          .toNumber();
+        state.expenses = new Decimal(state.expenses)
+          .plus(targetTransaction.amount)
+          .toNumber();
+        state.income = new Decimal(state.income)
+        .minus(targetTransaction.amount)
+        .toNumber();
       }
-
       state.history = state.history.map(transaction => {
         if (transaction.id === id) {
           return {
@@ -125,25 +149,27 @@ export const balanceSlice = createSlice({
             currentBalance: state.balance,
           };
         }
-
         return transaction;
       });
     },
     deleteIncome: (state, action: PayloadAction<DeletePayload>) => {
       const { id, amount } = action.payload;
-
+    
       state.history = state.history.filter(transaction => transaction.id !== id);
-
-      state.balance -= amount;
-      state.income -= amount;
+    
+      const decimalAmount = new Decimal(amount);
+      state.balance = new Decimal(state.balance).minus(decimalAmount).toNumber();
+      state.income = new Decimal(state.income).minus(decimalAmount).toNumber();
+    
     },
     deleteExpenses: (state, action: PayloadAction<DeletePayload>) => {
       const { id, amount } = action.payload;
-
+    
       state.history = state.history.filter(transaction => transaction.id !== id);
-
-      state.balance += amount;
-      state.expenses -= amount;
+    
+      const decimalAmount = new Decimal(amount);
+      state.balance = new Decimal(state.balance).plus(decimalAmount).toNumber();
+      state.expenses = new Decimal(state.expenses).minus(decimalAmount).toNumber();
     },
   },
 });
