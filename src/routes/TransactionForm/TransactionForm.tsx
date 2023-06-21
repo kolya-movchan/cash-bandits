@@ -8,7 +8,6 @@ import { decrement, increment, updateExpenses, updateIncome } from '../../reduce
 import { Transaction } from '../../types/Transaction';
 import classNames from 'classnames';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 type Props = {
   updateData?: {
@@ -16,11 +15,11 @@ type Props = {
     name: string,
     amount: number,
     type: string,
+    onHide: React.Dispatch<React.SetStateAction<boolean>>,
   },
-  onHide: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
+export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     const {
     handleSubmit,
     register,
@@ -31,10 +30,23 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
-    // console.log(data);
+
+    if (updateData) {
+      updateData.onHide(false);
+
+      const duplicateName = data.name === updateData.name;
+      const duplicateAmount = +data.amount === updateData.amount;
+      const duplicateType = data.type === updateData.type;
+
+      const allDuplicates = duplicateName && duplicateAmount && duplicateType;
+
+      if (allDuplicates) {
+        return
+      }
+    }
 
     reset();
-    toast.success('Transaction registered successfully!');
+    toast.success(`Transaction ${updateData ? 'updated' : 'registered'} successfully!`);
 
     if (updateData && data.type === 'income') {
       dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
@@ -42,7 +54,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
       return
     } else if (updateData) {
       dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
-
       return
     }
 
@@ -66,16 +77,19 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
 
   return (
     <>
-      <Container className="container-sm" style={{ maxWidth: '400px' }}>
-        <div className="d-flex justify-content-end">
-          <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={() => onHide(false)}
-          >
-          </button>
-        </div>
+      <Container className="container-sm" style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
+>
+        {updateData?.onHide && (
+          <div className="d-flex justify-content-end">
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => updateData.onHide(false)}
+            >
+            </button>
+          </div>
+        )}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
           <BootstrapForm.Group controlId="exampleBootstrapForm.ControlInput1">
@@ -86,8 +100,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
               placeholder="e.g. Salary or Loan"
               {...register('name', { required: 'Transaction Name is required' })}
               defaultValue={updateData ? updateData.name : ''}
-              // value={updateData ? updateData.name : ''}
-              // defaultValue={updateData.name}
             />
             <p className='error'>
               {errors && errors.name?.message}
@@ -127,7 +139,10 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
               })}
               defaultValue={updateData ? updateData.amount : ''}
             />
-            <p className='error'>
+            <p className={classNames(
+              'error',
+              {'error--narrow': updateData}
+            )}>
               {errors && errors.amount?.message}
             </p>
           </BootstrapForm.Group>

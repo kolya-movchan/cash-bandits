@@ -4,6 +4,11 @@
   font-size: 12px;
   font-weight: bold;
   color: #ff0000;
+  word-wrap: break-word;
+
+  &--narrow {
+    margin-bottom: 0;
+  }
 }
 
 input.error-container,

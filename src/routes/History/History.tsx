@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../../app/hooks';
-import { NavLink } from 'react-router-dom';
-import { deleteIncome, deleteExpenses } from '../../reducers/balanceReducer';
-import { useDispatch } from 'react-redux';
 import { TransactionForm } from '../TransactionForm';
 import { Transaction } from '../../components/Transaction';
+import { ToastContainer } from 'react-toastify';
 
 export type EditingTransaction = {
   id: string,
@@ -16,20 +14,9 @@ export type EditingTransaction = {
 
 export function History() {
   const { history } = useAppSelector(state => state.balance);
-  const dispatch = useDispatch();
+
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<EditingTransaction>();
-
-  const handleTransactionDelete = (id: string, amount: number, type: string) => {
-    if (type === 'income') {
-      dispatch(deleteIncome({id, amount}));
-    } else {
-      dispatch(deleteExpenses({id, amount}));
-    }
-  }
-
-  // console.log(isEditVisible);
-  // console.log(editingTransaction);
 
   return (
     <Container>
@@ -66,11 +53,13 @@ export function History() {
         <h1 className="display-5 text-center">No Records Yet</h1>
       )}
 
-      {isEditVisible && (
+      {(isEditVisible && editingTransaction) && (
         <div className="editForm">
-          <TransactionForm updateData={editingTransaction} onHide={setIsEditVisible} />
+          <TransactionForm updateData={{...editingTransaction, onHide: setIsEditVisible }} />
         </div>
       )}
+
+      <ToastContainer position="bottom-left" />
     </Container>
   );
 }

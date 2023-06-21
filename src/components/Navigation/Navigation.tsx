@@ -6,7 +6,7 @@ export function Navigation() {
     <header className="header">
       <nav className="navigation">
         <NavLink to="/" className="logo-container">
-          <img src="/itstar.svg" className="logo" alt="Vite logo" />
+          <img src="/itstar.svg" className="logo" alt="itstar logo" />
 
           <h2 className="title" style={{ textDecoration: 'none'}}>
             ITSTARBank
@@ -20,7 +20,7 @@ export function Navigation() {
             </NavLink>
 
             <NavLink to="/add" className="link">
-              Add Transaction
+              Add
             </NavLink>
 
             <NavLink to="/history" className="link">

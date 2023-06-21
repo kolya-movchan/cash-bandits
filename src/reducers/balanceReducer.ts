@@ -72,54 +72,62 @@ export const balanceSlice = createSlice({
 
       const targetTransaction = state.history.find(transaction => transaction.id === id);
 
-      if (targetTransaction) {
+      if (targetTransaction && targetTransaction?.type === type) {
         state.balance -= targetTransaction.amount;
         state.income -= targetTransaction.amount;
-
         state.balance += amount;
         state.income += amount;
-  
-        state.history = state.history.map(transaction => {
-          if (transaction.id === id) {
-            return {
-              ...transaction,
-              name,
-              amount,
-              type,
-              currentBalance: state.balance,
-            };
-          }
-  
-          return transaction;
-        });
+      } else if (targetTransaction) {
+        state.balance += targetTransaction.amount;
+        state.expenses -= targetTransaction.amount;
+        state.income += amount;
+        state.balance += amount;
       }
+
+      state.history = state.history.map(transaction => {
+        if (transaction.id === id) {
+          return {
+            ...transaction,
+            name,
+            amount,
+            type,
+            currentBalance: state.balance,
+          };
+        }
+
+        return transaction;
+      });
     },
     updateExpenses: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type, id } = action.payload;
 
       const targetTransaction = state.history.find(transaction => transaction.id === id);
 
-      if (targetTransaction) {
+      if (targetTransaction && targetTransaction?.type === type) {
         state.balance += targetTransaction.amount;
         state.expenses -= targetTransaction.amount;
-
         state.balance -= amount;
         state.expenses += amount;
-  
-        state.history = state.history.map(transaction => {
-          if (transaction.id === id) {
-            return {
-              ...transaction,
-              name,
-              amount,
-              type,
-              currentBalance: state.balance,
-            };
-          }
-  
-          return transaction;
-        });
+      } else if (targetTransaction) {
+        state.balance -= targetTransaction.amount;
+        state.expenses += targetTransaction.amount;
+        state.income -= amount;
+        state.balance -= amount;
       }
+
+      state.history = state.history.map(transaction => {
+        if (transaction.id === id) {
+          return {
+            ...transaction,
+            name,
+            amount,
+            type,
+            currentBalance: state.balance,
+          };
+        }
+
+        return transaction;
+      });
     },
     deleteIncome: (state, action: PayloadAction<DeletePayload>) => {
       const { id, amount } = action.payload;
