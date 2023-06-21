@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../../app/hooks';
 import { NavLink } from 'react-router-dom';
-import { deleteIncome, deleteExpenses, History as TransactionHistory } from '../../reducers/balanceReducer';
+import { deleteIncome, deleteExpenses } from '../../reducers/balanceReducer';
 import { useDispatch } from 'react-redux';
+import { TransactionForm } from '../TransactionForm';
+import { Transaction } from '../../components/Transaction';
+
+export type EditingTransaction = {
+  id: string,
+  name: string,
+  amount: number,
+  type: string,
+}
 
 export function History() {
   const { history } = useAppSelector(state => state.balance);
   const dispatch = useDispatch();
+  const [isEditVisible, setIsEditVisible] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState<EditingTransaction>();
 
   const handleTransactionDelete = (id: string, amount: number, type: string) => {
     if (type === 'income') {
@@ -16,6 +27,9 @@ export function History() {
       dispatch(deleteExpenses({id, amount}));
     }
   }
+
+  // console.log(isEditVisible);
+  // console.log(editingTransaction);
 
   return (
     <Container>
@@ -34,50 +48,28 @@ export function History() {
         <tbody>
           {[...history]
           .sort((transactionA, transactionB) =>
-            new Date(transactionA.time).getTime() - new Date(transactionB.time).getTime())
+            new Date(transactionB.time).getTime() - new Date(transactionA.time).getTime())
           .map(transaction => {
-            const { name, type, amount, currentBalance, time, id } = transaction;
 
             return (
-              <tr
-                className={type === 'income' ? 'table-success' : 'table-danger'}
-                key={id}
-              >
-                <td>{name}</td>
-                <td>{type}</td>
-                <td>{(type === 'expenses' && amount !== 0) && '-' }{amount.toLocaleString()}</td>
-                <td>{currentBalance.toLocaleString()}</td>
-                <td>{new Date(time).toLocaleString()}</td>
-                <td>
-                  <button className='tools'>
-                    <NavLink
-                      to="/add"
-                      className="link"
-                      state={{
-                        id,
-                        name,
-                        amount,
-                        type,
-                      }}
-                    >
-                      <img src="./edit.svg" alt="edit" className='tools__logo' />
-                    </NavLink>
-                  </button>
-
-                  <button
-                    className='tools'
-                    onClick={() => handleTransactionDelete(id, amount, type)}
-                  >
-                    <img src="./delete.svg" alt="delete" className='tools__logo' />
-                  </button>
-                </td>
-              </tr>
+              <Transaction
+                key={transaction.id}
+                transaction={transaction}
+                onEditInfo={setEditingTransaction}
+                onEdit={setIsEditVisible}
+              />
             )
           })}
         </tbody>
         </table>
       ) : (
         <h1 className="display-5 text-center">No Records Yet</h1>
+      )}
+
+      {isEditVisible && (
+        <div className="editForm">
+          <TransactionForm updateData={editingTransaction} onHide={setIsEditVisible} />
+        </div>
       )}
     </Container>
   );

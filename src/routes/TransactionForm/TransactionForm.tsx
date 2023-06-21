@@ -10,13 +10,24 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function TransactionForm() {
+type Props = {
+  updateData?: {
+    id: string,
+    name: string,
+    amount: number,
+    type: string,
+  },
+  onHide: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
     const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
   } = useForm<Transaction>();
+  
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
@@ -25,12 +36,12 @@ export function TransactionForm() {
     reset();
     toast.success('Transaction registered successfully!');
 
-    if (state && data.type === 'income') {
-      dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: state.id }));
+    if (updateData && data.type === 'income') {
+      dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
 
       return
-    } else if (state) {
-      dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: state.id }));
+    } else if (updateData) {
+      dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
 
       return
     }
@@ -42,16 +53,30 @@ export function TransactionForm() {
     }
   };
 
-  const location = useLocation();
-  const { state } = location;
-
   useEffect(() => {
-    // console.log(state);
-  }, [])
+    if (updateData) {
+      reset({
+        name: updateData.name,
+        type: updateData.type,
+        amount: updateData.amount.toString(),
+      });
+    }
+  }, [updateData, reset]);
+  
 
   return (
     <>
       <Container className="container-sm" style={{ maxWidth: '400px' }}>
+        <div className="d-flex justify-content-end">
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => onHide(false)}
+          >
+          </button>
+        </div>
+
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
           <BootstrapForm.Group controlId="exampleBootstrapForm.ControlInput1">
             <BootstrapForm.Label>Transaction Name</BootstrapForm.Label>
@@ -60,7 +85,9 @@ export function TransactionForm() {
               type="text"
               placeholder="e.g. Salary or Loan"
               {...register('name', { required: 'Transaction Name is required' })}
-              defaultValue={state && state.name}
+              defaultValue={updateData ? updateData.name : ''}
+              // value={updateData ? updateData.name : ''}
+              // defaultValue={updateData.name}
             />
             <p className='error'>
               {errors && errors.name?.message}
@@ -72,7 +99,7 @@ export function TransactionForm() {
             <BootstrapForm.Select
               as="select"
               {...register('type', { required: 'Transaction Type is required' })}
-              defaultValue={state && state.type}
+              defaultValue={updateData ? updateData.type : ''}
             >
               <option disabled>Choose Transaction Type</option>
               <option value="income">Income</option>
@@ -98,7 +125,7 @@ export function TransactionForm() {
                   message: 'Amount must be less than or equal to 100.000.000.000',
                 },
               })}
-              defaultValue={state && state.amount}
+              defaultValue={updateData ? updateData.amount : ''}
             />
             <p className='error'>
               {errors && errors.amount?.message}
@@ -107,13 +134,13 @@ export function TransactionForm() {
 
           <div className="d-flex justify-content-center">
             <Button variant="primary" type="submit" style={{ width: '150px' }}>
-              {state ? 'Update' : 'Add'}
+              {updateData ? 'Update' : 'Add'}
             </Button>
           </div>
         </BootstrapForm>
       </Container>
 
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="bottom-left" />
     </>
   );
 }
