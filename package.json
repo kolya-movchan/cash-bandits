@@ -1,6 +1,6 @@
 {
-	"name": "cash-bandits",
-	"homepage": "https://kolya-movchan.github.io/cash-bandits/",
+	"name": "mopobank",
+	"homepage": "https://kolya-movchan.github.io/mopoBank/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",

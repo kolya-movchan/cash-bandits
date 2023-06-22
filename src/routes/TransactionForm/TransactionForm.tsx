@@ -145,6 +145,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
                   message: 'Amount must be less than or equal to 100.000.000.000',
                 },
               })}
+              maxLength={11}
               defaultValue={updateData ? updateData.amount : ''}
             />
             <p className={classNames(

@@ -1,7 +1,7 @@
 # INTRO
 Welcome to my project, ...
 
-[DEMO LINK](https://kolya-movchan.github.io/***NAME-OF-PROJECT***)
+[DEMO LINK](https://kolya-movchan.github.io/cash-bandits)
 
 # TECHNOLOGIES:
 

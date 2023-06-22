@@ -6,7 +6,7 @@ import svgrPlugin from 'vite-plugin-svgr';
 export default defineConfig({
   envDir: './env',
   plugins: [react(), tsconfigPaths(), svgrPlugin()],
-  base: "/cash-bandits",
+  base: "/mopobank",
 
   build: {
     sourcemap: true,
