@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { EditingTransaction } from '../../routes/History';
-import { deleteIncome, deleteExpenses } from '../../reducers/balanceReducer';
+import { deleteIncome, deleteExpenses, saveTransaction } from '../../reducers/balanceReducer';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -39,6 +39,8 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
     } else {
       dispatch(deleteExpenses({id, amount}));
     }
+
+    dispatch(saveTransaction());
   }
 
   return (

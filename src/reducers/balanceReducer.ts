@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import uniqid from 'uniqid';
 import Decimal from 'decimal.js';
+import { toast } from 'react-toastify';
 
 interface TransactionPayload {
   amount: number;
@@ -14,7 +15,7 @@ interface DeletePayload {
   amount: number,
 }
 
-export interface History {
+interface History {
   id: string,
   name: string,
   type: string,
@@ -30,16 +31,37 @@ interface State {
   history: History[],
 }
 
-const initialState: State = {
+const loadBankFromLocalStorage = () => {
+  try {
+    const transactionsFromStorage = localStorage.getItem('bank');
+    if (transactionsFromStorage === null) {
+      return undefined;
+    }
+    return JSON.parse(transactionsFromStorage);
+  } catch (error) {
+    return undefined;
+  }
+};
+
+const initialState: State = loadBankFromLocalStorage() || {
   balance: 0,
   income: 0,
   expenses: 0,
   history: [],
-}
+};
+
 export const balanceSlice = createSlice({
   name: 'balance',
   initialState,
   reducers: {
+    saveTransaction: (state) => {
+      try {
+        const transactionsForStorage = JSON.stringify(state);
+        localStorage.setItem('bank', transactionsForStorage);
+      } catch {
+        toast.error('Failed to Save Transaction');
+      }
+    },
     increment: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type } = action.payload;
     
@@ -61,18 +83,24 @@ export const balanceSlice = createSlice({
       });
     },
     decrement: (state, action: PayloadAction<TransactionPayload>) => {
-      const { amount , name, type } = action.payload;
-
-      state.balance -= parseFloat(amount.toFixed(2));
-      state.expenses += parseFloat(amount.toFixed(2));
+      const { amount, name, type } = action.payload;
+    
+      const decimalAmount = new Decimal(amount);
+      const roundedAmount = decimalAmount.toFixed(2);
+      const roundedBalance = new Decimal(state.balance).minus(roundedAmount).toNumber();
+      const roundedExpenses = new Decimal(state.expenses).plus(roundedAmount).toNumber();
+    
+      state.balance = roundedBalance;
+      state.expenses = roundedExpenses;
+    
       state.history.push({
         id: uniqid(),
         name,
         type,
-        currentBalance: parseFloat(state.balance.toFixed(2)),
-        amount,
+        currentBalance: roundedBalance,
+        amount: +roundedAmount,
         time: new Date().toISOString(),
-      })
+      });
     },
     updateIncome: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type, id } = action.payload;
@@ -175,6 +203,6 @@ export const balanceSlice = createSlice({
 });
 
 
-export const { increment, decrement, updateIncome, updateExpenses, deleteIncome, deleteExpenses } = balanceSlice.actions;
+export const { saveTransaction, increment, decrement, updateIncome, updateExpenses, deleteIncome, deleteExpenses } = balanceSlice.actions;
 
 export default balanceSlice.reducer;

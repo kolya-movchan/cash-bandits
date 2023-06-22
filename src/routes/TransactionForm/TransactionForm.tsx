@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { decrement, increment, updateExpenses, updateIncome } from '../../reducers/balanceReducer';
+import { decrement, increment, saveTransaction, updateExpenses, updateIncome } from '../../reducers/balanceReducer';
 import { Transaction } from '../../types/Transaction';
 import classNames from 'classnames';
 import { useEffect } from 'react';
@@ -30,7 +30,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
 
   const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
-
     if (updateData) {
       updateData.onHide(false);
 
@@ -45,23 +44,21 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
       }
     }
 
-    reset();
-    toast.success(`Transaction ${updateData ? 'updated' : 'registered'} successfully!`);
-
     if (updateData && data.type === 'income') {
       dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
-
-      return
     } else if (updateData) {
       dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
-      return
     }
 
-    if (data.type === 'income') {
+    if (!updateData && data.type === 'income') {
       dispatch(increment({ ...data, amount: parseFloat(data.amount) }));
-    } else {
+    } else if (!updateData) {
       dispatch(decrement({ ...data, amount: parseFloat(data.amount) }));
     }
+
+    dispatch(saveTransaction());
+    reset();
+    toast.success(`Transaction ${updateData ? 'updated' : 'registered'} successfully!`);
   };
 
   useEffect(() => {
@@ -73,7 +70,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
       });
     }
   }, [updateData, reset]);
-  
 
   return (
     <>
