@@ -1,8 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { EditingTransaction } from '../../routes/History';
-import { deleteIncome, deleteExpenses, saveTransaction } from '../../reducers/balanceReducer';
-import { useDispatch } from 'react-redux';
+import React, { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-toastify';
+
+import { useAppDispatch } from '../../app/hooks';
+import { EditingTransaction } from '../../routes/History';
+import {
+  deleteIncome,
+  deleteExpenses,
+  saveTransaction
+} from '../../reducers/balanceReducer';
 
 type Props = {
   transaction: {
@@ -18,9 +23,9 @@ type Props = {
 }
 
 export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }) => {
-  const { name, type, amount, currentBalance, time, id } = transaction;
+  const dispatch = useAppDispatch();
 
-  const dispatch = useDispatch();
+  const { name, type, amount, currentBalance, time, id } = transaction;
 
   const showEdit = (id: string, name: string, amount: number, type: string) => {
     onEditInfo({
@@ -55,8 +60,15 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
         <td>{currentBalance.toLocaleString()}</td>
         <td>{new Date(time).toLocaleString()}</td>
         <td>
-          <button className='tools' onClick={() => showEdit(id, name, amount, type)}>
-            <img src="./edit.svg" alt="edit" className='tools__logo' />
+          <button
+            className='tools'
+            onClick={() => showEdit(id, name, amount, type)}
+          >
+            <img
+              src="./edit.svg"
+              alt="edit logo"
+              className='tools__logo'
+            />
           </button>
 
           <button
@@ -68,7 +80,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
           >
             <img
               src="./delete.svg"
-              alt="delete"
+              alt="delete logo"
               className='tools__logo'
             />
           </button>

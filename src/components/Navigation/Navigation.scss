@@ -1,5 +1,5 @@
 .header {
-  background-color: rgb(87, 178, 157);
+  background-color: #57b29d;
   margin-bottom: 50px;
 }
 
@@ -19,24 +19,23 @@
 }
 
 .logo {
-  padding: 0;
   width: 100%;
   height: 100%;
   will-change: filter;
   transition: filter 300ms;
 
   &:hover {
-    filter: drop-shadow(0 0 0.5em #646cffaa);
+    filter: drop-shadow(0 0 0.5em #ebf317aa);
   }
 
   &.react:hover {
-    filter: drop-shadow(0 0 0.5em #61dafbaa);
+    filter: drop-shadow(0 0 0.5em #e5d600aa);
   }
 }
 
 .title {
   margin: 0;
-  color: #fff;
+  color: $text-color;
 }
 
 .link-container {
@@ -45,7 +44,7 @@
 }
 
 .link {
-  color: #fff;
+  color: $text-color;
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;

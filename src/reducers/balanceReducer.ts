@@ -3,33 +3,7 @@ import uniqid from 'uniqid';
 import Decimal from 'decimal.js';
 import { toast } from 'react-toastify';
 
-interface TransactionPayload {
-  amount: number;
-  name: string;
-  type: string;
-  id?: string,
-}
-
-interface DeletePayload {
-  id: string,
-  amount: number,
-}
-
-interface History {
-  id: string,
-  name: string,
-  type: string,
-  currentBalance: number,
-  amount: number,
-  time: string,
-}
-
-interface State {
-  balance: number,
-  income: number,
-  expenses: number,
-  history: History[],
-}
+import { DeletePayload, State, TransactionPayload } from '../types/Reducer';
 
 const loadBankFromLocalStorage = () => {
   try {
@@ -66,7 +40,7 @@ export const balanceSlice = createSlice({
       const { amount, name, type } = action.payload;
     
       const decimalAmount = new Decimal(amount);
-      const roundedAmount = decimalAmount.toFixed(2);
+      const roundedAmount = +decimalAmount.toFixed(2);
       const roundedBalance = new Decimal(state.balance).plus(roundedAmount).toNumber();
       const roundedIncome = new Decimal(state.income).plus(roundedAmount).toNumber();
     
@@ -78,7 +52,7 @@ export const balanceSlice = createSlice({
         name,
         type,
         currentBalance: roundedBalance,
-        amount: +roundedAmount,
+        amount: roundedAmount,
         time: new Date().toISOString(),
       });
     },
@@ -86,7 +60,7 @@ export const balanceSlice = createSlice({
       const { amount, name, type } = action.payload;
     
       const decimalAmount = new Decimal(amount);
-      const roundedAmount = decimalAmount.toFixed(2);
+      const roundedAmount = +decimalAmount.toFixed(2);
       const roundedBalance = new Decimal(state.balance).minus(roundedAmount).toNumber();
       const roundedExpenses = new Decimal(state.expenses).plus(roundedAmount).toNumber();
     
@@ -98,7 +72,7 @@ export const balanceSlice = createSlice({
         name,
         type,
         currentBalance: roundedBalance,
-        amount: +roundedAmount,
+        amount: roundedAmount,
         time: new Date().toISOString(),
       });
     },
@@ -203,6 +177,14 @@ export const balanceSlice = createSlice({
 });
 
 
-export const { saveTransaction, increment, decrement, updateIncome, updateExpenses, deleteIncome, deleteExpenses } = balanceSlice.actions;
+export const {
+  saveTransaction,
+  increment,
+  decrement,
+  updateIncome,
+  updateExpenses,
+  deleteIncome,
+  deleteExpenses
+} = balanceSlice.actions;
 
 export default balanceSlice.reducer;

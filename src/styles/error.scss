@@ -3,7 +3,7 @@
   min-height: 20px;
   font-size: 12px;
   font-weight: bold;
-  color: #ff0000;
+  color: $error-color;
   word-wrap: break-word;
 
   &--narrow {
@@ -13,5 +13,5 @@
 
 input.error-container,
 select.error-container {
-  border: 2px solid #ff0000;
+  border: 2px solid $error-color;
 }

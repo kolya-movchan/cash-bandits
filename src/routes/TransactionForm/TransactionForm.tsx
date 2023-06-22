@@ -1,14 +1,14 @@
-// import React, { useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { Form as BootstrapForm, Container, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import classNames from 'classnames';
+
 import { decrement, increment, saveTransaction, updateExpenses, updateIncome } from '../../reducers/balanceReducer';
 import { Transaction } from '../../types/Transaction';
-import classNames from 'classnames';
-import { useEffect } from 'react';
 import { nameValidation } from '../../utils/regex';
+import { useAppDispatch } from '../../app/hooks';
 
 type Props = {
   updateData?: {
@@ -21,14 +21,15 @@ type Props = {
 }
 
 export const TransactionForm: React.FC<Props> = ({ updateData }) => {
-    const {
+  const dispatch = useAppDispatch();
+
+  const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
   } = useForm<Transaction>();
 
-  const dispatch = useDispatch();
   const onSubmit = (data: Transaction) => {
     if (updateData) {
       updateData.onHide(false);
@@ -44,16 +45,18 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
       }
     }
 
+    const newData = { ...data, amount: parseFloat(data.amount) };
+
     if (updateData && data.type === 'income') {
-      dispatch(updateIncome({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
+      dispatch(updateIncome({ ...newData, id: updateData.id }));
     } else if (updateData) {
-      dispatch(updateExpenses({ ...data, amount: parseFloat(data.amount), id: updateData.id }));
+      dispatch(updateExpenses({ ...newData, id: updateData.id }));
     }
 
     if (!updateData && data.type === 'income') {
-      dispatch(increment({ ...data, amount: parseFloat(data.amount) }));
+      dispatch(increment(newData));
     } else if (!updateData) {
-      dispatch(decrement({ ...data, amount: parseFloat(data.amount) }));
+      dispatch(decrement(newData));
     }
 
     dispatch(saveTransaction());
@@ -73,8 +76,10 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
 
   return (
     <>
-      <Container className="container-sm" style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
->
+      <Container
+        className="container-sm"
+        style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
+      >
         {updateData?.onHide && (
           <div className="d-flex justify-content-end">
             <button
@@ -88,7 +93,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
         )}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
-          <BootstrapForm.Group controlId="exampleBootstrapForm.ControlInput1">
+          <BootstrapForm.Group controlId="TransactionName">
             <BootstrapForm.Label>Transaction Name</BootstrapForm.Label>
             <BootstrapForm.Control
               className={classNames({ 'error-container': errors.name })}
@@ -108,12 +113,10 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               )}
               defaultValue={updateData ? updateData.name : ''}
             />
-            <p className='error'>
-              {errors && errors.name?.message}
-            </p>
+            <p className='error'>{errors && errors.name?.message}</p>
           </BootstrapForm.Group>
 
-          <BootstrapForm.Group controlId="exampleBootstrapForm.ControlSelect1" className="mb-4">
+          <BootstrapForm.Group controlId="TransactionType" className="mb-4">
             <BootstrapForm.Label>Type</BootstrapForm.Label>
             <BootstrapForm.Select
               as="select"
@@ -126,7 +129,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
             </BootstrapForm.Select>
           </BootstrapForm.Group>
 
-          <BootstrapForm.Group controlId="exampleBootstrapForm.ControlInput2" className="mb-3">
+          <BootstrapForm.Group controlId="TransactionAmount" className="mb-3">
             <BootstrapForm.Label>Amount</BootstrapForm.Label>
             <BootstrapForm.Control
               step={0.01}
@@ -157,7 +160,11 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
           </BootstrapForm.Group>
 
           <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit" style={{ width: '150px' }}>
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ width: '150px' }}
+            >
               {updateData ? 'Update' : 'Add'}
             </Button>
           </div>
