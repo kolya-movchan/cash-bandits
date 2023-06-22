@@ -6,7 +6,7 @@ export function Navigation() {
     <header className="header">
       <nav className="navigation">
         <NavLink to="/" className="logo-container">
-          <img src="/logo.png" className="logo" alt="itstar logo" />
+          <img src="./logo.png" className="logo" alt="mopobank logo" />
 
           <h2 className="title" style={{ textDecoration: 'none'}}>
             mopoBank
