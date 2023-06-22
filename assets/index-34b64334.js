@@ -115,3 +115,4 @@ Error generating stack: `+o.message+`
             text-center
             balance-container__balance
             balance-container__balance--expenses`,children:r(n)})]})]})]})}function aE(){return T(Gl,{children:T("div",{className:"d-flex flex-column justify-content-center align-items-center",children:T("h1",{children:"Oops... Error 404. Page not found."})})})}function cE(){return ue(Ll,{children:[T(cg,{}),T("main",{children:T("div",{children:ue(tg,{children:[T(pr,{path:"/",element:T(sE,{})}),T(pr,{path:"/history",element:T(uE,{})}),T(pr,{path:"/add",element:T(xm,{})}),T(pr,{path:"/404",element:T(aE,{})}),T(pr,{path:"*",element:T(Jy,{to:"/404",replace:!0})})]})})})]})}const fE=U2({reducer:{balance:iE}});ys.createRoot(document.getElementById("root")).render(ue($w,{store:fE,children:[T(lg,{children:T(cE,{})}),","]}));
+//# sourceMappingURL=index-34b64334.js.map
