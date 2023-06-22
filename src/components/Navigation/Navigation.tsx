@@ -6,10 +6,10 @@ export function Navigation() {
     <header className="header">
       <nav className="navigation">
         <NavLink to="/" className="logo-container">
-          <img src="/itstar.svg" className="logo" alt="itstar logo" />
+          <img src="/logo.png" className="logo" alt="itstar logo" />
 
           <h2 className="title" style={{ textDecoration: 'none'}}>
-            ITSTARBank
+            mopoBank
           </h2>
         </NavLink>
 

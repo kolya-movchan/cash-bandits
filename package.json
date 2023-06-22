@@ -1,5 +1,6 @@
 {
-	"name": "vite-template",
+	"name": "cash-bandits",
+	"homepage": "https://kolya-movchan.github.io/cash-bandits/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
