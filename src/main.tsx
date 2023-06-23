@@ -7,9 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-
-// import { Button, Container } from 'react-bootstrap';
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <HashRouter>
