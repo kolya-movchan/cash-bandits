@@ -1,0 +1,64 @@
+.app {
+  display: flex;
+}
+
+.side-pannel {
+  min-height: 100vh;
+  flex-shrink: 0;
+  padding: 20px;
+  background-color: #e6e6e6;
+
+  .side-container {
+    margin-bottom: 50px;
+  }
+}
+
+.dashBoard {
+  flex-grow: 2;
+}
+
+.wallet {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+
+  &__link {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #a2adba;
+
+    &:hover {
+      color: #1b212d;
+    }
+
+    &:hover .icon-dash {
+      filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
+        contrast(84%);
+    }
+
+    &--active {
+      color: #1b212d;
+      background-color: #c8ee44;
+      border-radius: 10px;
+    }
+
+    .icon-dash {
+      height: 20px;
+      filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%)
+        contrast(94%);
+    }
+
+    &--active .icon-dash {
+      filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
+        contrast(84%);
+    }
+  }
+}

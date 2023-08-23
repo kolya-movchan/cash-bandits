@@ -5,20 +5,28 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import classNames from 'classnames';
 
-import { decrement, increment, saveTransaction, updateExpenses, updateIncome } from '../../reducers/balanceReducer';
+import {
+  decrement,
+  increment,
+  saveTransaction,
+  updateExpenses,
+  updateIncome,
+} from '../../reducers/balanceReducer';
 import { Transaction } from '../../types/Transaction';
 import { nameValidation } from '../../utils/regex';
 import { useAppDispatch } from '../../app/hooks';
 
-type Props = {
-  updateData?: {
-    id: string,
-    name: string,
-    amount: number,
-    type: string,
-    onHide: React.Dispatch<React.SetStateAction<boolean>>,
-  },
+interface UpdateData {
+  id: string;
+  name: string;
+  amount: number;
+  type: string;
+  onHide: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+type Props = {
+  updateData?: UpdateData;
+};
 
 export const TransactionForm: React.FC<Props> = ({ updateData }) => {
   const dispatch = useAppDispatch();
@@ -30,19 +38,28 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     reset,
   } = useForm<Transaction>();
 
-  const onSubmit = (data: Transaction) => {
+  const hideEditForm = () => {
     if (updateData) {
       updateData.onHide(false);
+    }
+  };
 
-      const duplicateName = data.name === updateData.name;
-      const duplicateAmount = +data.amount === updateData.amount;
-      const duplicateType = data.type === updateData.type;
+  const checkIfSameInfo = (dataValue: Transaction, UpdateDataValue: UpdateData) => {
+    const duplicateName = dataValue.name === UpdateDataValue.name;
+    const duplicateAmount = +dataValue.amount === UpdateDataValue.amount;
+    const duplicateType = dataValue.type === UpdateDataValue.type;
 
-      const allDuplicates = duplicateName && duplicateAmount && duplicateType;
+    const allDuplicates = duplicateName && duplicateAmount && duplicateType;
 
-      if (allDuplicates) {
-        return
-      }
+    if (allDuplicates) {
+      return;
+    }
+  };
+
+  const onSubmit = (data: Transaction) => {
+    if (updateData) {
+      hideEditForm();
+      checkIfSameInfo(data, updateData);
     }
 
     const newData = { ...data, amount: parseFloat(data.amount) };
@@ -79,6 +96,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
       <Container
         className="container-sm"
         style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
+        hidden
       >
         {updateData?.onHide && (
           <div className="d-flex justify-content-end">
@@ -87,8 +105,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               className="btn-close"
               aria-label="Close"
               onClick={() => updateData.onHide(false)}
-            >
-            </button>
+            ></button>
           </div>
         )}
 
@@ -99,21 +116,20 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               className={classNames({ 'error-container': errors.name })}
               type="text"
               placeholder="e.g. Salary or Loan"
-              {...register('name',
-                { required: 'Transaction Name is required',
-                  pattern: {
-                    value: nameValidation,
-                    message: 'Invalid Transaction Name',
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: 'Name cannot be longer than 30 characters',
-                  },
+              {...register('name', {
+                required: 'Transaction Name is required',
+                pattern: {
+                  value: nameValidation,
+                  message: 'Invalid Transaction Name',
                 },
-              )}
+                maxLength: {
+                  value: 30,
+                  message: 'Name cannot be longer than 30 characters',
+                },
+              })}
               defaultValue={updateData ? updateData.name : ''}
             />
-            <p className='error'>{errors && errors.name?.message}</p>
+            <p className="error">{errors && errors.name?.message}</p>
           </BootstrapForm.Group>
 
           <BootstrapForm.Group controlId="TransactionType" className="mb-4">
@@ -134,9 +150,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
             <BootstrapForm.Control
               step={0.01}
               type="number"
-              className={classNames(
-                { 'error-container': errors.amount }
-              )}
+              className={classNames({ 'error-container': errors.amount })}
               {...register('amount', {
                 required: 'Amount is required',
                 min: {
@@ -151,27 +165,20 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               maxLength={11}
               defaultValue={updateData ? updateData.amount : ''}
             />
-            <p className={classNames(
-              'error',
-              {'error--narrow': updateData}
-            )}>
+            <p className={classNames('error', { 'error--narrow': updateData })}>
               {errors && errors.amount?.message}
             </p>
           </BootstrapForm.Group>
 
           <div className="d-flex justify-content-center">
-            <Button
-              variant="primary"
-              type="submit"
-              style={{ width: '150px' }}
-            >
+            <Button variant="primary" type="submit" style={{ width: '150px' }}>
               {updateData ? 'Update' : 'Add'}
             </Button>
           </div>
         </BootstrapForm>
       </Container>
 
-      <ToastContainer position="bottom-left" />
+      <ToastContainer position="bottom-right" />
     </>
   );
-}
+};

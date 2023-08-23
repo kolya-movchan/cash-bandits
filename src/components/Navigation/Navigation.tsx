@@ -4,13 +4,13 @@ export function Navigation() {
   return (
     <header className="header">
       <nav className="navigation">
-        <NavLink to="/" className="logo-container">
+        {/* <NavLink to="/" className="logo-container">
           <img src="./logo.png" className="logo" alt="mopobank logo" />
 
           <h2 className="title" style={{ textDecoration: 'none'}}>
             mopoBank
           </h2>
-        </NavLink>
+        </NavLink> */}
 
         <div>
           <div className="link-container">

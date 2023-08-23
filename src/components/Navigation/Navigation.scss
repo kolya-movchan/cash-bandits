@@ -24,18 +24,19 @@
   will-change: filter;
   transition: filter 300ms;
 
-  &:hover {
-    filter: drop-shadow(0 0 0.5em #ebf317aa);
-  }
+  // &:hover {
+  //   filter: drop-shadow(0 0 0.5em #ebf317aa);
+  // }
 
-  &.react:hover {
-    filter: drop-shadow(0 0 0.5em #e5d600aa);
-  }
+  // &.react:hover {
+  //   filter: drop-shadow(0 0 0.5em #e5d600aa);
+  // }
 }
 
 .title {
+  font-size: 30px;
   margin: 0;
-  color: $text-color;
+  color: #000;
 }
 
 .link-container {

@@ -7,14 +7,14 @@ import { TransactionForm } from '../TransactionForm';
 import { Transaction } from '../../components/Transaction';
 
 export type EditingTransaction = {
-  id: string,
-  name: string,
-  amount: number,
-  type: string,
-}
+  id: string;
+  name: string;
+  amount: number;
+  type: string;
+};
 
 export function History() {
-  const { history } = useAppSelector(state => state.balance);
+  const { history } = useAppSelector((state) => state.balance);
 
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<EditingTransaction>();
@@ -22,7 +22,7 @@ export function History() {
   return (
     <Container>
       {history.length > 0 ? (
-        <table className="table">
+        <table className="table" hidden>
           <thead className="thead-dark">
             <tr>
               <th scope="col">Name</th>
@@ -35,10 +35,12 @@ export function History() {
 
           <tbody>
             {[...history]
-              .sort((transactionA, transactionB) =>
-                new Date(transactionB.time).getTime() - new Date(transactionA.time).getTime())
-              .map(transaction => {
-
+              .sort(
+                (transactionA, transactionB) =>
+                  new Date(transactionB.time).getTime() -
+                  new Date(transactionA.time).getTime()
+              )
+              .map((transaction) => {
                 return (
                   <Transaction
                     key={transaction.id}
@@ -46,21 +48,23 @@ export function History() {
                     onEditInfo={setEditingTransaction}
                     onEdit={setIsEditVisible}
                   />
-                )
-            })}
+                );
+              })}
           </tbody>
         </table>
       ) : (
-        <h1 className="display-5 text-center">No Records Yet</h1>
+        <h1 className="display-5 text-center" hidden>No Records Yet</h1>
       )}
 
-      {(isEditVisible && editingTransaction) && (
+      {isEditVisible && editingTransaction && (
         <div className="editForm">
-          <TransactionForm updateData={{...editingTransaction, onHide: setIsEditVisible }} />
+          <TransactionForm
+            updateData={{ ...editingTransaction, onHide: setIsEditVisible }}
+          />
         </div>
       )}
 
-      <ToastContainer position="bottom-left" />
+      <ToastContainer position="bottom-right" />
     </Container>
   );
 }
