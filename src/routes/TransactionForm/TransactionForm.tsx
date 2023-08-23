@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Form as BootstrapForm, Container, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,14 +21,14 @@ interface UpdateData {
   name: string;
   amount: number;
   type: string;
-  onHide: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type Props = {
   updateData?: UpdateData;
+  onHide: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const TransactionForm: React.FC<Props> = ({ updateData }) => {
+export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
   const dispatch = useAppDispatch();
 
   const {
@@ -36,11 +36,12 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     register,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm<Transaction>();
 
   const hideEditForm = () => {
     if (updateData) {
-      updateData.onHide(false);
+      onHide(false);
     }
   };
 
@@ -52,14 +53,20 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     const allDuplicates = duplicateName && duplicateAmount && duplicateType;
 
     if (allDuplicates) {
-      return;
+      return true;
     }
+
+    return false;
   };
 
   const onSubmit = (data: Transaction) => {
     if (updateData) {
       hideEditForm();
-      checkIfSameInfo(data, updateData);
+      const sameData = checkIfSameInfo(data, updateData);
+
+      if (sameData) {
+        return;
+      }
     }
 
     const newData = { ...data, amount: parseFloat(data.amount) };
@@ -78,7 +85,13 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
 
     dispatch(saveTransaction());
     reset();
-    toast.success(`Transaction ${updateData ? 'updated' : 'registered'} successfully!`);
+    const message = `Transaction ${updateData ? 'updated' : 'registered'} successfully!`;
+
+    toast.success(message, {
+      autoClose: 1500,
+    });
+
+    onHide(false);
   };
 
   useEffect(() => {
@@ -89,22 +102,35 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
         amount: updateData.amount.toString(),
       });
     }
+
+    setTimeout(() => {
+      setFocus('name');
+    }, 150);
+
   }, [updateData, reset]);
+
+  // const nameInput: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus('name');
+    }, 150);
+  }, [setFocus]);
 
   return (
     <>
       <Container
-        className="container-sm"
+        // className="container-sm"
         style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
-        hidden
       >
-        {updateData?.onHide && (
+        {onHide && (
           <div className="d-flex justify-content-end">
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
-              onClick={() => updateData.onHide(false)}
+              onClick={() => onHide(false)}
             ></button>
           </div>
         )}
@@ -128,6 +154,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
                 },
               })}
               defaultValue={updateData ? updateData.name : ''}
+              // autoFocus
             />
             <p className="error">{errors && errors.name?.message}</p>
           </BootstrapForm.Group>
@@ -177,8 +204,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
           </div>
         </BootstrapForm>
       </Container>
-
-      <ToastContainer position="bottom-right" />
     </>
   );
 };

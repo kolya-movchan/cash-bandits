@@ -1,4 +1,108 @@
+.history-container {
+  width: 100%;
+  padding: 20px;
+  animation: showUp 0.3s ease;
+
+  &--full {
+    padding: 20px 50px;
+    // animation: none;
+  }
+
+  &--sm {
+    @keyframes showUp {
+      0% {
+        transform: translateX(20%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.history-wrapper {
+  padding: 20px 50px;
+  border: 1px solid #f5f5f5;
+  border-radius: 10px;
+}
+
+.history-top {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  color: #1b212d;
+  font-weight: bold;
+}
+
+.table-history {
+  width: 100%;
+  text-align: center;
+  border-collapse: separate;
+}
+
+.view-all {
+  color: #28a073;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    color: #006f46;
+  }
+
+  &__eagle {
+    font-size: 15px;
+  }
+}
+
+.table-titles {
+  & > * {
+    text-transform: uppercase;
+    color: #a2adba;
+    font-size: 11px;
+    font-weight: 500;
+    padding-bottom: 5px;
+  }
+}
+
+.transaction-cell {
+  border-radius: 5px;
+  opacity: 0.95;
+}
+
+.transaction-cell-name {
+  max-width: 20px;
+  overflow: hidden;
+}
+
+.income-cell {
+  color: #00a86b;
+}
+
+.expense-cell {
+  color: #fd5c63;
+}
+
+.time-cell {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+}
+
+.hours-cell {
+  color: #a2adba;
+  font-size: 14px;
+}
+
 .editForm {
+  z-index: 1;
   position: fixed;
   bottom: 50px;
   right: 20px;
@@ -22,3 +126,16 @@
   }
 }
 
+.no-data {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-align: center;
+
+  &__text {
+    font-size: 25px;
+  }
+}

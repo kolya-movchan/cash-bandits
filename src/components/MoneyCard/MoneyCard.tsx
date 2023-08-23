@@ -1,27 +1,25 @@
-import classNames from 'classnames'
-import React from 'react'
-import { formatNumber } from '../../utils/calculations'
+import classNames from 'classnames';
+import React from 'react';
+import { formatNumber } from '../../utils/calculations';
 
 type Props = {
-  title: string,
-  amount: number,
-  icon: string,
-}
+  title: string;
+  amount: number;
+  icon: string;
+};
 
-export const MoneyCard:React.FC<Props> = ({ title, amount, icon }) => {
+export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
   return (
-    <div className={classNames(
-      'money-card',
-      {'money-card--total': title.includes('balance'.toLowerCase())}
-    )}>      <div className="money-card__icon-container">
-        <img
-          src={icon}
-          alt="wallet total balance icon"
-          className="money-card__icon"
-        />
+    <div
+      className={classNames('money-card', {
+        'money-card--total': title.includes('balance'.toLowerCase()),
+      })}
+    >
+      {' '}
+      <div className="money-card__icon-container">
+        <img src={icon} alt="wallet total balance icon" className="money-card__icon" />
       </div>
-
-      <div className='money-card__balance'>
+      <div className="money-card__balance">
         <span className="money-card__title">{title}</span>
         <span className="money-card__sum">
           {amount >= 0
@@ -29,6 +27,6 @@ export const MoneyCard:React.FC<Props> = ({ title, amount, icon }) => {
             : `-$${formatNumber(amount).slice(1)}`}
         </span>
       </div>
-  </div>
-  )
-}
+    </div>
+  );
+};

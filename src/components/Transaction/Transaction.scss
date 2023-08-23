@@ -1,11 +1,49 @@
-.tools {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
+.tools-container {
+  display: flex;
+  gap: 5px;
+}
 
-  &__logo {
-    height: 25px;
-  }
+.tools {
+  height: 25px;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  padding: 1.5px 1.5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #c7ee44;
+  transform: scale(1.05);
+}
+
+.edit-button:active {
+  background-color: #9aba33;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  padding: 3.5px 3.5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #ce6262;
+  transform: scale(1.05);
+}
+
+.delete-button:active {
+  background-color: #972d2d;
 }

@@ -1,12 +1,18 @@
 .app {
   display: flex;
+  height: 100%;
+
 }
 
 .side-pannel {
+  box-sizing: border-box;
   min-height: 100vh;
-  flex-shrink: 0;
+  max-width: 225px;
+  flex: 0.75;
+  // flex-shrink: 0;
   padding: 20px;
   background-color: #e6e6e6;
+  box-sizing: border-box;
 
   .side-container {
     margin-bottom: 50px;
@@ -14,13 +20,13 @@
 }
 
 .dashBoard {
-  flex-grow: 2;
+  // flex-grow: 2;
 }
 
-.wallet {
-  flex-grow: 1;
-  flex-shrink: 0;
-}
+// .wallet {
+//   flex-grow: 1;
+//   flex-shrink: 0;
+// }
 
 .nav {
   display: flex;

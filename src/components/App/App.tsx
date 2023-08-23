@@ -1,9 +1,11 @@
 import classNames from 'classnames';
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { Dashboard, History, NotFound } from '../../routes';
 // import { Navigation } from '../Navigation';
 import { TransactionForm } from '../../routes/TransactionForm';
-import { DeataMenu } from '../DataMenu/DeataMenu';
+import { DataMenu } from '../DataMenu/DataMenu';
 
 export function App() {
   return (
@@ -26,7 +28,7 @@ export function App() {
                 classNames('nav__link', { 'nav__link--active': isActive })
               }
             >
-              <img src="./dashboard.svg" alt="dashboard icon" className='icon-dash'/>
+              <img src="./dashboard.svg" alt="dashboard icon" className="icon-dash" />
               Dashboard
             </NavLink>
 
@@ -36,14 +38,14 @@ export function App() {
                 classNames('nav__link', { 'nav__link--active': isActive })
               }
             >
-              <img src="./transactions.svg" alt="dashboard icon" className='icon-dash'/>
+              <img src="./transactions.svg" alt="dashboard icon" className="icon-dash" />
               Transactions
             </NavLink>
           </div>
         </div>
 
         <Routes>
-          <Route path="/" element={<DeataMenu />} />
+          <Route path="/" element={<DataMenu />} />
           <Route path="/transactions" element={<History />} />
           {/* <Route path="/history" element={<History />} />
         <Route path="/add" element={<TransactionForm />} />
@@ -51,7 +53,7 @@ export function App() {
         <Route path="*" element={<Navigate to="/404" replace />} /> */}
         </Routes>
 
-        {/* <div className="wallet">something</div> */}
+        <ToastContainer position="bottom-left" />
       </div>
     </>
   );

@@ -42,18 +42,48 @@
 }
 
 .dashBoard {
-  padding: 50px;
+  flex: 3;
+  padding: 45px 45px 0;
+  box-sizing: border-box;
+}
+
+.top-controls {
+  margin: -20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.add-trans {
+  height: 30px;
+  filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%)
+    contrast(94%);
+
+  &:hover {
+    filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
+        contrast(84%);
+  }
 }
 
 .section-title {
-  font-size: 30px;
-  margin-bottom: 15px;
+  font-size: 25px;
+  margin-bottom: 5px;
+  // margin-bottom: 15px;
+}
+
+.finance-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // padding: 0 50px;
 }
 
 .finance-cards {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   display: flex;
   flex-wrap: wrap;
+  // flex-grow: 1;
+  width: 100%;
   gap: 20px;
 }
 
@@ -71,7 +101,6 @@
 
   &--total {
     flex-grow: 2;
-    backdrop-filter: red;
   }
 
   &__icon-container {
