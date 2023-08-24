@@ -1,23 +1,18 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ChartComponent } from '../../components/ChartComponent/ChartComponent';
 import { MoneyCard } from '../../components/MoneyCard/MoneyCard';
+import { control } from '../../reducers/form';
 import { TransactionForm } from '../TransactionForm';
 
-export function Dashboard() {
+export const Dashboard = () => {
   const { balance, income, expenses } = useAppSelector((state) => state.balance);
   const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { add, edit } = useAppSelector((state) => state.form);
 
-  const [isFormActive, setIsFormActive] = useState(false);
-
-  const showForm = () => {
-    setIsFormActive(!isFormActive);
-  };
-
-  const location = useLocation();
-  console.log(location);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -34,7 +29,7 @@ export function Dashboard() {
             src="./add.svg"
             alt="add transaction icon"
             className={classNames('add-trans', { 'add-trans--dark-mode': darkMode })}
-            onClick={() => showForm()}
+            onClick={() => dispatch(control('addIsOn'))}
           />
         </button>
       </div>
@@ -45,14 +40,14 @@ export function Dashboard() {
           <MoneyCard title="Total income" amount={income} icon="./wallet-plus.svg" />
           <MoneyCard title="Total expenses" amount={expenses} icon="./wallet-minus.svg" />
         </div>
-        {isFormActive && (
+        {(add && !edit) && (
           <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
             {' '}
-            <TransactionForm onHide={setIsFormActive} />
+            <TransactionForm />
           </div>
         )}
         <ChartComponent />
       </div>
     </>
   );
-}
+};

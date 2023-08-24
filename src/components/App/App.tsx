@@ -15,21 +15,39 @@ export function App() {
 
   const location = useLocation();
 
+  const [isSideBarDisabled, setIsSideBarDisabled] = useState(false);
+  const [f, setF] = useState(false);
+
+  setTimeout(() => {
+    setF(true);
+  }, 1000);
+
+  setTimeout(() => {
+    setIsSideBarDisabled(true);
+  }, 1800);
+
   return (
     <>
-      <div
-        className={classNames(
-          'app',
-          { 'app--dark-mode': darkMode }
-        )}
-      >
+      <div className={classNames('app', { 'app--dark-mode': darkMode })}>
         <div
           className={classNames(
             'side-pannel',
             { 'side-pannel--dark-mode': darkMode }
+            // {'side-pannel--x': f},
+            // {'side-pannel--x2': isSideBarDisabled},
           )}
         >
           <div className="side-container">
+            {/* ? */}
+{/* 
+            <div className="custom-menu">
+              <button type="button" className="">
+                <i className="fa fa-bars"></i>
+                <span className="sr-only">Toggle Menu</span>
+              </button>
+            </div> */}
+
+            {/* ? */}
             <a href="#" className="logo-container">
               <img
                 src="./logo.jpg"
@@ -118,19 +136,23 @@ export function App() {
                 // to="/"
                 // target='_blank'
                 className={classNames('nav__link ', {
-                  'nav__link--dark-mode': darkMode
+                  'nav__link--dark-mode': darkMode,
                 })}
               >
-                <img src="./video.svg" alt="video icon" className={classNames('icon-dash', {
+                <img
+                  src="./video.svg"
+                  alt="video icon"
+                  className={classNames('icon-dash', {
                     'icon-dash--dark-mode': darkMode,
-                  })} />
+                  })}
+                />
                 Demo Video
               </Link>
               <Link
                 to="https://www.linkedin.com/in/klmovchan/"
                 target="_blank"
                 className={classNames('nav__link ', {
-                  'nav__link--dark-mode': darkMode
+                  'nav__link--dark-mode': darkMode,
                 })}
               >
                 <img

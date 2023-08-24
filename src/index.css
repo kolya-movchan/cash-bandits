@@ -44,6 +44,13 @@ button {
   cursor: pointer;
 }
 
+.confirm-window {
+  background-color: rgba(248, 248, 248, 0.9);
+}
+.confirm-window--dark-mode {
+  background-color: rgba(51, 51, 51, 0.9);
+}
+
 .error {
   margin-bottom: 4px;
   min-height: 20px;
@@ -73,11 +80,19 @@ select.error-container {
 
 .side-pannel {
   box-sizing: border-box;
+  transition: transform 1s ease-in;
   max-width: 225px;
   flex: 0.75;
   padding: 20px;
   background-color: #e6e6e6;
   box-sizing: border-box;
+}
+.side-pannel--x {
+  transform: translateX(-100%);
+}
+.side-pannel--x2 {
+  position: absolute;
+  height: 100vh;
 }
 .side-pannel--dark-mode {
   background-color: #26243d;
@@ -268,10 +283,17 @@ select.error-container {
 .history-container--full {
   padding: 50px;
 }
-.history-container--sm {
-  animation: showUp 1s ease-in;
+.history-container--animated {
+  animation: showHistory 1s ease-in;
 }
-@keyframes showUp {}
+@keyframes showHistory {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .history-wrapper {
   padding: 20px 50px;
@@ -336,6 +358,10 @@ select.error-container {
   font-size: 11px;
   font-weight: 500;
   padding-bottom: 5px;
+}
+
+.new-row {
+  animation: showHistory 1s ease-in;
 }
 
 .transaction-cell {
@@ -455,7 +481,8 @@ select.error-container {
 }
 
 .dashBoard {
-  flex: 3;
+  transition: width 1s;
+  flex-grow: 1;
   padding: 45px 45px 0;
   box-sizing: border-box;
 }

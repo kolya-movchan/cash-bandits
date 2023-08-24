@@ -10,6 +10,9 @@ import {
   updateHistory,
   updateBalanceAfterDeletion,
 } from './reducerHelper';
+import { useAppDispatch } from '../app/hooks';
+import { setNewTranscationId } from './newTransaction';
+import { useDispatch } from 'react-redux';
 
 const loadBankFromLocalStorage = () => {
   try {
@@ -46,7 +49,7 @@ export const balanceSlice = createSlice({
     },
 
     increment: (state, action: PayloadAction<TransactionPayload>) => {
-      const { amount, name, type } = action.payload;
+      const { amount, name, type, id } = action.payload;
 
       const roundedAmount = roundAmount(amount);
       const updatedBalance = updateBalance(roundedAmount, state, true);
@@ -54,10 +57,10 @@ export const balanceSlice = createSlice({
 
       state.balance += roundedAmount;
       state.income = updatedBalance;
-      state.history.push(updatedHistory);
+      state.history.push({...updatedHistory, id});
     },
     decrement: (state, action: PayloadAction<TransactionPayload>) => {
-      const { amount, name, type } = action.payload;
+      const { amount, name, type, id } = action.payload;
 
       const roundedAmount = roundAmount(amount);
       const updatedBalance = updateBalance(roundedAmount, state, false);
@@ -65,7 +68,7 @@ export const balanceSlice = createSlice({
 
       state.balance -= roundedAmount;
       state.expenses = updatedBalance;
-      state.history.push(updatedHistory);
+      state.history.push({...updatedHistory, id});
     },
     updateIncome: (state, action: PayloadAction<TransactionPayload>) => {
       const { amount, name, type, id } = action.payload;

@@ -57,7 +57,7 @@ export const ChartComponent = memo(() => {
     setIsSwitchModeRender(false);
   }, [history])
 
-  console.log('isDataUpdateRender', isSwitchModeRender)
+  // console.log('isDataUpdateRender', isSwitchModeRender)
 
   const options = {
     responsive: true,

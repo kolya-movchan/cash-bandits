@@ -8,7 +8,7 @@ import { Transaction } from '../../components/Transaction';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { confirmAlert } from 'react-confirm-alert';
-import { balanceSlice } from '../../reducers/balanceReducer';
+import { balanceSlice } from '../../reducers/balance';
 
 export type EditingTransaction = {
   id: string;
@@ -17,19 +17,20 @@ export type EditingTransaction = {
   type: string;
 };
 
-export function History() {
+export const History = () => {
   const { history } = useAppSelector((state) => state.balance);
   const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { add, edit } = useAppSelector((state) => state.form);
 
   const dispatch = useAppDispatch();
 
   const [isEditVisible, setIsEditVisible] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<EditingTransaction>();
   const [isFullMode, setIsFullMode] = useState(false);
-  const location = useLocation();
+  const locationData = useLocation();
 
   useLayoutEffect(() => {
-    if (location.pathname.includes('/transaction')) {
+    if (locationData.pathname.includes('/transaction')) {
       setIsFullMode(false);
     } else {
       setIsFullMode(true);
@@ -41,6 +42,8 @@ export function History() {
   const deleteAllHistory = () => {
     dispatch(balanceSlice.actions.removeAll());
   };
+
+  // console.log();
 
   return (
     <>
@@ -62,7 +65,7 @@ export function History() {
         <div
           className={classNames('history-container', {
             'history-container--full': !isFullMode,
-            'history-container--sm': isFullMode,
+            'history-container--animated': isFullMode && history.length === 1,
           })}
         >
           <div className="history-wrapper">
@@ -72,7 +75,7 @@ export function History() {
                   'section-heading--dark-mode': darkMode,
                 })}
               >{`${
-                location.pathname.includes('/transaction') ? 'All' : 'Recent'
+                locationData.pathname.includes('/transaction') ? 'All' : 'Recent'
               } Transactions`}</h2>
               {isFullMode && (
                 <div className="action-controls">
@@ -82,6 +85,7 @@ export function History() {
                       confirmAlert({
                         title: 'Confirm to submit',
                         message: 'Are you sure you want to delete all your transactions?',
+                        overlayClassName: darkMode ? 'confirm-window--dark-mode' : 'confirm-window',
                         buttons: [
                           {
                             label: 'Yes',
@@ -136,17 +140,17 @@ export function History() {
                           transaction={transaction}
                           onEditInfo={setEditingTransaction}
                           onEdit={setIsEditVisible}
+                          last={history[history.length - 1].id}
                         />
                       );
                     })}
                 </tbody>
               </table>
             )}
-            {isEditVisible && editingTransaction && (
+            {!add && edit && isEditVisible && editingTransaction && (
               <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
                 <TransactionForm
                   updateData={{ ...editingTransaction }}
-                  onHide={setIsEditVisible}
                 />
               </div>
             )}

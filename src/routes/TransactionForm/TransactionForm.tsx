@@ -11,10 +11,14 @@ import {
   saveTransaction,
   updateExpenses,
   updateIncome,
-} from '../../reducers/balanceReducer';
+} from '../../reducers/balance';
 import { Transaction } from '../../types/Transaction';
 import { nameValidation } from '../../utils/regex';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { control } from '../../reducers/form';
+import { FormMode } from '../../types/Reducer';
+import { NewTransaction, setNewTranscationId } from '../../reducers/newTransaction';
+import uniqid from 'uniqid';
 
 interface UpdateData {
   id: string;
@@ -25,12 +29,13 @@ interface UpdateData {
 
 type Props = {
   updateData?: UpdateData;
-  onHide: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
+export const TransactionForm: React.FC<Props> = ({ updateData }) => {
   const { darkMode } = useAppSelector((state) => state.darkMode);
   const dispatch = useAppDispatch();
+  const { add, edit } = useAppSelector<FormMode>((state) => state.form);
+  const { newTransactionId } = useAppSelector<NewTransaction>((state) => state.NewTransaction);
 
   const {
     handleSubmit,
@@ -42,7 +47,9 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
 
   const hideEditForm = () => {
     if (updateData) {
-      onHide(false);
+      dispatch(control('editIsOff'));
+    } else {
+      dispatch(control('addIsOff'));
     }
   };
 
@@ -70,7 +77,9 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
       }
     }
 
-    const newData = { ...data, amount: parseFloat(data.amount) };
+    const newTransactionId = uniqid();
+
+    const newData = { ...data, amount: parseFloat(data.amount), id: newTransactionId };
 
     if (updateData && data.type === 'income') {
       dispatch(updateIncome({ ...newData, id: updateData.id }));
@@ -92,7 +101,8 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
       autoClose: 1500,
     });
 
-    onHide(false);
+    dispatch(control('addIsOff'));
+    dispatch(setNewTranscationId(updateData ? updateData?.id : newTransactionId));
   };
 
   useEffect(() => {
@@ -122,22 +132,27 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
       <Container
         className={classNames({ 'payment-form-container--dark-mode': darkMode })}
       >
-        {onHide && (
+        {/* {onFormShow && ( */}
           <div className="d-flex justify-content-end">
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
-              onClick={() => onHide(false)}
+              onClick={() => dispatch(control(updateData ? 'editIsOff' : 'addIsOff'))}
             ></button>
           </div>
-        )}
+        {/* )} */}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
-          <BootstrapForm.Group controlId="TransactionName" className='payment-form-section'>
+          <BootstrapForm.Group
+            controlId="TransactionName"
+            className="payment-form-section"
+          >
             <BootstrapForm.Label>Transaction Name</BootstrapForm.Label>
             <BootstrapForm.Control
-              className={classNames({ 'error-container': errors.name }, 'ff', { 'ff': darkMode })}
+              className={classNames({ 'error-container': errors.name }, 'ff', {
+                ff: darkMode,
+              })}
               type="text"
               placeholder="e.g. Salary or Loan"
               {...register('name', {
@@ -154,8 +169,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
               defaultValue={updateData ? updateData.name : ''}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
-                  console.log(1);
-                  onHide(false);
+                  dispatch(control('addIsOff'));
                 }
               }}
             />

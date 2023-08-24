@@ -5,7 +5,7 @@ interface Payload {
 }
 
 export interface TransactionPayload extends Payload {
-  id?: string,
+  id: string,
 }
 
 export interface DeletePayload {
@@ -24,4 +24,9 @@ export interface State {
   income: number,
   expenses: number,
   history: History[],
+}
+
+export interface FormMode {
+  add: boolean;
+  edit: boolean;
 }

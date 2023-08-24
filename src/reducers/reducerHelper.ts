@@ -1,6 +1,7 @@
 import Decimal from "decimal.js";
 import { WritableDraft } from "immer/dist/internal";
 import uniqid from "uniqid";
+import { useAppDispatch } from "../app/hooks";
 import { State } from "../types/Reducer";
 
 export function roundAmount (amount: number) {
@@ -21,7 +22,7 @@ export function updateBalance (amount: number, state: State, income: boolean) {
 
 export function updateHistory (rounded: number, name: string, type: string, state: State, income: boolean) {
   return {
-    id: uniqid(),
+    // id: uniqid(),
     name,
     type,
     currentBalance: income ? state.balance + rounded : state.balance - rounded,

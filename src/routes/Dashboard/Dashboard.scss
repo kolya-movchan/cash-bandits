@@ -42,7 +42,9 @@
 }
 
 .dashBoard {
-  flex: 3;
+  transition: width 1s;
+  flex-grow: 1;
+  // width: 100%;
   padding: 45px 45px 0;
   box-sizing: border-box;
 }

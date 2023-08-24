@@ -8,16 +8,23 @@
   &--dark-mode {
     background-color: #1c1a2e;
   }
-
-  // &--light-mode {
-  //   background-color: #fff;
-  // }
 }
+
+
 
 .side-pannel {
   box-sizing: border-box;
-  // min-height: 100vh;
-  // height: 100%;
+  transition: transform 1s ease-in;
+
+  &--x {
+    transform: translateX(-100%);
+
+  }
+
+  &--x2 {
+    position: absolute;
+    height: 100vh;
+  }
 
   max-width: 225px;
   flex: 0.75;
