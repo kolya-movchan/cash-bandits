@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { useAppSelector } from '../../app/hooks';
 
 import {
@@ -26,6 +26,15 @@ ChartJS.register(
 export const options = {
   responsive: true,
   // maintainAspectRatio: false,
+  animations: {
+    tension: {
+      duration: 1000,
+      easing: 'linear',
+      from: 1,
+      to: 0,
+      loop: false,
+    }
+  },
   plugins: {
     legend: {
       labels: {
@@ -76,7 +85,7 @@ export const options = {
 };
 
 const today = new Date();
-const daysBeforeNow = 2;
+const daysBeforeNow = 4;
 
 const dateOptions = { month: 'short', day: 'numeric', };
 
@@ -92,10 +101,8 @@ for (let i = daysBeforeNow; i >= 0; i--) {
   labels.push(currentDate.toLocaleDateString('en-US', dateOptions));
 }
 
-export const ChartComponent = () => {
+export const ChartComponent = memo(() => {
   const { history } = useAppSelector((state) => state.balance);
-
-  // console.log(history[0]);
 
   const dailyIncomeBalances = labels.map((labelDate) => {
     const transactionsOnDate = history.filter(
@@ -128,6 +135,7 @@ export const ChartComponent = () => {
         pointHoverBackgroundColor: '#1B4D3E',
         borderCapStyle: 'round',
         tension: 0.4,
+        pointRadius: 5,
       },
       {
         label: 'Expenses',
@@ -136,9 +144,10 @@ export const ChartComponent = () => {
         backgroundColor: '#fd5c63',
         borderCapStyle: 'round',
         tension: 0.4,
+        pointRadius: 5,
       },
     ],
   };
 
   return <Line options={options} data={data} className="chartData" width={400} height={300}/>;
-};
+})

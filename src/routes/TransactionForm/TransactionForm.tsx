@@ -154,7 +154,12 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
                 },
               })}
               defaultValue={updateData ? updateData.name : ''}
-              // autoFocus
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') {
+                  console.log(1)
+                  onHide(false);
+                }
+              }}
             />
             <p className="error">{errors && errors.name?.message}</p>
           </BootstrapForm.Group>

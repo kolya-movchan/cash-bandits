@@ -106,7 +106,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
               onClick={() => {
                 confirmAlert({
                   title: 'Confirm to submit',
-                  message: 'Are you sure to do this.',
+                  message: 'Are you sure to do this?',
                   buttons: [
                     {
                       label: 'Yes',
@@ -121,7 +121,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
                       label: 'No',
                     },
                   ],
-                });
+                })
               }}
             >
               <img src="./delete.svg" alt="delete logo" className="tools" />

@@ -12,10 +12,6 @@ export function Dashboard() {
     setIsFormActive(!isFormActive);
   };
 
-  // useEffect(() => {
-  //   document.body.style.overflow = 'hidden'
-  // }, [])
-
   return (
     <>
       <div className="top-controls">
@@ -42,11 +38,11 @@ export function Dashboard() {
           </div>
         )}
 
-        <div style={{ display: 'flex', maxHeight: '400px', maxWidth: '400px', gap: '50px', justifyContent: 'center'}}>
+        {/* <div style={{ display: 'flex', maxHeight: '300px', maxWidth: '300px', gap: '50px', justifyContent: 'center',}}> */}
           <ChartComponent />
-          <ChartComponent />
+          {/* <ChartComponent /> */}
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 }

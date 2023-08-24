@@ -13,7 +13,7 @@ export interface DeletePayload {
   amount: number,
 }
 
-interface History extends Payload {
+export interface History extends Payload {
   id: string,
   currentBalance: number,
   time: string,
