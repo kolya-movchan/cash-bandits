@@ -63,11 +63,12 @@
 
   &:hover {
     filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
-        contrast(84%);
+      contrast(84%);
   }
 
   &--dark-mode:hover {
-      filter: invert(100%) sepia(2%) saturate(7500%) hue-rotate(326deg) brightness(107%) contrast(101%);
+    filter: invert(100%) sepia(2%) saturate(7500%) hue-rotate(326deg) brightness(107%)
+      contrast(101%);
   }
 }
 
@@ -108,6 +109,21 @@
   padding: 10px;
   border-radius: 10px;
   background-color: #f8f8f8;
+  transition: transform 1s ease-in;
+  user-select: none;
+
+  &:hover {
+    background-color: #343843;
+    transform: scale(1.03);
+  }
+
+  &:hover &__sum {
+    color: #fff;
+  }
+
+  &:hover &__icon-container {
+    background-color: #4e5257;
+  }
 
   &--dark-mode {
     background-color: #201e34;
@@ -117,8 +133,9 @@
     }
   }
 
-  &--dark-mode:hover &__icon {
-    filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%) contrast(97%);
+  &:hover &__icon {
+    filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%)
+      contrast(97%);
   }
 
   &--total {
@@ -137,7 +154,6 @@
 
   &__icon {
     height: 20px;
-
   }
 
   &__title {
@@ -151,7 +167,7 @@
     font-weight: bold;
 
     &--dark-mode {
-      color: #fff
+      color: #fff;
     }
   }
 

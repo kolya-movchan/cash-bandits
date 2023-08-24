@@ -157,6 +157,16 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               placeholder="e.g. Salary or Loan"
               {...register('name', {
                 required: 'Transaction Name is required',
+                validate: {
+                  noOnlySpaces: (v) => {
+                    const trimmedValue = v.trim();
+                    if (trimmedValue.length === 0) {
+                      return 'Name cannot be only spaces';
+                    }
+                    return true;
+                  },
+                  minLength: (v) => v.trim().length >= 1,
+                },
                 pattern: {
                   value: nameValidation,
                   message: 'Invalid Transaction Name',

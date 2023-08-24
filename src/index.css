@@ -48,7 +48,7 @@ button {
   background-color: rgba(248, 248, 248, 0.9);
 }
 .confirm-window--dark-mode {
-  background-color: rgba(51, 51, 51, 0.9);
+  background-color: rgba(49, 49, 51, 0.9);
 }
 
 .error {
@@ -537,6 +537,18 @@ select.error-container {
   padding: 10px;
   border-radius: 10px;
   background-color: #f8f8f8;
+  transition: transform 1s ease-in;
+  user-select: none;
+}
+.money-card:hover {
+  background-color: #343843;
+  transform: scale(1.03);
+}
+.money-card:hover .money-card__sum {
+  color: #fff;
+}
+.money-card:hover .money-card__icon-container {
+  background-color: #4e5257;
 }
 .money-card--dark-mode {
   background-color: #201e34;
@@ -544,7 +556,7 @@ select.error-container {
 .money-card--dark-mode:hover {
   background-color: #292743;
 }
-.money-card--dark-mode:hover .money-card__icon {
+.money-card:hover .money-card__icon {
   filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%) contrast(97%);
 }
 .money-card--total {
