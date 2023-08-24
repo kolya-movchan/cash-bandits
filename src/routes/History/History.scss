@@ -6,7 +6,7 @@
     padding: 50px;
   }
 
-  &--animated{
+  &--animated {
     animation: showHistory 1s ease-in;
 
     @keyframes showHistory {
@@ -35,7 +35,7 @@
 .section-heading {
   margin-bottom: 0;
   font-size: 20px;
-  color: #1b212d;
+  color: $link-color-light-hover;
   font-weight: bold;
 
   &--dark-mode {
@@ -51,7 +51,7 @@
 
 .view-all {
   color: #28a073;
-  font-weight: 500;
+  font-weight: $font-weigth-middle;
   text-decoration: none;
 
   &:hover {
@@ -70,7 +70,7 @@
 
 .remove-all {
   color: #bf4f47;
-  font-weight: 500;
+  font-weight: $font-weigth-middle;
   text-decoration: none;
 
   &:hover {
@@ -85,9 +85,9 @@
 .table-titles {
   & > * {
     text-transform: uppercase;
-    color: #a2adba;
+    color: $link-color-light;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: $font-weigth-middle;
     padding-bottom: 5px;
   }
 }
@@ -139,7 +139,7 @@
 }
 
 .hours-cell {
-  color: #a2adba;
+  color: $link-color-light;
   font-size: 14px;
 }
 
@@ -150,14 +150,14 @@
   right: 20px;
   padding: 15px;
 
-  background-color: $text-color;
+  background-color: $main-color-light;
   border: 1px solid #dee2e6;
   border-radius: 20px;
   transition: transform 1s ease;
   animation: showUp 1s ease;
 
   &--dark-mode {
-    background-color: #26243d;
+    background-color: $dark-mode-second-color;
   }
 
   @keyframes showUp {

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../hooks/hooks';
 import { formatNumber } from '../../utils/calculations';
 
 type Props = {

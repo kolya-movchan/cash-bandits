@@ -22,12 +22,13 @@ body {
   color: rgba(255, 255, 255, 0.87);
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: 0;
 }
 
 a {
-  font-weight: 500;
+  font-weight: $font-weigth-middle;
   color: #646cff;
   white-space: nowrap;
 }

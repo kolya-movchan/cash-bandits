@@ -14,7 +14,7 @@ import {
 } from '../../reducers/balance';
 import { Transaction } from '../../types/Transaction';
 import { nameValidation } from '../../utils/regex';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { control } from '../../reducers/form';
 import { FormMode } from '../../types/Reducer';
 import { NewTransaction, setNewTranscationId } from '../../reducers/newTransaction';

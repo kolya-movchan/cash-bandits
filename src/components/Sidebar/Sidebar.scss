@@ -1,0 +1,99 @@
+.side-pannel {
+  transition: transform 1s ease-in;
+
+  max-width: 225px;
+  flex: 0.75;
+  padding: 20px;
+  background-color: $main-color-gray;
+
+  &--dark-mode {
+    background-color: $dark-mode-second-color;
+  }
+
+  .side-container {
+    margin-bottom: 50px;
+  }
+
+  .title {
+    font-size: 30px;
+    margin: 0;
+    color: $main-color-black;
+
+    &--dark-mode {
+      color: $main-color-light;
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+
+    &__link {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      color: $link-color-light;
+
+      &:hover {
+        color: $link-color-light-hover;
+      }
+
+      &:hover .icon-dash {
+        @extend %icon-hover;
+      }
+
+      &:hover .icon-dash--dark-mode {
+        @extend %icon-hover-dark-mode;
+      }
+
+      &--dark-mode:hover {
+        color: $main-color-light;
+      }
+
+      &--active {
+        color: $link-color-light-hover;
+        background-color: $main-color-light-green;
+        border-radius: 10px;
+      }
+
+      .icon-dash {
+        height: 20px;
+        @extend %icon-dash-hover;
+
+        &--lg {
+          height: 25px;
+        }
+      }
+
+      &--active .icon-dash {
+        @extend %icon-hover;
+      }
+    }
+
+    &__dark-and-light {
+      padding: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &__mode {
+      color: $link-color-light;
+      font-weight: $font-weigth-middle;
+
+      &:hover {
+        color: $link-color-light-hover;
+      }
+
+      &--dark-mode:hover {
+        @extend %icon-hover-dark-mode;
+      }
+    }
+  }
+}

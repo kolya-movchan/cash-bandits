@@ -1,7 +1,7 @@
 .payment-form-container {
   &--dark-mode {
-    border: #26243d;
-    background-color: #26243d;
+    border: $dark-mode-second-color;
+    background-color: $dark-mode-second-color;
     color: #fff;
   }
 }
@@ -9,5 +9,5 @@
 // .payment-form-section {
 //   &--dark-mode input, &--dark-mode input:active {
 //   background-color: #252830;
-  // }
+// }
 // }

@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { TransactionForm } from '../TransactionForm';
 import { Transaction } from '../../components/Transaction';
 import { NavLink, useLocation } from 'react-router-dom';

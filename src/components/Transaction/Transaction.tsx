@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { EditingTransaction } from '../../routes/History';
 import { deleteIncome, deleteExpenses, saveTransaction } from '../../reducers/balance';
 import classNames from 'classnames';

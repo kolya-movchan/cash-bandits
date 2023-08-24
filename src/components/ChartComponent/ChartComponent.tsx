@@ -1,5 +1,5 @@
-import React, {memo, useEffect, useState} from 'react';
-import { useAppSelector } from '../../app/hooks';
+import React, { memo, useEffect, useState } from 'react';
+import { useAppSelector } from '../../hooks/hooks';
 
 import {
   Chart as ChartJS,
@@ -28,7 +28,7 @@ ChartJS.register(
 const today = new Date();
 const daysBeforeNow = 4;
 
-const dateOptions = { month: 'short', day: 'numeric', };
+const dateOptions = { month: 'short', day: 'numeric' };
 
 const labels: string[] = [];
 
@@ -51,11 +51,11 @@ export const ChartComponent = memo(() => {
 
   useEffect(() => {
     setIsSwitchModeRender(true);
-  }, [darkMode])
+  }, [darkMode]);
 
   useEffect(() => {
     setIsSwitchModeRender(false);
-  }, [history])
+  }, [history]);
 
   // console.log('isDataUpdateRender', isSwitchModeRender)
 
@@ -69,12 +69,12 @@ export const ChartComponent = memo(() => {
         from: 1,
         to: 0,
         loop: false,
-      }
+      },
     },
     plugins: {
       legend: {
         labels: {
-          color: darkMode ? '#fff' : '#a2adba',
+          color: darkMode ? '#fff' : '$link-color-light',
           usePointStyle: true,
           boxHeight: 10,
           font: {
@@ -82,7 +82,7 @@ export const ChartComponent = memo(() => {
           },
         },
       },
-  
+
       title: {
         display: true,
         text: 'Total Income and Expenses Statistics',
@@ -90,10 +90,10 @@ export const ChartComponent = memo(() => {
         font: {
           size: 20,
         },
-        color: darkMode ? '#fff' : '#1b212d'
+        color: darkMode ? '#fff' : '$link-color-light-hover',
       },
     },
-  
+
     scales: {
       x: {
         ticks: {},
@@ -105,19 +105,21 @@ export const ChartComponent = memo(() => {
         ticks: {
           callback: (value: number) => {
             if (value >= 1000) {
-              return `${(value / 1000)}K`;
+              return `${value / 1000}K`;
             }
             return value;
           },
         },
       },
     },
-  
+
     // borderColor: 'red', // Set the border color
     // borderWidth: 1,
   };
 
-  const modifiedOptions = isSwitchModeRender ? { ...options, animations: false } : options;
+  const modifiedOptions = isSwitchModeRender
+    ? { ...options, animations: false }
+    : options;
 
   const dailyIncomeBalances = labels.map((labelDate) => {
     const transactionsOnDate = history.filter(
@@ -164,5 +166,13 @@ export const ChartComponent = memo(() => {
     ],
   };
 
-  return <Line options={modifiedOptions} data={data} className="chartData" width={400} height={300}/>;
-})
+  return (
+    <Line
+      options={modifiedOptions}
+      data={data}
+      className="chartData"
+      width={400}
+      height={300}
+    />
+  );
+});

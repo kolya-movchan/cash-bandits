@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { WritableDraft } from "immer/dist/internal";
 import uniqid from "uniqid";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch } from "../hooks/hooks";
 import { State } from "../types/Reducer";
 
 export function roundAmount (amount: number) {

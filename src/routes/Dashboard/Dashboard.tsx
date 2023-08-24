@@ -1,11 +1,10 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ChartComponent } from '../../components/ChartComponent/ChartComponent';
 import { MoneyCard } from '../../components/MoneyCard/MoneyCard';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { control } from '../../reducers/form';
 import { TransactionForm } from '../TransactionForm';
+import { History } from '../../routes';
 
 export const Dashboard = () => {
   const { balance, income, expenses } = useAppSelector((state) => state.balance);
@@ -15,7 +14,7 @@ export const Dashboard = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <>
+    <div className="dashBoard">
       <div className="top-controls">
         <h1
           className={classNames('section-title', {
@@ -33,14 +32,13 @@ export const Dashboard = () => {
           />
         </button>
       </div>
-
       <div className="finance-data">
         <div className="finance-cards">
           <MoneyCard title="Total balance" amount={balance} icon="./wallet-total.svg" />
           <MoneyCard title="Total income" amount={income} icon="./wallet-plus.svg" />
           <MoneyCard title="Total expenses" amount={expenses} icon="./wallet-minus.svg" />
         </div>
-        {(add && !edit) && (
+        {add && !edit && (
           <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
             {' '}
             <TransactionForm />
@@ -48,6 +46,7 @@ export const Dashboard = () => {
         )}
         <ChartComponent />
       </div>
-    </>
+      <History />
+    </div>
   );
 };

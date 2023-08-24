@@ -1,11 +1,14 @@
 @import './styles/variables';
+@import './styles/_placeholder';
 @import './styles/global.scss';
 @import './styles/error.scss';
 
-@import './components/App/App.scss';
-@import './components/Navigation/Navigation.scss';
+@import './app/App.scss';
+
+@import './components/Sidebar/Sidebar.scss';
 @import './components/Transaction/Transaction.scss';
 @import './components/ChartComponent/ChartComponent.scss';
+@import './components/Logo/Logo.scss';
 
 @import './routes/TransactionForm/TransactionForm.scss';
 @import './routes/History/History.scss';

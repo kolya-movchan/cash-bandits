@@ -10,7 +10,7 @@ import {
   updateHistory,
   updateBalanceAfterDeletion,
 } from './reducerHelper';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../hooks/hooks';
 import { setNewTranscationId } from './newTransaction';
 import { useDispatch } from 'react-redux';
 
