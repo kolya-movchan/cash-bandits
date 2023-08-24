@@ -6,19 +6,40 @@ import { Dashboard, History, NotFound } from '../../routes';
 // import { Navigation } from '../Navigation';
 import { TransactionForm } from '../../routes/TransactionForm';
 import { DataMenu } from '../DataMenu/DataMenu';
-import { ArrowContainer, Popover } from 'react-tiny-popover';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { switchMode } from '../../reducers/darkMode';
 
 export function App() {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const dispatch = useAppDispatch();
+
+  const location = useLocation();
 
   return (
     <>
-      <div className="app">
-        <div className="side-pannel">
+      <div
+        className={classNames(
+          'app',
+          { 'app--dark-mode': darkMode }
+        )}
+      >
+        <div
+          className={classNames(
+            'side-pannel',
+            { 'side-pannel--dark-mode': darkMode }
+          )}
+        >
           <div className="side-container">
             <a href="#" className="logo-container">
-              <img src="./logo.jpg" className="logo" alt="mopobank logo" />
-              <h2 className="title" style={{ textDecoration: 'none' }}>
+              <img
+                src="./logo.jpg"
+                className="logo logo--dark-mode"
+                alt="mopobank logo"
+              />
+              <h2
+                className={classNames('title', { 'title--dark-mode': darkMode })}
+                style={{ textDecoration: 'none' }}
+              >
                 mopoBank
               </h2>
             </a>
@@ -26,47 +47,99 @@ export function App() {
 
           <div className="nav">
             <div>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  classNames('nav__link', { 'nav__link--active': isActive })
-                }
-              >
-                <img src="./dashboard.svg" alt="dashboard icon" className="icon-dash" />
-                Dashboard
-              </NavLink>
-              <NavLink
-                to="/transactions"
-                className={({ isActive }) =>
-                  classNames('nav__link', { 'nav__link--active': isActive })
-                }
-              >
-                <img
-                  src="./transactions.svg"
-                  alt="dashboard icon"
-                  className="icon-dash"
-                />
-                Transactions
-              </NavLink>
+              <div style={{ marginBottom: '20px' }}>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    classNames(
+                      'nav__link',
+                      { 'nav__link--active': isActive },
+                      {
+                        'nav__link--dark-mode': darkMode && !isActive,
+                      }
+                    )
+                  }
+                >
+                  <img
+                    src="./dashboard.svg"
+                    alt="dashboard icon"
+                    className={classNames('icon-dash', {
+                      'icon-dash--dark-mode': darkMode && location.pathname !== '/',
+                    })}
+                  />
+                  Dashboard
+                </NavLink>
+                <NavLink
+                  to="/transactions"
+                  className={({ isActive }) =>
+                    classNames(
+                      'nav__link',
+                      { 'nav__link--active': isActive },
+                      {
+                        'nav__link--dark-mode': darkMode && !isActive,
+                      }
+                    )
+                  }
+                >
+                  <img
+                    src="./transactions.svg"
+                    alt="dashboard icon"
+                    className={classNames('icon-dash', {
+                      'icon-dash--dark-mode':
+                        darkMode && location.pathname !== '/transactions',
+                    })}
+                  />
+                  Transactions
+                </NavLink>
+              </div>
+
+              <div className="form-check form-switch">
+                <label className="custom-control-label nav__dark-and-light">
+                  <span
+                    className={classNames('nav__mode ', {
+                      'nav__mode--dark-mode': darkMode,
+                    })}
+                  >
+                    Dark Mode
+                  </span>
+                  <input
+                    checked={darkMode}
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={() => {
+                      dispatch(switchMode(darkMode));
+                    }}
+                  />
+                </label>
+              </div>
             </div>
             <div>
               <Link
                 // to="/"
                 // target='_blank'
-                className="nav__link"
+                className={classNames('nav__link ', {
+                  'nav__link--dark-mode': darkMode
+                })}
               >
-                <img src="./video.svg" alt="video icon" className="icon-dash" />
+                <img src="./video.svg" alt="video icon" className={classNames('icon-dash', {
+                    'icon-dash--dark-mode': darkMode,
+                  })} />
                 Demo Video
               </Link>
               <Link
                 to="https://www.linkedin.com/in/klmovchan/"
                 target="_blank"
-                className="nav__link"
+                className={classNames('nav__link ', {
+                  'nav__link--dark-mode': darkMode
+                })}
               >
                 <img
                   src="./question-mark.svg"
                   alt="question mark icon"
-                  className="icon-dash"
+                  className={classNames('icon-dash', {
+                    'icon-dash--dark-mode': darkMode,
+                  })}
+                  // className="icon-dash"
                 />
                 Ask Me
               </Link>

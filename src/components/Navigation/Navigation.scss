@@ -38,6 +38,10 @@
   font-size: 30px;
   margin: 0;
   color: #000;
+
+  &--dark-mode {
+    color: #fff;
+  }
 }
 
 .link-container {

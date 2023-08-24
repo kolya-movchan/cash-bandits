@@ -14,7 +14,7 @@ import {
 } from '../../reducers/balanceReducer';
 import { Transaction } from '../../types/Transaction';
 import { nameValidation } from '../../utils/regex';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 interface UpdateData {
   id: string;
@@ -29,6 +29,7 @@ type Props = {
 };
 
 export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
+  const { darkMode } = useAppSelector((state) => state.darkMode);
   const dispatch = useAppDispatch();
 
   const {
@@ -106,11 +107,9 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
     setTimeout(() => {
       setFocus('name');
     }, 150);
-
   }, [updateData, reset]);
 
   // const nameInput: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
-
 
   useEffect(() => {
     setTimeout(() => {
@@ -121,8 +120,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
   return (
     <>
       <Container
-        // className="container-sm"
-        style={updateData ? { maxWidth: '250px' } : { maxWidth: '400px' }}
+        className={classNames({ 'payment-form-container--dark-mode': darkMode })}
       >
         {onHide && (
           <div className="d-flex justify-content-end">
@@ -136,10 +134,10 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
         )}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
-          <BootstrapForm.Group controlId="TransactionName">
+          <BootstrapForm.Group controlId="TransactionName" className='payment-form-section'>
             <BootstrapForm.Label>Transaction Name</BootstrapForm.Label>
             <BootstrapForm.Control
-              className={classNames({ 'error-container': errors.name })}
+              className={classNames({ 'error-container': errors.name }, 'ff', { 'ff': darkMode })}
               type="text"
               placeholder="e.g. Salary or Loan"
               {...register('name', {
@@ -156,7 +154,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData, onHide }) => {
               defaultValue={updateData ? updateData.name : ''}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
-                  console.log(1)
+                  console.log(1);
                   onHide(false);
                 }
               }}

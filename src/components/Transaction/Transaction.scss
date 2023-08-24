@@ -16,10 +16,16 @@
   background-color: #e5e5e5;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &--dark-mode {
+    // transition: none;
+    background-color: #3f3b64;
+  }
 }
 
 .edit-button:hover {
+  transition: background-color 1s ease, transform 0.2s ease;
+
   background-color: #c7ee44;
   transform: scale(1.05);
 }
@@ -36,10 +42,15 @@
   border-radius: 7px;
   background-color: #e5e5e5;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &--dark-mode {
+    background-color: #3f3b64;
+  }
 }
 
 .delete-button:hover {
+  transition: background-color 1s ease, transform 0.2s ease;
+
   background-color: #ce6262;
   transform: scale(1.05);
 }

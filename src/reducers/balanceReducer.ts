@@ -23,12 +23,14 @@ const loadBankFromLocalStorage = () => {
   }
 };
 
-const initialState: State = loadBankFromLocalStorage() || {
+const initialData = {
   balance: 0,
   income: 0,
   expenses: 0,
   history: [],
 };
+
+const initialState: State = loadBankFromLocalStorage() || initialData;
 
 export const balanceSlice = createSlice({
   name: 'balance',
@@ -154,6 +156,8 @@ export const balanceSlice = createSlice({
       state.income = 0;
       state.expenses = 0;
       state.history = [];
+
+      localStorage.setItem('bank', JSON.stringify(initialData));
     },
   },
 });

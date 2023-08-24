@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { ChartComponent } from '../../components/ChartComponent/ChartComponent';
 import { MoneyCard } from '../../components/MoneyCard/MoneyCard';
@@ -6,21 +8,32 @@ import { TransactionForm } from '../TransactionForm';
 
 export function Dashboard() {
   const { balance, income, expenses } = useAppSelector((state) => state.balance);
+  const { darkMode } = useAppSelector((state) => state.darkMode);
+
   const [isFormActive, setIsFormActive] = useState(false);
 
   const showForm = () => {
     setIsFormActive(!isFormActive);
   };
 
+  const location = useLocation();
+  console.log(location);
+
   return (
     <>
       <div className="top-controls">
-        <h1 className="section-title">Dashboard</h1>
+        <h1
+          className={classNames('section-title', {
+            'section-title--dark-mode': darkMode,
+          })}
+        >
+          Dashboard
+        </h1>
         <button>
           <img
             src="./add.svg"
             alt="add transaction icon"
-            className="add-trans"
+            className={classNames('add-trans', { 'add-trans--dark-mode': darkMode })}
             onClick={() => showForm()}
           />
         </button>
@@ -33,16 +46,13 @@ export function Dashboard() {
           <MoneyCard title="Total expenses" amount={expenses} icon="./wallet-minus.svg" />
         </div>
         {isFormActive && (
-          <div className="editForm">
+          <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
+            {' '}
             <TransactionForm onHide={setIsFormActive} />
           </div>
         )}
-
-        {/* <div style={{ display: 'flex', maxHeight: '300px', maxWidth: '300px', gap: '50px', justifyContent: 'center',}}> */}
-          <ChartComponent />
-          {/* <ChartComponent /> */}
-        </div>
-      {/* </div> */}
+        <ChartComponent />
+      </div>
     </>
   );
 }

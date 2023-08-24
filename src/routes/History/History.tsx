@@ -19,6 +19,8 @@ export type EditingTransaction = {
 
 export function History() {
   const { history } = useAppSelector((state) => state.balance);
+  const { darkMode } = useAppSelector((state) => state.darkMode);
+
   const dispatch = useAppDispatch();
 
   const [isEditVisible, setIsEditVisible] = useState(false);
@@ -28,17 +30,13 @@ export function History() {
 
   useLayoutEffect(() => {
     if (location.pathname.includes('/transaction')) {
-      // document.body.style.overflow = 'scroll';
       setIsFullMode(false);
     } else {
-      // document.body.style.overflow = 'hidden';
       setIsFullMode(true);
     }
 
     document.documentElement.scrollTop = 0;
   }, []);
-
-  console.log(isFullMode);
 
   const deleteAllHistory = () => {
     dispatch(balanceSlice.actions.removeAll());
@@ -49,7 +47,13 @@ export function History() {
       {!history.length ? (
         !isFullMode ? (
           <div className="no-data">
-            <span className="no-data__text">No Data Avaliable</span>
+            <span
+              className={classNames('no-data__text', {
+                'no-data__text--dark-mode': darkMode,
+              })}
+            >
+              No Data Avaliable
+            </span>
           </div>
         ) : (
           <></>
@@ -63,7 +67,11 @@ export function History() {
         >
           <div className="history-wrapper">
             <div className="history-top">
-              <h2 className="section-heading">{`${
+              <h2
+                className={classNames('section-heading', {
+                  'section-heading--dark-mode': darkMode,
+                })}
+              >{`${
                 location.pathname.includes('/transaction') ? 'All' : 'Recent'
               } Transactions`}</h2>
               {isFullMode && (
@@ -92,10 +100,12 @@ export function History() {
                       });
                     }}
                   >
-                    Remove all <span className="remove-all__cross">x</span>
+                    Remove all
+                    {/* <span className="remove-all__cross">x</span> */}
                   </button>
                   <NavLink className="view-all" to="/transactions">
-                    View all <span className="view-all__eagle">&gt;</span>
+                    <span style={{ marginRight: '3px' }}>View all </span>
+                    <span className="view-all__eagle">&gt;</span>
                   </NavLink>
                 </div>
               )}
@@ -133,7 +143,7 @@ export function History() {
               </table>
             )}
             {isEditVisible && editingTransaction && (
-              <div className="editForm">
+              <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
                 <TransactionForm
                   updateData={{ ...editingTransaction }}
                   onHide={setIsEditVisible}

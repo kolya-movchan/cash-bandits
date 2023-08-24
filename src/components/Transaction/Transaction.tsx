@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { EditingTransaction } from '../../routes/History';
 import {
   deleteIncome,
@@ -27,6 +27,7 @@ type Props = {
 
 export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }) => {
   const dispatch = useAppDispatch();
+  const { darkMode } = useAppSelector((state) => state.darkMode);
 
   const { name, type, amount, currentBalance, time, id } = transaction;
 
@@ -76,7 +77,13 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
         // className={type === 'income' ? 'table-success' : 'table-danger'}
         key={id}
       >
-        <td className="transaction-cell-name">{name}</td>
+        <td
+          className={classNames('transaction-cell-name', {
+            'transaction-cell-name--dark-mode': darkMode,
+          })}
+        >
+          {name}
+        </td>
         <td
           className={classNames(
             'transaction-cell',
@@ -86,23 +93,33 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
         >
           {type}
         </td>
-        <td>
+        <td className={classNames('transaction-cell-amount', {
+            'transaction-cell-amount--dark-mode': darkMode,
+          })}>
           {type === 'expenses' && amount !== 0 && '-'} ${amount.toLocaleString()}
         </td>
-        <td>${currentBalance.toLocaleString()}</td>
-        <td className="time-cell">
+        <td className={classNames('transaction-cell-balance', {
+            'transaction-cell-balance--dark-mode': darkMode,
+          })}>${currentBalance.toLocaleString()}</td>
+        <td className={classNames('time-cell', {
+            'time-cell--dark-mode': darkMode,
+          })}>
           {formattedDate} <span className="hours-cell">at {formattedTime}</span>
         </td>
         <td>
           <div className="tools-container">
             <button
-              className="edit-button"
+              className={classNames('edit-button', {
+                'edit-button--dark-mode': darkMode,
+              })}
               onClick={() => showEdit(id, name, amount, type)}
             >
               <img src="./edit.svg" alt="edit logo" className="tools" />
             </button>
             <button
-              className="delete-button"
+              className={classNames('delete-button', {
+                'delete-button--dark-mode': darkMode,
+              })}
               onClick={() => {
                 confirmAlert({
                   title: 'Confirm to submit',
@@ -121,7 +138,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo, onEdit }
                       label: 'No',
                     },
                   ],
-                })
+                });
               }}
             >
               <img src="./delete.svg" alt="delete logo" className="tools" />

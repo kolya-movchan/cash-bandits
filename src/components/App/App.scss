@@ -3,6 +3,15 @@
   // height: 100%;
   min-width: 1000px;
   min-height: 100vh;
+  background-color: #fff;
+
+  &--dark-mode {
+    background-color: #1c1a2e;
+  }
+
+  // &--light-mode {
+  //   background-color: #fff;
+  // }
 }
 
 .side-pannel {
@@ -16,6 +25,10 @@
   background-color: #e6e6e6;
 
   box-sizing: border-box;
+
+  &--dark-mode {
+    background-color: #26243d;
+  }
 
   .side-container {
     margin-bottom: 50px;
@@ -37,7 +50,6 @@
   //   right: -20px;
   // }
 
-
   &__link {
     display: flex;
     gap: 7px;
@@ -56,6 +68,14 @@
         contrast(84%);
     }
 
+    &:hover .icon-dash--dark-mode {
+      filter: invert(96%) sepia(0%) saturate(13%) hue-rotate(34deg) brightness(103%) contrast(102%);
+    }
+
+    &--dark-mode:hover {
+      color: #fff;
+    }
+
     &--active {
       color: #1b212d;
       background-color: #c8ee44;
@@ -67,14 +87,40 @@
       filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%)
         contrast(94%);
 
-        &--lg {
-          height: 25px;
-        }
+      &--lg {
+        height: 25px;
+      }
     }
 
     &--active .icon-dash {
       filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
         contrast(84%);
     }
+  }
+
+  &__dark-and-light {
+    padding: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__mode {
+    color: #a2adba;
+    font-weight: 500;
+
+    &:hover {
+      color: #1b212d;
+    }
+
+    &--dark-mode:hover {
+      filter: invert(96%) sepia(0%) saturate(13%) hue-rotate(34deg) brightness(103%) contrast(102%);
+    }
+
+    // &:hover {
+    //   filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%)
+    //     contrast(84%);
+    // }
   }
 }

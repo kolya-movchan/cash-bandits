@@ -3,7 +3,7 @@
   padding: 20px;
 
   &--full {
-    padding: 20px 50px;
+    padding: 50px;
   }
 
   &--sm {
@@ -39,6 +39,10 @@
   font-size: 20px;
   color: #1b212d;
   font-weight: bold;
+
+  &--dark-mode {
+    color: #fff;
+  }
 }
 
 .table-history {
@@ -95,11 +99,23 @@
   opacity: 0.95;
 }
 
-// .transaction-cell-name {
-//   // max-width: 20px;
-//   // word-break: break-all;
-//   overflow: hidden;
-// }
+.transaction-cell-name {
+  &--dark-mode {
+    color: #fff;
+  }
+}
+
+.transaction-cell-amount {
+  &--dark-mode {
+    color: #fff;
+  }
+}
+
+.transaction-cell-balance {
+  &--dark-mode {
+    color: #fff;
+  }
+}
 
 .income-cell {
   color: #00a86b;
@@ -114,6 +130,10 @@
   gap: 7px;
   justify-content: center;
   align-items: center;
+
+  &--dark-mode {
+    color: #fff;
+  }
 }
 
 .hours-cell {
@@ -133,6 +153,10 @@
   border-radius: 20px;
   transition: transform 1s ease;
   animation: showUp 1s ease;
+
+  &--dark-mode {
+    background-color: #26243d;
+  }
 
   @keyframes showUp {
     0% {
@@ -157,5 +181,9 @@
 
   &__text {
     font-size: 25px;
+
+    &--dark-mode {
+      color: #fff;
+    }
   }
 }

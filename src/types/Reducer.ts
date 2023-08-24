@@ -9,7 +9,7 @@ export interface TransactionPayload extends Payload {
 }
 
 export interface DeletePayload {
-  id: string,
+   id: string,
   amount: number,
 }
 

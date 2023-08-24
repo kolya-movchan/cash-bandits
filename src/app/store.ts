@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import balanceSlice from '../reducers/balanceReducer';
+import darkModeSlice from '../reducers/darkMode';
 
 export const store = configureStore({
   reducer: {
     balance: balanceSlice,
+    darkMode: darkModeSlice,
   },
 });
 
