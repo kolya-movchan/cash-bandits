@@ -2,12 +2,6 @@
   &--dark-mode {
     border: $dark-mode-second-color;
     background-color: $dark-mode-second-color;
-    color: #fff;
+    color: $main-color-light;
   }
 }
-
-// .payment-form-section {
-//   &--dark-mode input, &--dark-mode input:active {
-//   background-color: #252830;
-// }
-// }

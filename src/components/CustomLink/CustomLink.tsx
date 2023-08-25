@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/hooks';
+import { useSelectorData } from '../../hooks/hooks';
 
 type Props = {
   to: string;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const CustomLink: React.FC<Props> = ({ to, iconSrc, text }) => {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useSelectorData();
 
   return (
     <Link

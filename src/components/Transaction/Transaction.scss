@@ -8,25 +8,23 @@
 }
 
 .edit-button {
-  display: flex;
-  align-items: center;
+  @extend %flex-rw-centered-scnd;
   padding: 1.5px 1.5px;
   border: none;
   border-radius: 7px;
-  background-color: #e5e5e5;
-  color: white;
+  background-color: $bg-utils-cover;
+  color: $main-color-light;
   cursor: pointer;
 
   &--dark-mode {
-    // transition: none;
-    background-color: #3f3b64;
+    background-color: $bg-utils-cover-dark-mode;
   }
 }
 
 .edit-button:hover {
   transition: background-color 1s ease, transform 0.2s ease;
 
-  background-color: #c7ee44;
+  background-color: $main-color-light-green;
   transform: scale(1.05);
 }
 
@@ -35,16 +33,15 @@
 }
 
 .delete-button {
-  display: flex;
-  align-items: center;
+  @extend %flex-rw-centered-scnd;
   padding: 3.5px 3.5px;
   border: none;
   border-radius: 7px;
-  background-color: #e5e5e5;
+  background-color: $bg-utils-cover;
   cursor: pointer;
 
   &--dark-mode {
-    background-color: #3f3b64;
+    background-color: $bg-utils-cover-dark-mode;
   }
 }
 

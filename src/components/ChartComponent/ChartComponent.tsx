@@ -1,170 +1,26 @@
-import React, { memo, useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/hooks';
+import { memo, useLayoutEffect, useState } from 'react'
+import { useSelectorData } from '../../hooks/hooks'
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import darkMode from '../../reducers/darkMode';
-import { useLocation } from 'react-router-dom';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const today = new Date();
-const daysBeforeNow = 4;
-
-const dateOptions = { month: 'short', day: 'numeric' };
-
-const labels: string[] = [];
-
-for (let i = daysBeforeNow; i >= 0; i--) {
-  const currentDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - i
-  );
-
-  labels.push(currentDate.toLocaleDateString('en-US', dateOptions));
-}
+import { Line } from 'react-chartjs-2'
+import { prepareChartData } from '../../utils/chartjs.config'
 
 export const ChartComponent = memo(() => {
-  const { history } = useAppSelector((state) => state.balance);
-  const { darkMode } = useAppSelector((state) => state.darkMode);
-  const location = useLocation();
+  const { darkMode, history, add, edit } = useSelectorData()
 
-  const [isSwitchModeRender, setIsSwitchModeRender] = useState(false);
+  const { options, data } = prepareChartData(darkMode, history)
 
-  useEffect(() => {
-    setIsSwitchModeRender(true);
-  }, [darkMode]);
+  const [prevHistory, setPrevHistory] = useState(history);
 
-  useEffect(() => {
-    setIsSwitchModeRender(false);
-  }, [history]);
 
-  // console.log('isDataUpdateRender', isSwitchModeRender)
+  useLayoutEffect(() => {
+    if (history !== prevHistory) {
+      setPrevHistory(history);
+    }
+  }, [history, prevHistory]);
 
-  const options = {
-    responsive: true,
-    // maintainAspectRatio: false,
-    animations: {
-      tension: {
-        duration: 1000,
-        easing: 'linear',
-        from: 1,
-        to: 0,
-        loop: false,
-      },
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: darkMode ? '#fff' : '$link-color-light',
-          usePointStyle: true,
-          boxHeight: 10,
-          font: {
-            size: 16,
-          },
-        },
-      },
+  const modifiedOptions = history === prevHistory ? { ...options, animations: false } : options
 
-      title: {
-        display: true,
-        text: 'Total Income and Expenses Statistics',
-        align: 'start',
-        font: {
-          size: 20,
-        },
-        color: darkMode ? '#fff' : '$link-color-light-hover',
-      },
-    },
-
-    scales: {
-      x: {
-        ticks: {},
-      },
-      y: {
-        grid: {
-          display: false, // Disable y-axis grid lines
-        },
-        ticks: {
-          callback: (value: number) => {
-            if (value >= 1000) {
-              return `${value / 1000}K`;
-            }
-            return value;
-          },
-        },
-      },
-    },
-
-    // borderColor: 'red', // Set the border color
-    // borderWidth: 1,
-  };
-
-  const modifiedOptions = isSwitchModeRender
-    ? { ...options, animations: false }
-    : options;
-
-  const dailyIncomeBalances = labels.map((labelDate) => {
-    const transactionsOnDate = history.filter(
-      (trans) =>
-        trans.type === 'income' &&
-        new Date(trans.time).toLocaleDateString('en-US', dateOptions) === labelDate
-    );
-    const totalBalance = transactionsOnDate.reduce((sum, inc) => sum + inc.amount, 0);
-    return totalBalance;
-  });
-
-  const dailyExpensesBalances = labels.map((labelDate) => {
-    const transactionsOnDate = history.filter(
-      (trans) =>
-        trans.type === 'expenses' &&
-        new Date(trans.time).toLocaleDateString('en-US', dateOptions) === labelDate
-    );
-    const totalBalance = transactionsOnDate.reduce((sum, inc) => sum + inc.amount, 0);
-    return totalBalance;
-  });
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Income',
-        data: dailyIncomeBalances,
-        borderColor: '#00A86B',
-        backgroundColor: '#00A86B',
-        pointHoverBackgroundColor: '#1B4D3E',
-        borderCapStyle: 'round',
-        tension: 0.4,
-        pointRadius: 5,
-      },
-      {
-        label: 'Expenses',
-        data: dailyExpensesBalances,
-        borderColor: '#fd5c63',
-        backgroundColor: '#fd5c63',
-        borderCapStyle: 'round',
-        tension: 0.4,
-        pointRadius: 5,
-      },
-    ],
-  };
+  console.log(modifiedOptions.animations.valueOf)
 
   return (
     <Line
@@ -174,5 +30,5 @@ export const ChartComponent = memo(() => {
       width={400}
       height={300}
     />
-  );
-});
+  )
+})

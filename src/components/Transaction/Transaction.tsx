@@ -1,90 +1,40 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import classNames from 'classnames'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { EditingTransaction } from '../../routes/History';
-import { deleteIncome, deleteExpenses, saveTransaction } from '../../reducers/balance';
-import classNames from 'classnames';
-import { control } from '../../reducers/form';
-import { setNewTranscationId } from '../../reducers/newTransaction';
+import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import { useAppDispatch, useEditFormOpen, useModalWindowDelete, useSelectorData } from '../../hooks/hooks'
+import { setNewTranscationId } from '../../reducers/newTransaction'
+import { EditingTransaction } from '../../types/Transaction'
+import { calculateTimeFormat } from '../../utils/calculations'
 
 type Props = {
   transaction: {
-    name: string;
-    type: string;
-    amount: number;
-    currentBalance: number;
-    time: string;
-    id: string;
-  };
-  last: string;
-  onEditInfo: Dispatch<SetStateAction<EditingTransaction | undefined>>;
-  onEdit: (value: boolean) => void;
-};
+    name: string
+    type: string
+    amount: number
+    currentBalance: number
+    time: string
+    id: string
+  }
+  onEditInfo: Dispatch<SetStateAction<EditingTransaction | undefined>>
+}
 
-export const Transaction: React.FC<Props> = ({
-  transaction,
-  onEditInfo,
-  onEdit,
-  last,
-}) => {
-  const dispatch = useAppDispatch();
-  const { darkMode } = useAppSelector((state) => state.darkMode);
-  const { newTransactionId } = useAppSelector((state) => state.NewTransaction);
-
-  const { name, type, amount, currentBalance, time, id } = transaction;
-
-  const currentDate = new Date(time);
-
-  const dateOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-
-  const timeOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
-  };
-
-  const formattedDate = currentDate.toLocaleDateString('en-US', dateOptions);
-  const formattedTime = currentDate.toLocaleTimeString('en-US', timeOptions);
-
-  const showEdit = (id: string, name: string, amount: number, type: string) => {
-    onEditInfo({
-      id,
-      name,
-      amount,
-      type,
-    });
-
-    onEdit(true);
-    dispatch(control('editIsOn'));
-  };
-
-  const handleTransactionDelete = (id: string, amount: number, type: string) => {
-    if (type === 'income') {
-      dispatch(deleteIncome({ id, amount }));
-    } else {
-      dispatch(deleteExpenses({ id, amount }));
-    }
-
-    dispatch(saveTransaction());
-  };
+export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
+  const dispatch = useAppDispatch()
+  const { darkMode, newTransactionId } = useSelectorData()
+  const { name, type, amount, currentBalance, time, id } = transaction
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(setNewTranscationId(''));
-    }, 1000);
+      dispatch(setNewTranscationId(''))
+    }, 1000)
   }, [])
 
   return (
     <tr
       key={id}
       className={classNames({
-        'new-row': id === newTransactionId && !location.hash.includes('/transactions') ,
+        'new-row': id === newTransactionId && !location.hash.includes('/transactions'),
       })}
     >
       <td
@@ -122,7 +72,8 @@ export const Transaction: React.FC<Props> = ({
           'time-cell--dark-mode': darkMode,
         })}
       >
-        {formattedDate} <span className="hours-cell">at {formattedTime}</span>
+        {calculateTimeFormat(time).formattedDate}{' '}
+        <span className="hours-cell">at {calculateTimeFormat(time).formattedTime}</span>
       </td>
       <td>
         <div className="tools-container">
@@ -130,7 +81,7 @@ export const Transaction: React.FC<Props> = ({
             className={classNames('edit-button', {
               'edit-button--dark-mode': darkMode,
             })}
-            onClick={() => showEdit(id, name, amount, type)}
+            onClick={() => useEditFormOpen(id, name, amount, type, onEditInfo, dispatch)}
           >
             <img src="./edit.svg" alt="edit logo" className="tools" />
           </button>
@@ -138,35 +89,12 @@ export const Transaction: React.FC<Props> = ({
             className={classNames('delete-button', {
               'delete-button--dark-mode': darkMode,
             })}
-            onClick={() => {
-              confirmAlert({
-                title: 'Confirm to submit',
-                message: 'Are you sure to do this?',
-                overlayClassName: darkMode
-                  ? 'confirm-window--dark-mode'
-                  : 'confirm-window',
-                buttons: [
-                  {
-                    label: 'Yes',
-                    onClick: () => {
-                      handleTransactionDelete(id, amount, type);
-                      toast.success('Transaction deleted successfully!', {
-                        autoClose: 1500,
-                      });
-                    },
-                  },
-
-                  {
-                    label: 'No',
-                  },
-                ],
-              });
-            }}
+            onClick={useModalWindowDelete(darkMode, id, amount, type, dispatch)}
           >
             <img src="./delete.svg" alt="delete logo" className="tools" />
           </button>
         </div>
       </td>
     </tr>
-  );
-};
+  )
+}

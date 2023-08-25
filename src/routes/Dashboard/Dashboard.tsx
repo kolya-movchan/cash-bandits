@@ -1,17 +1,16 @@
-import classNames from 'classnames';
-import { ChartComponent } from '../../components/ChartComponent/ChartComponent';
-import { MoneyCard } from '../../components/MoneyCard/MoneyCard';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { control } from '../../reducers/form';
-import { TransactionForm } from '../TransactionForm';
-import { History } from '../../routes';
+import classNames from 'classnames'
+
+import { useAppDispatch, useSelectorData } from '../../hooks/hooks'
+import { control } from '../../reducers/form'
+
+import { ChartComponent } from '../../components/ChartComponent/ChartComponent'
+import { FinanceCards } from '../../components/FinanceCards/FinanceCards'
+import { History } from '../../routes'
+import { TransactionForm } from '../TransactionForm'
 
 export const Dashboard = () => {
-  const { balance, income, expenses } = useAppSelector((state) => state.balance);
-  const { darkMode } = useAppSelector((state) => state.darkMode);
-  const { add, edit } = useAppSelector((state) => state.form);
-
-  const dispatch = useAppDispatch();
+  const { balance, income, expenses, darkMode, add, edit } = useSelectorData()
+  const dispatch = useAppDispatch()
 
   return (
     <div className="dashBoard">
@@ -33,20 +32,12 @@ export const Dashboard = () => {
         </button>
       </div>
       <div className="finance-data">
-        <div className="finance-cards">
-          <MoneyCard title="Total balance" amount={balance} icon="./wallet-total.svg" />
-          <MoneyCard title="Total income" amount={income} icon="./wallet-plus.svg" />
-          <MoneyCard title="Total expenses" amount={expenses} icon="./wallet-minus.svg" />
-        </div>
-        {add && !edit && (
-          <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
-            {' '}
-            <TransactionForm />
-          </div>
-        )}
+        <FinanceCards total={{ balance, income, expenses }} />
         <ChartComponent />
       </div>
       <History />
+
+      {add && !edit && <TransactionForm />}
     </div>
-  );
-};
+  )
+}

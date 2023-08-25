@@ -1,66 +1,35 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
-
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { TransactionForm } from '../TransactionForm';
-import { Transaction } from '../../components/Transaction';
-import { NavLink, useLocation } from 'react-router-dom';
-import classNames from 'classnames';
-import { confirmAlert } from 'react-confirm-alert';
-import { balanceSlice } from '../../reducers/balance';
-
-export type EditingTransaction = {
-  id: string;
-  name: string;
-  amount: number;
-  type: string;
-};
+import classNames from 'classnames'
+import { useLayoutEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
+import { HistoryTable } from '../../components/HistoryTable/HistoryTable'
+import { useAppDispatch, useModalWindow, useSelectorData } from '../../hooks/hooks'
+import { EditingTransaction } from '../../types/Transaction'
+import { TransactionForm } from '../TransactionForm'
+import NoData from './NoData'
 
 export const History = () => {
-  const { history } = useAppSelector((state) => state.balance);
-  const { darkMode } = useAppSelector((state) => state.darkMode);
-  const { add, edit } = useAppSelector((state) => state.form);
+  const { history, darkMode, add, edit } = useSelectorData()
 
-  const dispatch = useAppDispatch();
-
-  const [isEditVisible, setIsEditVisible] = useState(false);
-  const [editingTransaction, setEditingTransaction] = useState<EditingTransaction>();
-  const [isFullMode, setIsFullMode] = useState(false);
-  const locationData = useLocation();
+  const [editingTransaction, setEditingTransaction] = useState<EditingTransaction | undefined>()
+  const [isFullMode, setIsFullMode] = useState(false)
+  const locationData = useLocation()
 
   useLayoutEffect(() => {
     if (locationData.pathname.includes('/transaction')) {
-      setIsFullMode(false);
+      setIsFullMode(false)
     } else {
-      setIsFullMode(true);
+      setIsFullMode(true)
     }
 
-    document.documentElement.scrollTop = 0;
-  }, []);
+    document.documentElement.scrollTop = 0
+  }, [])
 
-  const deleteAllHistory = () => {
-    dispatch(balanceSlice.actions.removeAll());
-  };
-
-  // console.log();
+  const dispatch = useAppDispatch()
 
   return (
     <>
       {!history.length ? (
-        !isFullMode ? (
-          <div className="no-data">
-            <span
-              className={classNames('no-data__text', {
-                'no-data__text--dark-mode': darkMode,
-              })}
-            >
-              No Data Avaliable
-            </span>
-          </div>
-        ) : (
-          <></>
-        )
+        <NoData isFullMode={isFullMode} />
       ) : (
         <div
           className={classNames('history-container', {
@@ -81,32 +50,11 @@ export const History = () => {
                 <div className="action-controls">
                   <button
                     className="remove-all"
-                    onClick={() => {
-                      confirmAlert({
-                        title: 'Confirm to submit',
-                        message: 'Are you sure you want to delete all your transactions?',
-                        overlayClassName: darkMode ? 'confirm-window--dark-mode' : 'confirm-window',
-                        buttons: [
-                          {
-                            label: 'Yes',
-                            onClick: () => {
-                              deleteAllHistory();
-
-                              toast.success('All transactions deleted successfully!', {
-                                autoClose: 1500,
-                              });
-                            },
-                          },
-                          {
-                            label: 'No',
-                          },
-                        ],
-                      });
-                    }}
+                    onClick={useModalWindow(dispatch, darkMode)}
                   >
                     Remove all
-                    {/* <span className="remove-all__cross">x</span> */}
                   </button>
+
                   <NavLink className="view-all" to="/transactions">
                     <span style={{ marginRight: '3px' }}>View all </span>
                     <span className="view-all__eagle">&gt;</span>
@@ -115,48 +63,18 @@ export const History = () => {
               )}
             </div>
             {history.length > 0 && (
-              <table className="table-history">
-                <thead>
-                  <tr className="table-titles">
-                    <th>Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Balance</th>
-                    <th scope="col">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...history]
-                    .slice(!isFullMode ? 0 : -3)
-                    .sort(
-                      (transactionA, transactionB) =>
-                        new Date(transactionB.time).getTime() -
-                        new Date(transactionA.time).getTime()
-                    )
-                    .map((transaction) => {
-                      return (
-                        <Transaction
-                          key={transaction.id}
-                          transaction={transaction}
-                          onEditInfo={setEditingTransaction}
-                          onEdit={setIsEditVisible}
-                          last={history[history.length - 1].id}
-                        />
-                      );
-                    })}
-                </tbody>
-              </table>
+              <HistoryTable
+                history={history}
+                isFullMode={isFullMode}
+                onEditInfo={setEditingTransaction}
+              />
             )}
-            {!add && edit && isEditVisible && editingTransaction && (
-              <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
-                <TransactionForm
-                  updateData={{ ...editingTransaction }}
-                />
-              </div>
+            {!add && edit && editingTransaction && (
+              <TransactionForm updateData={{ ...editingTransaction }} />
             )}
           </div>
         </div>
       )}
     </>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppSelector, useSelectorData } from '../../hooks/hooks';
 import { formatNumber } from '../../utils/calculations';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useSelectorData();
 
   return (
     <div

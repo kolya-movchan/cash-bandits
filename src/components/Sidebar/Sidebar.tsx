@@ -1,14 +1,12 @@
 import classNames from 'classnames';
-
-import { useAppSelector } from '../../hooks/hooks';
+import { useSelectorData } from '../../hooks/hooks';
 import { CustomLink } from '../CustomLink/CustomLink';
 import { CustomNavLink } from '../CustomNavLink/CustomNavLink';
 import { DarkMode } from '../DarkMode/DarkMode';
 import { Logo } from '../Logo/Logo';
 
-
 export const Sidebar = () => {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useSelectorData()
 
   return (
     <div className={classNames('side-pannel', { 'side-pannel--dark-mode': darkMode })}>

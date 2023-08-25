@@ -1,12 +1,12 @@
-import { NavLink, useLocation } from 'react-router-dom';
-import classNames from 'classnames';
+import { NavLink, useLocation } from 'react-router-dom'
+import classNames from 'classnames'
 
 type Props = {
-  to: string;
-  iconSrc: string;
-  text: string;
-  darkMode: boolean;
-};
+  to: string
+  iconSrc?: string
+  text: string
+  darkMode: boolean
+}
 
 export const CustomNavLink: React.FC<Props> = ({
   to,
@@ -14,7 +14,7 @@ export const CustomNavLink: React.FC<Props> = ({
   text,
   darkMode,
 }) => {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <NavLink
@@ -33,5 +33,5 @@ export const CustomNavLink: React.FC<Props> = ({
       />
       {text}
     </NavLink>
-  );
-};
+  )
+}

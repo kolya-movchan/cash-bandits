@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { useAppSelector } from "../../hooks/hooks";
+import { useSelectorData } from "../../hooks/hooks";
 
 export function Logo() {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useSelectorData()
 
   return (
     <div className="side-container">

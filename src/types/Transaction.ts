@@ -3,3 +3,10 @@ export interface Transaction {
   type: string;
   amount: string;
 }
+
+export type EditingTransaction = {
+  id: string;
+  name: string;
+  amount: number;
+  type: string;
+};

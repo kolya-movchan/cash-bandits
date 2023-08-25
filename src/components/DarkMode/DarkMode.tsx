@@ -1,11 +1,10 @@
 import classNames from "classnames";
-import { useLocation } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import darkMode, { switchMode } from "../../reducers/darkMode";
+import { useAppDispatch, useSelectorData } from "../../hooks/hooks";
+import { switchMode } from "../../reducers/darkMode";
 
 export const DarkMode = () => {
   const dispatch = useAppDispatch();
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useSelectorData();
   
   return <div className="form-check form-switch">
     <label className="custom-control-label nav__dark-and-light">

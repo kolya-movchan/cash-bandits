@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Form as BootstrapForm, Container, Button } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
-import classNames from 'classnames';
+import { useEffect, useRef } from 'react'
+import { Form as BootstrapForm, Container, Button } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast } from 'react-toastify'
+import classNames from 'classnames'
 
 import {
   decrement,
@@ -11,31 +11,33 @@ import {
   saveTransaction,
   updateExpenses,
   updateIncome,
-} from '../../reducers/balance';
-import { Transaction } from '../../types/Transaction';
-import { nameValidation } from '../../utils/regex';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { control } from '../../reducers/form';
-import { FormMode } from '../../types/Reducer';
-import { NewTransaction, setNewTranscationId } from '../../reducers/newTransaction';
-import uniqid from 'uniqid';
+} from '../../reducers/balance'
+import { Transaction } from '../../types/Transaction'
+import { nameValidation } from '../../utils/regex'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { control } from '../../reducers/form'
+import { FormMode } from '../../types/Reducer'
+import { NewTransaction, setNewTranscationId } from '../../reducers/newTransaction'
+import uniqid from 'uniqid'
 
 interface UpdateData {
-  id: string;
-  name: string;
-  amount: number;
-  type: string;
+  id: string
+  name: string
+  amount: number
+  type: string
 }
 
 type Props = {
-  updateData?: UpdateData;
-};
+  updateData?: UpdateData
+}
 
 export const TransactionForm: React.FC<Props> = ({ updateData }) => {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
-  const dispatch = useAppDispatch();
-  const { add, edit } = useAppSelector<FormMode>((state) => state.form);
-  const { newTransactionId } = useAppSelector<NewTransaction>((state) => state.NewTransaction);
+  const { darkMode } = useAppSelector((state) => state.darkMode)
+  const dispatch = useAppDispatch()
+  const { add, edit } = useAppSelector<FormMode>((state) => state.form)
+  const { newTransactionId } = useAppSelector<NewTransaction>(
+    (state) => state.NewTransaction
+  )
 
   const {
     handleSubmit,
@@ -43,67 +45,67 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     formState: { errors },
     reset,
     setFocus,
-  } = useForm<Transaction>();
+  } = useForm<Transaction>()
 
   const hideEditForm = () => {
     if (updateData) {
-      dispatch(control('editIsOff'));
+      dispatch(control('editIsOff'))
     } else {
-      dispatch(control('addIsOff'));
+      dispatch(control('addIsOff'))
     }
-  };
+  }
 
   const checkIfSameInfo = (dataValue: Transaction, UpdateDataValue: UpdateData) => {
-    const duplicateName = dataValue.name === UpdateDataValue.name;
-    const duplicateAmount = +dataValue.amount === UpdateDataValue.amount;
-    const duplicateType = dataValue.type === UpdateDataValue.type;
+    const duplicateName = dataValue.name === UpdateDataValue.name
+    const duplicateAmount = +dataValue.amount === UpdateDataValue.amount
+    const duplicateType = dataValue.type === UpdateDataValue.type
 
-    const allDuplicates = duplicateName && duplicateAmount && duplicateType;
+    const allDuplicates = duplicateName && duplicateAmount && duplicateType
 
     if (allDuplicates) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
   const onSubmit = (data: Transaction) => {
     if (updateData) {
-      hideEditForm();
-      const sameData = checkIfSameInfo(data, updateData);
+      hideEditForm()
+      const sameData = checkIfSameInfo(data, updateData)
 
       if (sameData) {
-        return;
+        return
       }
     }
 
-    const newTransactionId = uniqid();
+    const newTransactionId = uniqid()
 
-    const newData = { ...data, amount: parseFloat(data.amount), id: newTransactionId };
+    const newData = { ...data, amount: parseFloat(data.amount), id: newTransactionId }
 
     if (updateData && data.type === 'income') {
-      dispatch(updateIncome({ ...newData, id: updateData.id }));
+      dispatch(updateIncome({ ...newData, id: updateData.id }))
     } else if (updateData) {
-      dispatch(updateExpenses({ ...newData, id: updateData.id }));
+      dispatch(updateExpenses({ ...newData, id: updateData.id }))
     }
 
     if (!updateData && data.type === 'income') {
-      dispatch(increment(newData));
+      dispatch(increment(newData))
     } else if (!updateData) {
-      dispatch(decrement(newData));
+      dispatch(decrement(newData))
     }
 
-    dispatch(saveTransaction());
-    reset();
-    const message = `Transaction ${updateData ? 'updated' : 'registered'} successfully!`;
+    dispatch(saveTransaction())
+    reset()
+    const message = `Transaction ${updateData ? 'updated' : 'registered'} successfully!`
 
     toast.success(message, {
       autoClose: 1500,
-    });
+    })
 
-    dispatch(control('addIsOff'));
-    dispatch(setNewTranscationId(updateData ? updateData?.id : newTransactionId));
-  };
+    dispatch(control('addIsOff'))
+    dispatch(setNewTranscationId(updateData ? updateData?.id : newTransactionId))
+  }
 
   useEffect(() => {
     if (updateData) {
@@ -111,36 +113,36 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
         name: updateData.name,
         type: updateData.type,
         amount: updateData.amount.toString(),
-      });
+      })
     }
 
     setTimeout(() => {
-      setFocus('name');
-    }, 150);
-  }, [updateData, reset]);
+      setFocus('name')
+    }, 150)
+  }, [updateData, reset])
 
   // const nameInput: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setFocus('name');
-    }, 150);
-  }, [setFocus]);
+      setFocus('name')
+    }, 150)
+  }, [setFocus])
 
   return (
-    <>
+    <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
       <Container
         className={classNames({ 'payment-form-container--dark-mode': darkMode })}
       >
         {/* {onFormShow && ( */}
-          <div className="d-flex justify-content-end">
-            <button
-              type="button"
-              className="btn-close"
-              aria-label="Close"
-              onClick={() => dispatch(control(updateData ? 'editIsOff' : 'addIsOff'))}
-            ></button>
-          </div>
+        <div className="d-flex justify-content-end">
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => dispatch(control(updateData ? 'editIsOff' : 'addIsOff'))}
+          ></button>
+        </div>
         {/* )} */}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
@@ -159,11 +161,11 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
                 required: 'Transaction Name is required',
                 validate: {
                   noOnlySpaces: (v) => {
-                    const trimmedValue = v.trim();
+                    const trimmedValue = v.trim()
                     if (trimmedValue.length === 0) {
-                      return 'Name cannot be only spaces';
+                      return 'Name cannot be only spaces'
                     }
-                    return true;
+                    return true
                   },
                   minLength: (v) => v.trim().length >= 1,
                 },
@@ -179,7 +181,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               defaultValue={updateData ? updateData.name : ''}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
-                  dispatch(control('addIsOff'));
+                  dispatch(control('addIsOff'))
                 }
               }}
             />
@@ -231,6 +233,6 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
           </div>
         </BootstrapForm>
       </Container>
-    </>
-  );
-};
+    </div>
+  )
+}

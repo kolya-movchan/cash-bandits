@@ -1,5 +1,5 @@
 %icon-dash-hover {
-  filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%)
+  filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%);
 }
 
 %icon-hover {
@@ -10,4 +10,50 @@
 %icon-hover-dark-mode {
   filter: invert(96%) sepia(0%) saturate(13%) hue-rotate(34deg) brightness(103%)
     contrast(102%);
+}
+
+%icon-card-hover {
+  filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%)
+    contrast(97%);
+}
+
+%flex-cl {
+  display: flex;
+  flex-direction: column;
+}
+
+%flex-cl-centered-scnd {
+  @extend %flex-cl;
+  align-items: center;
+}
+
+%flex-cl-centered-main {
+  @extend %flex-cl;
+  justify-content: center;
+}
+
+%flex-cl-centered-full {
+  @extend %flex-cl;
+  @extend %all-centered;
+}
+
+%flex-rw-centered-scnd {
+  display: flex;
+  align-items: center;
+}
+
+%flex-cl-centered-main {
+  display: flex;
+  justify-content: center;
+}
+
+%flex-cl-centered-full {
+  display: flex;
+  @extend %all-centered;
+}
+
+%all-centered {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

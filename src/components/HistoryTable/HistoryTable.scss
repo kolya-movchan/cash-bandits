@@ -1,0 +1,115 @@
+.table-history {
+  width: 100%;
+  text-align: center;
+  border-collapse: separate;
+}
+
+.view-all {
+  color: #28a073;
+  font-weight: $font-weigth-middle;
+  text-decoration: none;
+
+  &:hover {
+    color: #006f46;
+  }
+
+  &__eagle {
+    font-size: 15px;
+  }
+}
+
+.action-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.remove-all {
+  color: #bf4f47;
+  font-weight: $font-weigth-middle;
+  text-decoration: none;
+
+  &:hover {
+    color: #751e1e;
+  }
+
+  &__cross {
+    font-size: 15px;
+  }
+}
+
+.table-titles {
+  & > * {
+    text-transform: uppercase;
+    color: $link-color-light;
+    font-size: 11px;
+    font-weight: $font-weigth-middle;
+    padding-bottom: 5px;
+  }
+}
+
+.new-row {
+  animation: showHistory 1s ease-in;
+}
+
+.transaction-cell {
+  border-radius: 5px;
+  opacity: 0.95;
+}
+
+.transaction-cell-name {
+  &--dark-mode {
+    color: $main-color-light;
+  }
+}
+
+.transaction-cell-amount {
+  &--dark-mode {
+    color: $main-color-light;
+  }
+}
+
+.transaction-cell-balance {
+  &--dark-mode {
+    color: $main-color-light;
+  }
+}
+
+.income-cell {
+  color: #00a86b;
+}
+
+.expense-cell {
+  color: #fd5c63;
+}
+
+.time-cell {
+  @extend %flex-cl-centered-full;
+  gap: 7px;
+
+  &--dark-mode {
+    color: $main-color-light
+  }
+}
+
+.hours-cell {
+  color: $link-color-light;
+  font-size: 14px;
+}
+
+.editForm {
+  z-index: 1;
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  padding: 15px;
+
+  background-color: $main-color-light;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  transition: transform 1s ease;
+  animation: showUp 1s ease;
+
+  &--dark-mode {
+    background-color: $dark-mode-second-color;
+  }
+}
