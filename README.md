@@ -14,9 +14,6 @@ Check out the [**Live Demo**](https://kolya-movchan.github.io/mopobank) to see i
 
 
 ## Features 🚀
-
-## Features
-
 - 📊 Visualize your financial data with interactive charts.
 - 💰 Track income and expenses easily.
 - 🌙 Dark mode for comfortable usage at night.
@@ -71,7 +68,7 @@ Designed and developed with ❤️ by Kolya Movchan.
 
 Connect with me on [LinkedIn](https://www.linkedin.com/in/klmovchan/)
 
-[License](LICENSE) • This project is open-source.
+[License](license) • This project is open-source.
 
 ---
 
