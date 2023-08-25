@@ -33,8 +33,6 @@ This project makes use of modern technologies and libraries to provide a smooth 
 - **React Confirm Alert**: Implement customizable confirmation dialogs for important actions.
 - **React Toastify**: Display stylish toast notifications to enhance user feedback.
 - **Decimal.js**: Ensure precise and reliable arithmetic calculations.
-- **Faker**: Generate realistic fake data for testing purposes.
-- **Normalize.css**: A CSS reset library to ensure consistent styling across different browsers.
   
 ## Development Tools 🛠️
 
