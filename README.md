@@ -1,6 +1,6 @@
 # Financial Tracker App 📊💰
 
-Welcome to the Financial Tracker App, your ultimate solution for effortlessly managing your finances, tracking spendings and income, all wrapped up in a sleek and intuitive user interface. Gain control over your financial journey with features like visible total balance, income, and expenses, dynamic charts for visual insights, a comprehensive transaction history, and even a dark mode to suit your style. Let's dive into the exciting world of smart finance management!
+Welcome to the Financial Tracker App, your ultimate solution for effortlessly managing your finances, and tracking spending and income, all wrapped up in a sleek and intuitive user interface. Gain control over your financial journey with features like visible total balance, income, and expenses, dynamic charts for visual insights, a comprehensive transaction history, and even a dark mode to suit your style. Let's dive into the exciting world of smart finance management!
 
 [DEMO LINK](https://kolya-movchan.github.io/mopobank)
 
