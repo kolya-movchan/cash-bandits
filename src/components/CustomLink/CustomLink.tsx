@@ -1,20 +1,20 @@
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
-import { useSelectorData } from '../../hooks/hooks';
+import classNames from 'classnames'
+import { Link } from 'react-router-dom'
+import { useSelectorData } from '../../hooks/hooks'
 
 type Props = {
-  to: string;
-  iconSrc: string;
-  text: string;
-};
+  to: string
+  iconSrc: string
+  text: string
+}
 
 export const CustomLink: React.FC<Props> = ({ to, iconSrc, text }) => {
-  const { darkMode } = useSelectorData();
+  const { darkMode } = useSelectorData()
 
   return (
     <Link
       to={to}
-      target='_blank'
+      target="_blank"
       className={classNames('nav__link ', {
         'nav__link--dark-mode': darkMode,
       })}
@@ -28,5 +28,5 @@ export const CustomLink: React.FC<Props> = ({ to, iconSrc, text }) => {
       />
       {text}
     </Link>
-  );
-};
+  )
+}

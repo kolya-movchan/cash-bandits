@@ -22,14 +22,9 @@
   flex-direction: column;
 }
 
-%flex-cl-centered-scnd {
-  @extend %flex-cl;
-  align-items: center;
-}
-
-%flex-cl-centered-main {
-  @extend %flex-cl;
+%all-centered {
   justify-content: center;
+  align-items: center;
 }
 
 %flex-cl-centered-full {
@@ -42,18 +37,7 @@
   align-items: center;
 }
 
-%flex-cl-centered-main {
-  display: flex;
-  justify-content: center;
-}
-
-%flex-cl-centered-full {
+%flex-rw-centered-full {
   display: flex;
   @extend %all-centered;
-}
-
-%all-centered {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }

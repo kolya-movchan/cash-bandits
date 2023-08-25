@@ -7,6 +7,7 @@ import { ChartComponent } from '../../components/ChartComponent/ChartComponent'
 import { FinanceCards } from '../../components/FinanceCards/FinanceCards'
 import { History } from '../../routes'
 import { TransactionForm } from '../TransactionForm'
+import { FormStatus } from '../../types/FormStatus'
 
 export const Dashboard = () => {
   const { balance, income, expenses, darkMode, add, edit } = useSelectorData()
@@ -27,7 +28,7 @@ export const Dashboard = () => {
             src="./add.svg"
             alt="add transaction icon"
             className={classNames('add-trans', { 'add-trans--dark-mode': darkMode })}
-            onClick={() => dispatch(control('addIsOn'))}
+            onClick={() => dispatch(control(FormStatus.AddIsOn))}
           />
         </button>
       </div>

@@ -1,43 +1,25 @@
-import { useEffect, useRef } from 'react'
-import { Form as BootstrapForm, Container, Button } from 'react-bootstrap'
+import classNames from 'classnames'
+import { useEffect } from 'react'
+import { Button, Container, Form as BootstrapForm } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer, toast } from 'react-toastify'
-import classNames from 'classnames'
-
-import {
-  decrement,
-  increment,
-  saveTransaction,
-  updateExpenses,
-  updateIncome,
-} from '../../reducers/balance'
-import { Transaction } from '../../types/Transaction'
-import { nameValidation } from '../../utils/regex'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { control } from '../../reducers/form'
-import { FormMode } from '../../types/Reducer'
-import { NewTransaction, setNewTranscationId } from '../../reducers/newTransaction'
 import uniqid from 'uniqid'
-
-interface UpdateData {
-  id: string
-  name: string
-  amount: number
-  type: string
-}
+import { useAppDispatch, useSelectorData } from '../../hooks/hooks'
+import { control } from '../../reducers/form'
+import { FormStatus } from '../../types/FormStatus'
+import { Transaction, UpdateData } from '../../types/Transaction'
+import { focusInput, processSubmit, processSuccess } from '../../utils/logic'
+import { nameValidation } from '../../utils/regex'
 
 type Props = {
   updateData?: UpdateData
 }
 
 export const TransactionForm: React.FC<Props> = ({ updateData }) => {
-  const { darkMode } = useAppSelector((state) => state.darkMode)
+  const { darkMode } = useSelectorData()
   const dispatch = useAppDispatch()
-  const { add, edit } = useAppSelector<FormMode>((state) => state.form)
-  const { newTransactionId } = useAppSelector<NewTransaction>(
-    (state) => state.NewTransaction
-  )
+
+  const { name, type, amount } = updateData ?? {}
 
   const {
     handleSubmit,
@@ -47,103 +29,42 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
     setFocus,
   } = useForm<Transaction>()
 
-  const hideEditForm = () => {
-    if (updateData) {
-      dispatch(control('editIsOff'))
-    } else {
-      dispatch(control('addIsOff'))
-    }
-  }
-
-  const checkIfSameInfo = (dataValue: Transaction, UpdateDataValue: UpdateData) => {
-    const duplicateName = dataValue.name === UpdateDataValue.name
-    const duplicateAmount = +dataValue.amount === UpdateDataValue.amount
-    const duplicateType = dataValue.type === UpdateDataValue.type
-
-    const allDuplicates = duplicateName && duplicateAmount && duplicateType
-
-    if (allDuplicates) {
-      return true
-    }
-
-    return false
-  }
-
   const onSubmit = (data: Transaction) => {
-    if (updateData) {
-      hideEditForm()
-      const sameData = checkIfSameInfo(data, updateData)
-
-      if (sameData) {
-        return
-      }
-    }
-
     const newTransactionId = uniqid()
 
-    const newData = { ...data, amount: parseFloat(data.amount), id: newTransactionId }
-
-    if (updateData && data.type === 'income') {
-      dispatch(updateIncome({ ...newData, id: updateData.id }))
-    } else if (updateData) {
-      dispatch(updateExpenses({ ...newData, id: updateData.id }))
-    }
-
-    if (!updateData && data.type === 'income') {
-      dispatch(increment(newData))
-    } else if (!updateData) {
-      dispatch(decrement(newData))
-    }
-
-    dispatch(saveTransaction())
-    reset()
-    const message = `Transaction ${updateData ? 'updated' : 'registered'} successfully!`
-
-    toast.success(message, {
-      autoClose: 1500,
-    })
-
-    dispatch(control('addIsOff'))
-    dispatch(setNewTranscationId(updateData ? updateData?.id : newTransactionId))
+    processSubmit(dispatch, updateData, data, newTransactionId)
+    processSuccess(reset, dispatch, updateData, newTransactionId)
   }
 
   useEffect(() => {
     if (updateData) {
       reset({
-        name: updateData.name,
-        type: updateData.type,
-        amount: updateData.amount.toString(),
+        name,
+        type,
+        amount: amount?.toString(),
       })
     }
 
-    setTimeout(() => {
-      setFocus('name')
-    }, 150)
-  }, [updateData, reset])
+    focusInput(setFocus)
+  }, [updateData])
 
-  // const nameInput: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setFocus('name')
-    }, 150)
-  }, [setFocus])
+  useEffect(() => focusInput(setFocus), [setFocus])
 
   return (
     <div className={classNames('editForm', { 'editForm--dark-mode': darkMode })}>
       <Container
         className={classNames({ 'payment-form-container--dark-mode': darkMode })}
       >
-        {/* {onFormShow && ( */}
         <div className="d-flex justify-content-end">
           <button
             type="button"
-            className="btn-close"
+            className={classNames('btn-close', { 'btn-close-white': darkMode })}
             aria-label="Close"
-            onClick={() => dispatch(control(updateData ? 'editIsOff' : 'addIsOff'))}
+            onClick={() =>
+              dispatch(control(updateData ? FormStatus.EditIsOff : FormStatus.AddIsOff))
+            }
           ></button>
         </div>
-        {/* )} */}
 
         <BootstrapForm onSubmit={handleSubmit(onSubmit)}>
           <BootstrapForm.Group
@@ -152,9 +73,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
           >
             <BootstrapForm.Label>Transaction Name</BootstrapForm.Label>
             <BootstrapForm.Control
-              className={classNames({ 'error-container': errors.name }, 'ff', {
-                ff: darkMode,
-              })}
+              className={classNames({ 'error-container': errors.name })}
               type="text"
               placeholder="e.g. Salary or Loan"
               {...register('name', {
@@ -178,10 +97,10 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
                   message: 'Name cannot be longer than 30 characters',
                 },
               })}
-              defaultValue={updateData ? updateData.name : ''}
+              defaultValue={updateData ? name : ''}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
-                  dispatch(control('addIsOff'))
+                  dispatch(control(FormStatus.AddIsOff))
                 }
               }}
             />
@@ -193,7 +112,7 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
             <BootstrapForm.Select
               as="select"
               {...register('type', { required: 'Transaction Type is required' })}
-              defaultValue={updateData ? updateData.type : ''}
+              defaultValue={updateData ? type : ''}
             >
               <option disabled>Choose Transaction Type</option>
               <option value="income">Income</option>
@@ -210,16 +129,16 @@ export const TransactionForm: React.FC<Props> = ({ updateData }) => {
               {...register('amount', {
                 required: 'Amount is required',
                 min: {
-                  value: 0,
-                  message: 'Amount must be greater than or equal to 0',
+                  value: 0.01,
+                  message: 'Amount must be more than 0',
                 },
                 max: {
-                  value: 10000000000,
-                  message: 'Amount must be less than or equal to 100.000.000.000',
+                  value: 1000000,
+                  message: 'Amount must be less than or equal to 1.000.000',
                 },
               })}
               maxLength={11}
-              defaultValue={updateData ? updateData.amount : ''}
+              defaultValue={updateData ? amount : ''}
             />
             <p className={classNames('error', { 'error--narrow': updateData })}>
               {errors && errors.amount?.message}

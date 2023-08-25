@@ -2,10 +2,11 @@ import classNames from 'classnames'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 import React, { Dispatch, SetStateAction, useEffect } from 'react'
-import { useAppDispatch, useEditFormOpen, useModalWindowDelete, useSelectorData } from '../../hooks/hooks'
+import { useAppDispatch, useSelectorData } from '../../hooks/hooks'
 import { setNewTranscationId } from '../../reducers/newTransaction'
 import { EditingTransaction } from '../../types/Transaction'
 import { calculateTimeFormat } from '../../utils/calculations'
+import { showModalDeleteAll, updateEditInfo } from '../../utils/logic'
 
 type Props = {
   transaction: {
@@ -72,7 +73,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
           'time-cell--dark-mode': darkMode,
         })}
       >
-        {calculateTimeFormat(time).formattedDate}{' '}
+        <span>{calculateTimeFormat(time).formattedDate} </span>
         <span className="hours-cell">at {calculateTimeFormat(time).formattedTime}</span>
       </td>
       <td>
@@ -81,7 +82,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
             className={classNames('edit-button', {
               'edit-button--dark-mode': darkMode,
             })}
-            onClick={() => useEditFormOpen(id, name, amount, type, onEditInfo, dispatch)}
+            onClick={() => updateEditInfo(id, name, amount, type, onEditInfo, dispatch)}
           >
             <img src="./edit.svg" alt="edit logo" className="tools" />
           </button>
@@ -89,7 +90,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
             className={classNames('delete-button', {
               'delete-button--dark-mode': darkMode,
             })}
-            onClick={useModalWindowDelete(darkMode, id, amount, type, dispatch)}
+            onClick={showModalDeleteAll(darkMode, id, amount, type, dispatch)}
           >
             <img src="./delete.svg" alt="delete logo" className="tools" />
           </button>

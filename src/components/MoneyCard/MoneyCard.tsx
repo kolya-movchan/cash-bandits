@@ -1,16 +1,16 @@
-import classNames from 'classnames';
-import React from 'react';
-import { useAppSelector, useSelectorData } from '../../hooks/hooks';
-import { formatNumber } from '../../utils/calculations';
+import classNames from 'classnames'
+import React from 'react'
+import { useSelectorData } from '../../hooks/hooks'
+import { formatNumber } from '../../utils/calculations'
 
 type Props = {
-  title: string;
-  amount: number;
-  icon: string;
-};
+  title: string
+  amount: number
+  icon: string
+}
 
 export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
-  const { darkMode } = useSelectorData();
+  const { darkMode } = useSelectorData()
 
   return (
     <div
@@ -20,15 +20,21 @@ export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
       })}
     >
       {' '}
-      <div className={classNames('money-card__icon-container', {
-            'money-card__icon-container--dark-mode': darkMode,
-          })}>
+      <div
+        className={classNames('money-card__icon-container', {
+          'money-card__icon-container--dark-mode': darkMode,
+        })}
+      >
         <img src={icon} alt="wallet total balance icon" className="money-card__icon" />
       </div>
       <div className="money-card__balance">
-        <span className={classNames('money-card__title', {
+        <span
+          className={classNames('money-card__title', {
             'money-card__title--dark-mode': darkMode,
-          })}>{title}</span>
+          })}
+        >
+          {title}
+        </span>
         <span
           className={classNames('money-card__sum', {
             'money-card__sum--dark-mode': darkMode,
@@ -40,5 +46,5 @@ export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
         </span>
       </div>
     </div>
-  );
-};
+  )
+}

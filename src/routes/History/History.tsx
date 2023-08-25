@@ -2,15 +2,18 @@ import classNames from 'classnames'
 import { useLayoutEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { HistoryTable } from '../../components/HistoryTable/HistoryTable'
-import { useAppDispatch, useModalWindow, useSelectorData } from '../../hooks/hooks'
+import { useAppDispatch, useSelectorData } from '../../hooks/hooks'
 import { EditingTransaction } from '../../types/Transaction'
+import { showModalSingleDelete } from '../../utils/logic'
 import { TransactionForm } from '../TransactionForm'
 import NoData from './NoData'
 
 export const History = () => {
   const { history, darkMode, add, edit } = useSelectorData()
 
-  const [editingTransaction, setEditingTransaction] = useState<EditingTransaction | undefined>()
+  const [editingTransaction, setEditingTransaction] = useState<
+    EditingTransaction | undefined
+  >()
   const [isFullMode, setIsFullMode] = useState(false)
   const locationData = useLocation()
 
@@ -50,7 +53,7 @@ export const History = () => {
                 <div className="action-controls">
                   <button
                     className="remove-all"
-                    onClick={useModalWindow(dispatch, darkMode)}
+                    onClick={showModalSingleDelete(dispatch, darkMode)}
                   >
                     Remove all
                   </button>

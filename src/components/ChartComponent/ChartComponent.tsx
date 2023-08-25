@@ -9,16 +9,16 @@ export const ChartComponent = memo(() => {
 
   const { options, data } = prepareChartData(darkMode, history)
 
-  const [prevHistory, setPrevHistory] = useState(history);
-
+  const [prevHistory, setPrevHistory] = useState(history)
 
   useLayoutEffect(() => {
     if (history !== prevHistory) {
-      setPrevHistory(history);
+      setPrevHistory(history)
     }
-  }, [history, prevHistory]);
+  }, [history, prevHistory])
 
-  const modifiedOptions = history === prevHistory ? { ...options, animations: false } : options
+  const modifiedOptions =
+    history === prevHistory ? { ...options, animations: false } : options
 
   console.log(modifiedOptions.animations.valueOf)
 

@@ -1,8 +1,8 @@
-import { Container } from 'react-bootstrap';
-import { useAppSelector } from '../../hooks/hooks';
+import { Container } from 'react-bootstrap'
+import { useAppSelector } from '../../hooks/hooks'
 
 export function NotFound() {
-  const { darkMode } = useAppSelector((state) => state.darkMode);
+  const { darkMode } = useAppSelector((state) => state.darkMode)
 
   return (
     <Container className="vh-100">
@@ -14,5 +14,5 @@ export function NotFound() {
         <h1>Oops... Error 404. Page not found.</h1>
       </div>
     </Container>
-  );
+  )
 }

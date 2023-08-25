@@ -1,5 +1,5 @@
-import classNames from "classnames";
-import { useSelectorData } from "../../hooks/hooks";
+import classNames from 'classnames'
+import { useSelectorData } from '../../hooks/hooks'
 
 export function Logo() {
   const { darkMode } = useSelectorData()
@@ -16,5 +16,5 @@ export function Logo() {
         </h2>
       </a>
     </div>
-  );
+  )
 }

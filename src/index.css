@@ -14,9 +14,14 @@
   filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%) contrast(97%);
 }
 
-.money-card__balance, .time-cell, .no-data {
+.money-card__balance, .no-data {
   display: flex;
   flex-direction: column;
+}
+
+.time-cell, .money-card__balance, .no-data {
+  justify-content: center;
+  align-items: center;
 }
 
 .delete-button, .edit-button {
@@ -24,14 +29,8 @@
   align-items: center;
 }
 
-.money-card__balance, .time-cell, .no-data {
+.time-cell {
   display: flex;
-}
-
-.money-card__balance, .time-cell, .no-data {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 * {
@@ -39,13 +38,13 @@
 }
 
 html {
-  height: 100vh; /* Set a fixed height */
+  height: 100vh;
   overflow: hidden;
 }
 
 body {
   margin: 0;
-  max-height: 100%; /* Allow inner content to take full height */
+  max-height: 100%;
   overflow-y: auto;
 }
 
@@ -79,13 +78,6 @@ button {
   color: inherit;
   background-color: transparent;
   cursor: pointer;
-}
-
-.confirm-window {
-  background-color: rgba(248, 248, 248, 0.9);
-}
-.confirm-window--dark-mode {
-  background-color: rgba(49, 49, 51, 0.9);
 }
 
 .error {
@@ -140,6 +132,13 @@ select.error-container {
 }
 .no-data__text--dark-mode {
   color: #fff;
+}
+
+.confirm-window {
+  background-color: rgba(248, 248, 248, 0.9);
+}
+.confirm-window--dark-mode {
+  background-color: rgba(49, 49, 51, 0.9);
 }
 
 .side-pannel {

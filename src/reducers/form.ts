@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FormMode } from '../types/Reducer';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { FormStatus } from '../types/FormStatus'
+import { FormMode } from '../types/Reducer'
 
 const initialState: FormMode = {
   add: false,
   edit: false,
-};
+}
 
 export const formSlice = createSlice({
   name: 'form',
@@ -12,31 +13,31 @@ export const formSlice = createSlice({
   reducers: {
     control: (state: FormMode, action: PayloadAction<string>) => {
       switch (action.payload) {
-        case 'addIsOn':
-          state.add = true;
-          state.edit = false;
-          break;
+        case FormStatus.AddIsOn:
+          state.add = true
+          state.edit = false
+          break
 
-        case 'editIsOn':
-          state.add = false;
-          state.edit = true;
-          break;
+        case FormStatus.EditIsOn:
+          state.edit = true
+          state.add = false
+          break
 
-        case 'addIsOff':
-          state.add = false;
-          break;
+        case FormStatus.AddIsOff:
+          state.add = false
+          break
 
-        case 'editIsOff':
-          state.edit = false;
-          break;
+        case FormStatus.EditIsOff:
+          state.edit = false
+          break
 
         default:
-          state = initialState;
+          state = initialState
       }
     },
   },
-});
+})
 
-export const { control } = formSlice.actions;
+export const { control } = formSlice.actions
 
-export default formSlice.reducer;
+export default formSlice.reducer

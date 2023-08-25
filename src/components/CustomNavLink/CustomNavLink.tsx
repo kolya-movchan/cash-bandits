@@ -8,12 +8,7 @@ type Props = {
   darkMode: boolean
 }
 
-export const CustomNavLink: React.FC<Props> = ({
-  to,
-  iconSrc,
-  text,
-  darkMode,
-}) => {
+export const CustomNavLink: React.FC<Props> = ({ to, iconSrc, text, darkMode }) => {
   const location = useLocation()
 
   return (

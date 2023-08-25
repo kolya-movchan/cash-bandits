@@ -1,32 +1,32 @@
 interface Payload {
-  amount: number;
-  name: string;
-  type: string;
+  amount: number
+  name: string
+  type: string
 }
 
 export interface TransactionPayload extends Payload {
-  id: string,
+  id: string
 }
 
 export interface DeletePayload {
-   id: string,
-  amount: number,
+  id: string
+  amount: number
 }
 
 export interface History extends Payload {
-  id: string,
-  currentBalance: number,
-  time: string,
+  id: string
+  currentBalance: number
+  time: string
 }
 
 export interface State {
-  balance: number,
-  income: number,
-  expenses: number,
-  history: History[],
+  balance: number
+  income: number
+  expenses: number
+  history: History[]
 }
 
 export interface FormMode {
-  add: boolean;
-  edit: boolean;
+  add: boolean
+  edit: boolean
 }

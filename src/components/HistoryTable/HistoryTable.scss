@@ -83,11 +83,11 @@
 }
 
 .time-cell {
-  @extend %flex-cl-centered-full;
+  @extend %flex-rw-centered-full;
   gap: 7px;
 
   &--dark-mode {
-    color: $main-color-light
+    color: $main-color-light;
   }
 }
 

@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import { useSelectorData } from '../../hooks/hooks';
-import { CustomLink } from '../CustomLink/CustomLink';
-import { CustomNavLink } from '../CustomNavLink/CustomNavLink';
-import { DarkMode } from '../DarkMode/DarkMode';
-import { Logo } from '../Logo/Logo';
+import classNames from 'classnames'
+import { useSelectorData } from '../../hooks/hooks'
+import { CustomLink } from '../CustomLink/CustomLink'
+import { CustomNavLink } from '../CustomNavLink/CustomNavLink'
+import { DarkMode } from '../DarkMode/DarkMode'
+import { Logo } from '../Logo/Logo'
 
 export const Sidebar = () => {
   const { darkMode } = useSelectorData()
@@ -41,5 +41,5 @@ export const Sidebar = () => {
         </div>{' '}
       </div>
     </div>
-  );
-};
+  )
+}
