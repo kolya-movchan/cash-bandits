@@ -67,7 +67,3 @@ Designed and developed with ❤️ by Kolya Movchan.
 Connect with me on [LinkedIn](https://www.linkedin.com/in/klmovchan/)
 
 [License](license) • This project is open-source.
-
----
-
-*Disclaimer: This application is for educational and personal use. Please do not input sensitive financial information.*
