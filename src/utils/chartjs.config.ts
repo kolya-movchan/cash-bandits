@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from 'chart.js'
 import { History } from '../types/Reducer'
 import { calculateDailyBalances } from './calculations'
@@ -41,7 +42,7 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
     labels.push(currentDate.toLocaleDateString('en-US', dateOptions))
   }
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     animations: {
       tension: {
@@ -67,7 +68,7 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
       title: {
         display: true,
         text: 'Total Income and Expenses Statistics',
-        align: 'start',
+        align: 'start' as const,
         font: {
           size: 20,
         },
@@ -84,9 +85,9 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
           display: false,
         },
         ticks: {
-          callback: (value: number) => {
+          callback: (value) => {
             if (value >= 1000) {
-              return `${value / 1000}K`
+              return `${+value / 1000}K`
             }
             return value
           },
@@ -108,7 +109,21 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
     dateOptions
   )
 
-  const data = {
+  type ChartData = {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+      pointHoverBackgroundColor?: string;
+      borderCapStyle: 'round' | 'butt' | 'square';
+      tension: number;
+      pointRadius: number;
+    }[];
+  };
+
+  const data: ChartData = {
     labels,
     datasets: [
       {
