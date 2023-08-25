@@ -23,7 +23,7 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
   )
 
   const today = new Date()
-  const daysBeforeNow = 4
+  const daysBeforeNow = 2
 
   const dateOptions: Intl.DateTimeFormatOptions = {
     month: 'short',
@@ -32,7 +32,7 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
 
   const labels: string[] = []
 
-  for (let i = daysBeforeNow; i >= 0; i--) {
+  for (let i = daysBeforeNow; i >= -2; i--) {
     const currentDate = new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -77,9 +77,6 @@ export const prepareChartData = (darkMode: boolean, history: History[]) => {
     },
 
     scales: {
-      x: {
-        ticks: {},
-      },
       y: {
         grid: {
           display: false,
