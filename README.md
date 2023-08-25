@@ -5,12 +5,13 @@ Welcome to the Financial Tracker App, your ultimate solution for effortlessly ma
 [DEMO LINK](https://kolya-movchan.github.io/mopobank)
 
 <p align="center">
-  ![Financial App Demo Image]<img src="(https://github.com/kolya-movchan/mopobank/blob/main/public/mopobank-demo.png?raw=true)" alt="Financial App Screenshot">
+  <img src="https://github.com/kolya-movchan/mopobank/raw/main/public/mopobank-demo.png" alt="Financial App Screenshot">
 </p>
 
 <p align="center">
-  ![Financial App Demo Image Dark Mode]<img src="(https://github.com/kolya-movchan/mopobank/blob/main/public/mopobank-demo-dark-mode.png?raw=true)" alt="Financial App Screenshot Dark Mode">
+  <img src="https://github.com/kolya-movchan/mopobank/raw/main/public/mopobank-demo-dark-mode.png" alt="Financial App Screenshot Dark Mode">
 </p>
+
 
 ## Features 🚀
 
