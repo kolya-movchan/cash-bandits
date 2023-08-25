@@ -5,7 +5,7 @@ Welcome to the Financial Tracker App, your ultimate solution for effortlessly ma
 [DEMO LINK](https://kolya-movchan.github.io/mopobank)
 
 <p align="center">
-  <img src='./mopobank-demo.png" alt="Financial App Screenshot">
+  <img src="./mopobank-demo.png" alt="Financial App Screenshot">
 </p>
 
 <p align="center">
