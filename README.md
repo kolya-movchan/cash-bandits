@@ -71,7 +71,7 @@ Designed and developed with ❤️ by Kolya Movchan.
 
 Connect with me on [LinkedIn](https://www.linkedin.com/in/klmovchan/)
 
-[License](LICENSE) • This project is open-source.
+[License](license) • This project is open-source.
 
 ---
 
