@@ -1,67 +1,74 @@
-# INTRO
-Welcome to my project! This application is designed to help you manage your finances efficiently by allowing you to add income, expenses, and track your transaction history. With its user-friendly interface and powerful features, you can stay organized and gain insights into your financial activities.
+# Financial Tracker App 📊💰
 
-To manage the global state and data flow, Redux and Redux Toolkit are employed. These libraries provide a robust and predictable state management solution, enabling centralized data storage and efficient data updates throughout the application.
+Welcome to the Financial Tracker App, your ultimate solution for effortlessly managing your finances, tracking spendings and income, all wrapped up in a sleek and intuitive user interface. Gain control over your financial journey with features like visible total balance, income, and expenses, dynamic charts for visual insights, a comprehensive transaction history, and even a dark mode to suit your style. Let's dive into the exciting world of smart finance management!
 
-Enjoy your finances workflow!
+<p align="center">
+  <img src="./mopobank-demo" alt="Financial Tracker App Screenshot">
+</p>
 
-[DEMO LINK](https://kolya-movchan.github.io/mopobank)
+<p align="center">
+  <img src="./mopobank-demo-dark-mode" alt="Financial Tracker App Screenshot">
+</p>
 
-# TECHNOLOGIES:
+## Features 🚀
 
-## Vite
-I used Vite as the build tool and development framework for this project. Vite offers a fast and efficient development experience, allowing for quick project setup and speedy hot module replacement. Its benefits include improved development productivity and a smoother development workflow.
+- **Total Balance at a Glance**: Get a clear view of your financial standing with prominently displayed total balance, income, and expenses.
+- **Interactive Charts**: Visualize your financial data through interactive charts showcasing total income and expenses over time.
+- **Transaction History**: Keep track of your transactions with a detailed history, complete with options to edit or delete individual transactions.
+- **Efficient Management**: Seamlessly remove all transactions or view all transactions using the routing feature.
+- **Dark Mode**: Toggle dark mode for a comfortable and eye-friendly experience during nighttime usage.
 
-## TypeScript
-By incorporating TypeScript into the project, I benefited from enhanced code quality and improved tooling support. TypeScript's static typing caught potential errors during development, resulting in more reliable and maintainable code. The type annotations provided better documentation and improved collaboration within the team.
+## Technologies Used 🛠️
 
-## JavaScript
-JavaScript served as the fundamental programming language for web development in this project. It enabled me to create interactive and dynamic functionality, handle user interactions, and perform calculations and data manipulations on the client-side.
+This project makes use of modern technologies and libraries to provide a smooth and delightful user experience:
 
-## React
-Utilizing React facilitated the creation of reusable UI components and efficient rendering through a virtual DOM. React's component-based architecture promoted code reusability and maintainability. Its declarative syntax and efficient rendering capabilities were instrumental in building dynamic and responsive user interfaces.
+- **React**: A widely used JavaScript library for building user interfaces, enabling seamless component-based UI development.
+- **Redux Toolkit**: The official recommended way to manage state in React applications, ensuring efficient and predictable state management.
+- **React Router DOM**: For handling navigation and routing within the app.
+- **React Bootstrap**: Leverage the power of Bootstrap with React-specific components for consistent and responsive UI.
+- **Chart.js**: Create stunning charts and graphs to visualize your financial data.
+- **React Chartjs 2**: A wrapper around Chart.js, providing easy integration of dynamic charts into your React app.
+- **React Hook Form**: Simplify form handling with this flexible and performant library.
+- **React Confirm Alert**: Implement customizable confirmation dialogs for important actions.
+- **React Toastify**: Display stylish toast notifications to enhance user feedback.
+- **Decimal.js**: Ensure precise and reliable arithmetic calculations.
+- **Faker**: Generate realistic fake data for testing purposes.
+- **Normalize.css**: A CSS reset library to ensure consistent styling across different browsers.
+  
+## Development Tools 🛠️
 
-## React Hook Form
-React Hook Form simplified form management by leveraging React hooks. It provided an efficient way to handle form registration, validation, submission, and state management. This library reduced boilerplate code and improved the overall form handling experience.
+The project is built with the help of various development tools and dependencies:
 
-## React Router
-By incorporating React Router, I enabled seamless navigation and routing within the single-page application. React Router's declarative routing and URL parameter handling allowed for efficient navigation between different sections of the app, providing a smooth user experience.
+- **TypeScript**: A statically typed superset of JavaScript that enhances code quality and development efficiency.
+- **ESLint**: Provides code linting and ensures consistent code style following the AirBnB guidelines.
+- **Prettier**: Ensures code formatting is consistent and maintains a clean codebase.
+- **Sass**: A powerful CSS preprocessor for more organized and maintainable styles.
+- **Vite**: A fast build tool that significantly improves development experience with lightning-fast hot module replacement.
+- **GitHub Pages**: Deploy your app effortlessly to GitHub Pages for easy sharing.
+- **Vite Plugin SVGR**: Allows importing SVG files as React components for seamless vector graphics integration.
+  
+## Getting Started 🏁
 
-## react-toastify
-The usage of react-toastify enhanced the app's user experience by providing informative and user-friendly notifications. It offered customizable and responsive notifications for real-time feedback, ensuring a seamless and interactive user interface.
+1. Clone this repository.
+2. Run `npm install` to install dependencies.
+3. Start the development server with `npm run dev`.
+4. Open your browser and navigate to `http://localhost:3000`.
+5. Begin tracking your finances with ease!
 
-## Redux
-Redux served as the predictable state management library for this project. It provided centralized data storage and facilitated predictable data flow throughout the application. Redux's global state management made it easier to manage and update data across components, ensuring a consistent application state.
+## Contributions and Feedback 🙌
 
-## Redux Toolkit
-By leveraging Redux Toolkit, I simplified working with Redux. It provided utilities and abstractions, such as simplified syntax, automatic generation of action types and reducers, and built-in support for immutable updates. Redux Toolkit reduced boilerplate code and promoted best practices, leading to more efficient development with Redux.
+Contributions, issues, and feedback are more than welcome! Feel free to open an issue if you encounter a bug, have a suggestion, or want to contribute enhancements.
 
-## Bootstrap
-Bootstrap, as a CSS framework, expedited the development process by providing pre-styled components, grids, and utilities. It ensured consistent styling across the application and delivered a responsive and visually appealing user interface.
+Let's make managing finances a breeze together! 💸
 
-## SCSS
-The usage of SCSS improved code maintainability and organization. SCSS allowed me to define reusable styles, reduce code duplication, and write more modular and readable code. The ability to nest selectors and utilize variables in SCSS further enhanced the styling capabilities of the project.
+---
 
-## Classnames Library
-By utilizing the classnames library, I managed dynamic class assignments based on specific conditions. This improved the flexibility and readability of the code, making it easier to apply conditional styling and handle class assignments dynamically.
+Designed and developed with ❤️ by [Your Name].
 
-## decimal.js
-The integration of the decimal.js library enabled precise decimal arithmetic in JavaScript. It proved particularly valuable when dealing with financial transactions that required accurate calculations and avoided common floating-point errors.
+Connect with me on [LinkedIn](https://www.linkedin.com/in/klmovchan/)
 
-## uniqid
-The use of the uniqid library facilitated the generation of unique identifiers for various elements within the app. It ensured the uniqueness of IDs, preventing conflicts and facilitating effective management and tracking of different entities or items.
+[License](LICENSE) • This project is open-source.
 
-## npm
-npm, as the package manager, allowed me to manage project dependencies efficiently. It facilitated the installation of various libraries and tools needed for the project, ensuring smooth development workflow.
+---
 
-## Prettier and ESLint
-Prettier and ESLint played crucial roles in maintaining consistent coding styles, catching potential errors, and improving code quality and readability. They enforced code formatting rules and identified code issues, enabling me to produce clean and high-quality code.
-
-## Git and GitHub
-The use of Git and GitHub provided version control and facilitated easy management of the source code. It ensured project integrity, enabled collaboration within the team, and promoted a structured and organized development process. Hosting the project on GitHub allowed for seamless code sharing and collaboration.
-
-## Clean and Organized Code
-The project adhered to a coding style that prioritized clean and well-organized code. Proper indentation, consistent formatting, and logical structuring made the codebase easier to understand and maintain. The adoption of naming conventions for variables, functions, and CSS classes enhanced code comprehensibility and facilitated self-documentation.
-
-## Explanation Comments
-Explanation comments were incorporated throughout the codebase to provide clarity and context for complex logic, implemented functionalities, and non-obvious code sections. These comments helped me and other developers understand the purpose and functionality of different code components, promoting better collaboration and maintainability.
+*Disclaimer: This application is for educational and personal use. Please do not input sensitive financial information.*
