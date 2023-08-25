@@ -2,10 +2,10 @@
 
 Welcome to the Financial Tracker App, your ultimate solution for effortlessly managing your finances, tracking spendings and income, all wrapped up in a sleek and intuitive user interface. Gain control over your financial journey with features like visible total balance, income, and expenses, dynamic charts for visual insights, a comprehensive transaction history, and even a dark mode to suit your style. Let's dive into the exciting world of smart finance management!
 
-[DEMO LINK](https://kolya-movchan.github.io/mopobank)
+Check out the [**Live Demo**](https://kolya-movchan.github.io/mopobank) to see it in action!
 
 <p align="center">
-  <img src="https://github.com/kolya-movchan/mopobank/raw/main/public/mopobank-demo.png" alt="Financial App Screenshot">
+  <img src="https://github.com/kolya-movchan/mopobank/raw/main/public/mopobank-demo.png" alt="Financial App Screenshot" style="margin-bottom: 20px;">
 </p>
 
 <p align="center">
@@ -15,11 +15,12 @@ Welcome to the Financial Tracker App, your ultimate solution for effortlessly ma
 
 ## Features 🚀
 
-- **Total Balance at a Glance**: Get a clear view of your financial standing with prominently displayed total balance, income, and expenses.
-- **Interactive Charts**: Visualize your financial data through interactive charts showcasing total income and expenses over time.
-- **Transaction History**: Keep track of your transactions with a detailed history, complete with options to edit or delete individual transactions.
-- **Efficient Management**: Seamlessly remove all transactions or view all transactions using the routing feature.
-- **Dark Mode**: Toggle dark mode for a comfortable and eye-friendly experience during nighttime usage.
+## Features
+
+- 📊 Visualize your financial data with interactive charts.
+- 💰 Track income and expenses easily.
+- 🌙 Dark mode for comfortable usage at night.
+- 📅 View your financial history over time.
 
 ## Technologies Used 🛠️
 
@@ -60,7 +61,7 @@ The project is built with the help of various development tools and dependencies
 
 ## Contributions and Feedback 🙌
 
-Contributions, issues, and feedback are more than welcome! Feel free to open an issue if you encounter a bug, have a suggestion, or want to contribute enhancements.
+Contributions, issues, and feedback are more than welcome! Feel free to contribute or report issues in the [Issues](https://github.com/kolya-movchan/mopobank/issues) section!
 
 Let's make managing finances a breeze together! 💸
 
