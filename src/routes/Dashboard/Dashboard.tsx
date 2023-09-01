@@ -23,12 +23,15 @@ export const Dashboard = () => {
         >
           Dashboard
         </h1>
-        <button>
+
+        <button
+          className={classNames('add-button', { 'add-button--dark-mode': darkMode })}
+          onClick={() => dispatch(control(FormStatus.AddIsOn))}
+        >
           <img
-            src="./add.svg"
+            src="/mopobank/plus.svg"
             alt="add transaction icon"
             className={classNames('add-trans', { 'add-trans--dark-mode': darkMode })}
-            onClick={() => dispatch(control(FormStatus.AddIsOn))}
           />
         </button>
       </div>

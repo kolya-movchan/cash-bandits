@@ -1,17 +1,13 @@
-.add-trans, .side-pannel .nav__link .icon-dash {
+.add-trans, .tools, .side-pannel .nav__link .icon-dash {
   filter: invert(78%) sepia(5%) saturate(675%) hue-rotate(172deg) brightness(87%);
 }
 
-.add-trans:hover, .side-pannel .nav__link--active .icon-dash, .side-pannel .nav__link:hover .icon-dash {
+.add-button:hover .add-trans, .side-pannel .nav__link--active .icon-dash, .side-pannel .nav__link:hover .icon-dash {
   filter: invert(6%) sepia(5%) saturate(7075%) hue-rotate(182deg) brightness(95%) contrast(84%);
 }
 
-.add-trans--dark-mode:hover, .side-pannel .nav__mode--dark-mode:hover, .side-pannel .nav__link:hover .icon-dash--dark-mode {
+.add-button--dark-mode:hover .add-trans, .side-pannel .nav__mode--dark-mode:hover, .side-pannel .nav__link:hover .icon-dash--dark-mode {
   filter: invert(96%) sepia(0%) saturate(13%) hue-rotate(34deg) brightness(103%) contrast(102%);
-}
-
-.money-card:hover .money-card__icon {
-  filter: invert(99%) sepia(74%) saturate(1447%) hue-rotate(14deg) brightness(95%) contrast(97%);
 }
 
 .money-card__balance, .no-data {
@@ -19,7 +15,7 @@
   flex-direction: column;
 }
 
-.time-cell, .money-card__balance, .no-data {
+.money-card__balance, .no-data {
   justify-content: center;
   align-items: center;
 }
@@ -27,10 +23,6 @@
 .delete-button, .edit-button {
   display: flex;
   align-items: center;
-}
-
-.time-cell {
-  display: flex;
 }
 
 * {
@@ -152,10 +144,10 @@ select.error-container {
   background-color: #26243d;
 }
 .side-pannel .side-container {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .side-pannel .title {
-  font-size: 30px;
+  font-size: 20px;
   margin: 0;
   color: #000;
 }
@@ -165,8 +157,7 @@ select.error-container {
 .side-pannel .nav {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 30px;
+  gap: 20px;
 }
 .side-pannel .nav__link {
   display: flex;
@@ -217,52 +208,56 @@ select.error-container {
 }
 
 .edit-button {
-  padding: 1.5px 1.5px;
+  padding: 5px;
   border: none;
-  border-radius: 7px;
-  background-color: #e5e5e5;
+  border-radius: 5px;
+  background-color: #fff;
   color: #fff;
   cursor: pointer;
+  border: 2px solid #e6e6e6;
 }
 .edit-button--dark-mode {
   background-color: #3f3b64;
 }
 
 .edit-button:hover {
-  transition: background-color 1s ease, transform 0.2s ease;
-  background-color: #c8ee44;
-  transform: scale(1.05);
+  border: 2px solid #7cb9e8;
 }
 
-.edit-button:active {
-  background-color: #9aba33;
+.edit-button:hover .edit-img {
+  transition: background-color 1s ease, transform 0.2s ease;
+  filter: invert(72%) sepia(33%) saturate(824%) hue-rotate(178deg) brightness(96%) contrast(90%);
+}
+
+.tools {
+  height: 14px;
+  width: 14px;
 }
 
 .delete-button {
-  padding: 3.5px 3.5px;
+  padding: 5px;
   border: none;
-  border-radius: 7px;
-  background-color: #e5e5e5;
+  border-radius: 5px;
+  background-color: #fff;
   cursor: pointer;
+  border: 2px solid #e6e6e6;
 }
 .delete-button--dark-mode {
   background-color: #3f3b64;
 }
 
 .delete-button:hover {
-  transition: background-color 1s ease, transform 0.2s ease;
-  background-color: #ce6262;
-  transform: scale(1.05);
+  border: 2px solid #ee204d;
 }
 
-.delete-button:active {
-  background-color: #972d2d;
+.delete-button:hover .delete-img {
+  transition: background-color 1s ease, transform 0.2s ease;
+  filter: invert(36%) sepia(100%) saturate(4598%) hue-rotate(331deg) brightness(90%) contrast(108%);
 }
 
 .chartData {
   position: relative;
   margin: auto;
-  min-height: 200px;
   padding: 20px;
   border: 1px solid #f5f5f5;
   border-radius: 10px;
@@ -348,6 +343,7 @@ select.error-container {
 }
 
 .hours-cell {
+  margin-left: 5px;
   color: #a2adba;
   font-size: 14px;
 }
@@ -393,31 +389,15 @@ select.error-container {
   align-items: center;
   gap: 10px;
   height: 100px;
-  flex-grow: 1;
+  flex: 1;
   padding: 10px;
   border-radius: 10px;
   background-color: #f8f8f8;
   transition: transform 1s ease-in;
   user-select: none;
 }
-.money-card:hover {
-  background-color: #343843;
-  transform: scale(1.03);
-}
-.money-card:hover .money-card__sum {
-  color: #fff;
-}
-.money-card:hover .money-card__icon-container {
-  background-color: #4e5257;
-}
 .money-card--dark-mode {
   background-color: #201e34;
-}
-.money-card--dark-mode:hover {
-  background-color: #292743;
-}
-.money-card--total {
-  flex-grow: 2;
 }
 .money-card__icon-container {
   padding: 10px;
@@ -430,9 +410,20 @@ select.error-container {
 .money-card__icon {
   height: 20px;
 }
+.money-card--total .money-card__icon-container {
+  background-color: rgba(249, 249, 69, 0.896);
+}
+.money-card--income .money-card__icon-container {
+  background-color: rgba(50, 223, 50, 0.997);
+}
+.money-card--expense .money-card__icon-container {
+  background-color: rgb(197, 75, 75);
+}
 .money-card__title {
-  color: #a2adba;
   font-size: 16px;
+}
+.money-card__title--dark-mode {
+  color: #a2adba;
 }
 .money-card__sum {
   color: #1b212d;
@@ -495,16 +486,39 @@ select.error-container {
 .top-controls {
   margin: -20px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.add-trans {
-  height: 30px;
+.add-button {
+  height: 35px;
+  width: 35px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
 }
+.add-button--dark-mode {
+  background-color: #3f3b64;
+}
+
+.add-button:hover {
+  background-color: #fff;
+  border: 1px solid #000;
+  transition: background-color 1s ease, border-color 1s ease;
+}
+.add-button--dark-mode:hover {
+  background-color: #444070;
+}
+.add-trans {
+  height: 12px;
+  transition: filter 0.3s ease;
+}
+
 .section-title {
   font-size: 25px;
-  margin-bottom: 5px;
+  margin: 0;
 }
 .section-title--dark-mode {
   color: #fff;

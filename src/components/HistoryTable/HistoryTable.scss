@@ -83,7 +83,6 @@
 }
 
 .time-cell {
-  @extend %flex-rw-centered-full;
   gap: 7px;
 
   &--dark-mode {
@@ -92,6 +91,7 @@
 }
 
 .hours-cell {
+  margin-left: 5px;
   color: $link-color-light;
   font-size: 14px;
 }

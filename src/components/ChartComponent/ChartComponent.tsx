@@ -32,7 +32,7 @@ export const ChartComponent = memo(() => {
       options={modifiedOptions}
       data={data}
       className="chartData"
-      width={400}
+      width={1000}
       height={300}
     />
   )

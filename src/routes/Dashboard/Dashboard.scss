@@ -8,26 +8,53 @@
 .top-controls {
   margin: -20px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.add-trans {
-  height: 30px;
-  @extend %icon-dash-hover;
+.add-button {
+  height: 35px;
+  width: 35px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid $main-color-gray;
 
-  &:hover {
+  &--dark-mode {
+    background-color: #3f3b64;
+  }
+}
+
+.add-button:hover {
+  background-color: #fff;
+  border: 1px solid $main-color-black;
+
+  transition: background-color 1s ease, border-color 1s ease;
+
+
+  .add-trans {
     @extend %icon-hover;
   }
+}
 
-  &--dark-mode:hover {
+.add-button--dark-mode:hover {
+  background-color: #444070;
+
+  .add-trans {
     @extend %icon-hover-dark-mode;
   }
 }
 
+.add-trans {
+  height: 12px;
+  transition: filter 0.3s ease;
+  @extend %icon-dash-hover;
+}
+
 .section-title {
   font-size: 25px;
-  margin-bottom: 5px;
+  margin: 0;
 
   &--dark-mode {
     color: $main-color-light;

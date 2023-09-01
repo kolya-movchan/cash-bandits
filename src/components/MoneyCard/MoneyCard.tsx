@@ -16,7 +16,13 @@ export const MoneyCard: React.FC<Props> = ({ title, amount, icon }) => {
     <div
       className={classNames('money-card', {
         'money-card--total': title.includes('balance'.toLowerCase()),
+        'money-card--income': title.includes('income'.toLowerCase()),
+        'money-card--expense': title.includes('expense'.toLowerCase()),
+        'money-card--total--dark-mode': darkMode,
+        'money-card--income--dark-mode': darkMode,
+        'money-card--expense--dark-mode': darkMode,
         'money-card--dark-mode': darkMode,
+
       })}
     >
       {' '}

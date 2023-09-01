@@ -49,21 +49,23 @@ export const History = () => {
               >{`${
                 locationData.pathname.includes('/transaction') ? 'All' : 'Recent'
               } Transactions`}</h2>
-              {isFullMode && (
-                <div className="action-controls">
+              <div className="action-controls">
+                {!isFullMode && (
                   <button
                     className="remove-all"
                     onClick={showModalSingleDelete(dispatch, darkMode)}
                   >
                     Remove all
                   </button>
+                )}
 
+                {isFullMode && (
                   <NavLink className="view-all" to="/transactions">
                     <span style={{ marginRight: '3px' }}>View all </span>
                     <span className="view-all__eagle">&gt;</span>
                   </NavLink>
-                </div>
-              )}
+                )}
+              </div>
             </div>
             {history.length > 0 && (
               <HistoryTable

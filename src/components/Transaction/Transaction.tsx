@@ -84,7 +84,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
             })}
             onClick={() => updateEditInfo(id, name, amount, type, onEditInfo, dispatch)}
           >
-            <img src="./edit.svg" alt="edit logo" className="tools" />
+            <img src="/mopobank/edit-logo.svg" alt="edit logo" className="tools edit-img" />
           </button>
           <button
             className={classNames('delete-button', {
@@ -92,7 +92,7 @@ export const Transaction: React.FC<Props> = ({ transaction, onEditInfo }) => {
             })}
             onClick={showModalDeleteAll(darkMode, id, amount, type, dispatch)}
           >
-            <img src="./delete.svg" alt="delete logo" className="tools" />
+            <img src="/mopobank/delete-logo.svg" alt="delete logo" className="tools delete-img" />
           </button>
         </div>
       </td>

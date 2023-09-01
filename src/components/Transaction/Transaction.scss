@@ -8,13 +8,15 @@
 }
 
 .edit-button {
+  padding: 5px;
+
   @extend %flex-rw-centered-scnd;
-  padding: 1.5px 1.5px;
   border: none;
-  border-radius: 7px;
-  background-color: $bg-utils-cover;
+  border-radius: 5px;
+  background-color: #fff;
   color: $main-color-light;
   cursor: pointer;
+  border: 2px solid $main-color-gray;
 
   &--dark-mode {
     background-color: $bg-utils-cover-dark-mode;
@@ -22,23 +24,32 @@
 }
 
 .edit-button:hover {
-  transition: background-color 1s ease, transform 0.2s ease;
-
-  background-color: $main-color-light-green;
-  transform: scale(1.05);
+  border: 2px solid #7cb9e8;
 }
 
-.edit-button:active {
-  background-color: #9aba33;
+.edit-button:hover .edit-img {
+  transition: background-color 1s ease, transform 0.2s ease;
+
+  filter: invert(72%) sepia(33%) saturate(824%) hue-rotate(178deg) brightness(96%)
+    contrast(90%);
+}
+
+.tools {
+  height: 14px;
+  width: 14px;
+
+  @extend %icon-dash-hover;
 }
 
 .delete-button {
+  padding: 5px;
+
   @extend %flex-rw-centered-scnd;
-  padding: 3.5px 3.5px;
   border: none;
-  border-radius: 7px;
-  background-color: $bg-utils-cover;
+  border-radius: 5px;
+  background-color: #fff;
   cursor: pointer;
+  border: 2px solid $main-color-gray;
 
   &--dark-mode {
     background-color: $bg-utils-cover-dark-mode;
@@ -46,12 +57,12 @@
 }
 
 .delete-button:hover {
-  transition: background-color 1s ease, transform 0.2s ease;
-
-  background-color: #ce6262;
-  transform: scale(1.05);
+  border: 2px solid #ee204d;
 }
 
-.delete-button:active {
-  background-color: #972d2d;
+.delete-button:hover .delete-img {
+  transition: background-color 1s ease, transform 0.2s ease;
+
+  filter: invert(36%) sepia(100%) saturate(4598%) hue-rotate(331deg) brightness(90%)
+    contrast(108%);
 }

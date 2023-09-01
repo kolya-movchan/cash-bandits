@@ -13,40 +13,16 @@
   gap: 10px;
 
   height: 100px;
-  flex-grow: 1;
+  flex: 1;
   padding: 10px;
   border-radius: 10px;
   background-color: #f8f8f8;
   transition: transform 1s ease-in;
   user-select: none;
 
-  &:hover {
-    background-color: #343843;
-    transform: scale(1.03);
-  }
-
-  &:hover &__sum {
-    color: $main-color-light;
-  }
-
-  &:hover &__icon-container {
-    background-color: #4e5257;
-  }
 
   &--dark-mode {
     background-color: #201e34;
-
-    &:hover {
-      background-color: #292743;
-    }
-  }
-
-  &:hover &__icon {
-    @extend %icon-card-hover;
-  }
-
-  &--total {
-    flex-grow: 2;
   }
 
   &__icon-container {
@@ -63,9 +39,27 @@
     height: 20px;
   }
 
+
+  &--total &__icon-container {
+    background-color: rgba(249, 249, 69, 0.896);
+  }
+
+  &--income &__icon-container {
+    background-color: rgba(50, 223, 50, 0.997);
+  }
+
+
+  &--expense &__icon-container {
+    background-color: rgb(197, 75, 75);
+  }
+
+
   &__title {
-    color: $link-color-light;
     font-size: 16px;
+
+    &--dark-mode {
+      color: $link-color-light;
+    }
   }
 
   &__sum {

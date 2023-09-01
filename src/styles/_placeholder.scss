@@ -37,6 +37,11 @@
   align-items: center;
 }
 
+%flex-rw-centered-x {
+  display: flex;
+  justify-content: center;
+}
+
 %flex-rw-centered-full {
   display: flex;
   @extend %all-centered;

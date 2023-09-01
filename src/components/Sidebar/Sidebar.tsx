@@ -10,10 +10,10 @@ export const Sidebar = () => {
 
   return (
     <div className={classNames('side-pannel', { 'side-pannel--dark-mode': darkMode })}>
-      {<Logo />}
-
       <div className="nav">
         <div>
+
+        {<Logo />}
           <div style={{ marginBottom: '20px' }}>
             <CustomNavLink
               to="/"
@@ -31,12 +31,13 @@ export const Sidebar = () => {
 
           <DarkMode />
         </div>
+        <div style={{ borderTop: `1px solid ${!darkMode ? '#1b212d' : '#a2adba'}` }}></div>
         <div>
-          <CustomLink to={'/'} iconSrc={'./video.svg'} text={'Demo Video'} />
+          <CustomLink to={'https://github.com/kolya-movchan'} iconSrc={'./github.svg'} text={'Github'} />
           <CustomLink
             to={'https://www.linkedin.com/in/klmovchan/'}
-            iconSrc={'./question-mark.svg'}
-            text={'Ask Me'}
+            iconSrc={'./linkedin-logo-bold.svg'}
+            text={'LinkedIn'}
           />
         </div>{' '}
       </div>
